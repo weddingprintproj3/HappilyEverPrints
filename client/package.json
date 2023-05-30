@@ -18,7 +18,11 @@
     "react-dom": "^16.13.1",
     "react-router-dom": "^6.2.1",
     "react-scripts": "5.0.1",
-    "sass": "^1.62.1"
+    "sass": "^1.62.1",
+    "@emailjs/browser": "^3.11.0",
+    "dotenv": "^16.0.3",
+    "axios": "^1.4.0"
+
   },
   "scripts": {
     "start": "react-scripts start",
