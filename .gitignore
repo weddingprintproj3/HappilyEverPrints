@@ -1,6 +1,11 @@
 # Created by https://www.toptal.com/developers/gitignore/api/react,macos,node,dotenv
 # Edit at https://www.toptal.com/developers/gitignore?templates=react,macos,node,dotenv
 
+# dependencies
+node_modules
+/.pnp
+.pnp.js
+
 ### dotenv ###
 .env
 
@@ -190,3 +195,4 @@ thumb
 sketch
 
 # End of https://www.toptal.com/developers/gitignore/api/react,macos,node,dotenv
+>>>>>>> 530231eb34de0ceac06f6fb77dc75d83907e2399
