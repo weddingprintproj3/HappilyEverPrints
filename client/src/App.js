@@ -14,6 +14,7 @@ import NoMatch from './pages/NoMatch';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
 import Nav from './components/Nav';
+import Contact from './pages/Contact';
 import { StoreProvider } from './utils/GlobalState';
 import Success from './pages/Success';
 import OrderHistory from './pages/OrderHistory';
@@ -48,6 +49,10 @@ function App() {
               <Route 
                 path="/" 
                 element={<Home />} 
+              />
+              <Route
+                path="/contact"
+                element={<Contact />}
               />
               <Route 
                 path="/login" 

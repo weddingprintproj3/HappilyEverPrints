@@ -49,6 +49,9 @@ function Nav() {
       </h1>
 
       <nav>
+        <Link to="/contact">
+          Contact Us
+        </Link>
         {showNavigation()}
       </nav>
     </header>
