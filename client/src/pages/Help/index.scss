@@ -1,0 +1,173 @@
+.help-page {
+    min-height: calc(100vh - 80px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+
+    .faq-section,
+    .contact-section {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        h1 {
+            font-size: 30px;
+            padding: 30px;
+            font-family: 'Gistesy', sans-serif;
+            letter-spacing: 2px;
+            text-align: center;
+        }
+
+        p {
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+    }
+
+    .faq-section {
+        background-color: #fafafa;
+        width: 100%;
+        padding-bottom: 20px;
+
+        .faq-content {
+            width: 90%;
+            margin: 0 auto;
+
+            h2 {
+                background-color: #E4e4e4;
+                cursor: pointer;
+                box-sizing: border-box;
+                margin-bottom: 20px;
+                padding: 10px;
+                font-size: 1.2em;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                line-height: 1.5;
+
+                .arrow {
+                    float: right;
+                    margin-left: 10px;
+                    transition: transform 0.4s ease;
+                    color: #454545;
+
+                    &.down {
+                        transform: rotate(0deg);
+                    }
+
+                    &.up {
+                        transform: rotate(180deg);
+                    }
+                }
+            }
+
+            p {
+                display: none;
+                padding: 0px 10px;
+            }
+
+            .active {
+                display: block;
+            }
+        }
+    }
+
+    .contact-section {
+        width: 90%;
+        margin-top: 40px;
+
+        h4 {
+            font-size: 18px;
+        }
+
+        form {
+            width: 100%;
+            margin: 20px auto;
+
+            @media (min-width: 1200px) {
+                width: 70%;
+            }
+
+            .form-row {
+                display: flex;
+                flex-direction: column;
+
+                @media (min-width: 768px) {
+                    flex-direction: row;
+                    justify-content: space-between;
+                }
+
+                .form-field {
+                    width: 100%;
+
+                    &:first-child {
+                        margin-bottom: 20px;
+
+                        @media (min-width: 768px) {
+                            margin-bottom: 0;
+                            margin-right: 20px;
+                        }
+                    }
+
+                    @media (min-width: 768px) {
+                        width: calc(50% - 10px);
+                    }
+
+                    input {
+                        width: 100%;
+                        border: 0;
+                        background: #f3f3f3;
+                        font-size: 16px;
+                        padding: 14px;
+                        font-family: inherit;
+                        font-weight: 600;
+                    }
+                }
+            }
+
+            textarea {
+                width: 100%;
+                margin: 20px 0;
+                width: 100%;
+                border: 0;
+                background: #f3f3f3;
+                font-size: 16px;
+                padding: 14px;
+                box-sizing: border-box;
+                min-height: 150px;
+                font-family: inherit;
+                font-weight: 600;
+            }
+
+            .form-button {
+                display: flex;
+                justify-content: center;
+
+                button {
+                    appearance: none;
+                    -webkit-appearance: none;
+                    -moz-appearance: none;
+                    background: #adbea3;
+                    color: inherit;
+                    font: inherit;
+                    cursor: pointer;
+                    text-transform: uppercase;
+                    font-size: 12px;
+                    font-weight: 600;
+                    letter-spacing: 3px;
+                    text-decoration: none;
+                    padding: 12px 40px;
+                    border: 1px solid #adbea3;
+                    white-space: nowrap;
+
+
+                    &:hover {
+                        background-color: #bdcbb5;
+                        border: 1px solid #bdcbb5;
+                    }
+                }
+            }
+        }
+    }
+}

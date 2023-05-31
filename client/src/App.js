@@ -1,5 +1,5 @@
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import {
   ApolloClient,
   InMemoryCache,
@@ -34,19 +34,28 @@ const client = new ApolloClient({
   cache: new InMemoryCache(),
 });
 
+function ScrollToTop() {
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+
+  return null;
+}
+
 function App() {
   return (
     <ApolloProvider client={client}>
       <Router>
+      <ScrollToTop />
         <div>
           <StoreProvider>
             <Routes>
 
               <Route path="/" element={<Layout />}>
                 <Route index element={<Home />} />
-              </Route>
-              <Route path="/help" element={<Layout />}>
-                <Route index element={<Help />} />
+                <Route path="/help" element={<Help />} />
               </Route>
 
             </Routes>
