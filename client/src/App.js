@@ -13,6 +13,7 @@ import Home from './pages/Home';
 import Help from './pages/Help/Help';
 import Login from './pages/Login/Login';
 import Signup from './pages/Login/Signup';
+import Cart from './pages/Cart/Cart';
 
 import { StoreProvider } from './utils/GlobalState';
 import './App.scss';
