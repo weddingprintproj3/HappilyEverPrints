@@ -2,7 +2,7 @@ import { Link, NavLink } from 'react-router-dom';
 import './index.scss';
 import Logo from '../../assets/images/Logo.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHome, faQuestion, faHeart, faCartShopping, faRightToBracket } from '@fortawesome/free-solid-svg-icons';
+import { faHome, faCircleQuestion, faHeart, faCartShopping, faRightToBracket } from '@fortawesome/free-solid-svg-icons';
 
 const Navbar = () => (
     // HEADER WITH NAVIGATION SECTION
@@ -23,7 +23,7 @@ const Navbar = () => (
             </NavLink>
             <NavLink exact="true" activeclassname="active" to="/help">
                 <div className="icon-container">
-                    <FontAwesomeIcon icon={faQuestion} color="#343131" />
+                    <FontAwesomeIcon icon={faCircleQuestion} color="#343131" />
                 </div>
                 <div className="text-container">
                     <span>HELP</span>
@@ -34,7 +34,7 @@ const Navbar = () => (
                     <FontAwesomeIcon icon={faHeart} color="#343131" />
                 </div>
                 <div className="text-container">
-                    <span>FAVORITES</span>
+                    <span>SAVED</span>
                 </div>
             </NavLink>
             <NavLink exact="true" activeclassname="active" className="cart-link" to="/cart">

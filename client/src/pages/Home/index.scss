@@ -2,7 +2,7 @@
     min-height: calc(100vh - 80px);
     display: flex;
     flex-direction: column;
-    background-color: red;
+    align-items: center;
 
     .hero {
         display: flex;
@@ -48,10 +48,32 @@
         .hero-img {
             height: auto;
             width: 90%;
-        } 
+        }
     }
 
     .category-menu {
-        background-color: white;
+        text-align: center;
+        max-width: 90%;
+        margin: 20px 0px;
+
+
+        button {
+            background: none;
+            color: inherit;
+            border: none;
+            padding: 12px 0px;
+            margin: 0px 10px;
+            font: inherit;
+            text-decoration: none;
+            transition: border-bottom .2s ease;
+            border-bottom: 4px solid white;
+            text-transform: uppercase;
+
+            &:hover,
+            &:focus {
+                border-bottom: 4px solid #adbea3;
+                cursor: pointer;
+            }
+        }
     }
 }
