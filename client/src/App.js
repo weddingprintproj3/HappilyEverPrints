@@ -9,8 +9,10 @@ import {
 import { setContext } from '@apollo/client/link/context';
 
 import Layout from './components/Layout';
-import Home from './pages/Home'
-import Help from './pages/Help/Help'
+import Home from './pages/Home';
+import Help from './pages/Help/Help';
+import Login from './pages/Login/Login';
+import Signup from './pages/Login/Signup';
 
 import { StoreProvider } from './utils/GlobalState';
 import './App.scss';
@@ -56,6 +58,8 @@ function App() {
               <Route path="/" element={<Layout />}>
                 <Route index element={<Home />} />
                 <Route path="/help" element={<Help />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/signup" element={<Signup />} />
               </Route>
 
             </Routes>
