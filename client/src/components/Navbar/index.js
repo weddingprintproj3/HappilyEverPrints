@@ -4,6 +4,7 @@ import Logo from '../../assets/images/Logo.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHome, faCircleQuestion, faHeart, faCartShopping, faRightToBracket } from '@fortawesome/free-solid-svg-icons';
 
+
 const Navbar = () => (
     // HEADER WITH NAVIGATION SECTION
     <header>

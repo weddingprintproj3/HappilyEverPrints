@@ -1,34 +1,7 @@
 import React, { useState, useRef } from 'react';
-// import '../../styles/style.css';
-import { validateEmail } from '../utils/helpers';
-import { contactForm } from '../utils/API'
-// import { Modal, Button } from 'react-bootstrap'
+import { validateEmail } from '../../utils/helpers';
+import { contactForm } from '../../utils/API'
 
-// function MyModal(props) {
-//     return (
-//         <Modal
-//             {...props}
-//             size="lg"
-//             aria-labelledby="contained-modal-title-vcenter"
-//             centered
-//             id="modal"
-//         >
-//             <Modal.Header closeButton>
-//                 <Modal.Title id="contained-modal-title-vcenter">
-//                 </Modal.Title>
-//                 Sent!
-//             </Modal.Header>
-//             <Modal.Body>
-//                 <h3>
-//                     Your message has been submitted successfully! The team will get back to you shortly.
-//                 </h3>
-//             </Modal.Body>
-//             <Modal.Footer>
-//                 <Button onClick={props.onHide} className="btn-secondary">Close</Button>
-//             </Modal.Footer>
-//         </Modal>
-//     );
-// }
 
 function Contact() {
     // Create state variables for the fields in the form
@@ -39,7 +12,7 @@ function Contact() {
     const [errorMessage, setErrorMessage] = useState('');
     const form = useRef();
 
-    // const [modalShow, setModalShow] = React.useState(false);
+    const [modalShow, setModalShow] = React.useState(false);
 
     const handleInputChange = (e) => {
         // Getting the value and name of the input which triggered the change
@@ -88,7 +61,7 @@ function Contact() {
 
         // Alert the user their message has been sent
         // alert(`Your message has been submitted successfully! Sara will get back to you shortly.`);
-        // setModalShow(true)
+        setModalShow(true)
 
         // If all fields have been filled in, clear the input
         setName('');
@@ -97,19 +70,17 @@ function Contact() {
     };
 
     return (
-        <section className="container">
-            <h1 className="mx-auto text-center py-2">Get in touch</h1>
-            <p className="mx-auto text-center py-2">Do you have a question about our products? Are you looking for a specific design but can't find it on our site? Would you like to place a large order and need a quote? Send us a message and we'll back to you ASAP!</p>
-            <h4 className="mx-auto text-center mb-4 py-2">Write us a message</h4>
-            <form ref={form} className="form mx-auto mb-5">
-                <div className="mb-4">
+        <section>
+            <h1>Get in touch</h1>
+            <p>If you still have questions after reading our FAQ section feel free to send us a message and we'll back to you ASAP!</p>
+            <h4>Write us a message</h4>
+            <form ref={form} >
+                <div>
                     <label
-                        for="name"
-                        className="form-label">
+                        for="name">
                         Your name:
                     </label>
                     <input
-                        className="form-control"
                         value={name}
                         name="name"
                         type="text"
@@ -118,14 +89,12 @@ function Contact() {
                         onBlur={validateForm}
                     />
                 </div>
-                <div className="mb-4">
+                <div>
                     <label
-                        for="email"
-                        className="form-label">
+                        for="email">
                         Your email address:
                     </label>
                     <input
-                        className="form-control"
                         value={email}
                         name="email"
                         type="email"
@@ -134,36 +103,37 @@ function Contact() {
                         onBlur={validateForm}
                     />
                 </div>
-                <div className="mb-4">
+                <div>
                     <label
-                        for="message"
-                        className="form-label">
+                        for="message">
                         Your message here:
                     </label>
                     <textarea
-                        className="form-control"
                         value={message}
                         name="message"
                         onChange={handleInputChange}
                         onBlur={validateForm}
                     />
                 </div>
-                <div className="d-grid gap-2 pb-3">
+                <div>
                     <button
                         type="submit"
-                        className="btn btn-secondary"
                         onClick={handleFormSubmit}>
                         Submit
                     </button>
-                    {/* <MyModal
-                    show={modalShow}
-                    onHide={() => setModalShow(false)}
-                    /> */}
                 </div>
             </form>
+            {modalShow && (
+                <div className="modal">
+                    <div>
+                        <button className="close" onClick={() => setModalShow(false)}>&times;</button>
+                        <p>Your message has been submitted successfully! Our team will get back to you shortly.</p>
+                    </div>
+                </div>
+            )}
             {errorMessage && (
                 <div>
-                    <p className="error-text">{errorMessage}</p>
+                    <p>{errorMessage}</p>
                 </div>
             )}
         </section>
