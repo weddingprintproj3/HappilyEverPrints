@@ -1,0 +1,8 @@
+body {
+  margin: 0;
+  display: block;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-family: 'Lexend Giga', sans-serif;;
+}
+

@@ -1,0 +1,21 @@
+.App {
+    position: relative;
+
+    .page {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-start;
+        margin-top: 80px;
+        min-height: calc(100vh - 80px);
+        width: 100%;
+
+        .container {
+            display:flex;
+            flex-direction: column;
+            width: 100%;
+            will-change: contents;
+            z-index: 1;
+        }
+    }
+}
