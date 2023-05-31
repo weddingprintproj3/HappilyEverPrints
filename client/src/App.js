@@ -10,6 +10,7 @@ import { setContext } from '@apollo/client/link/context';
 
 import Layout from './components/Layout';
 import Home from './pages/Home'
+import Help from './pages/Help/Help'
 
 import { StoreProvider } from './utils/GlobalState';
 import './App.scss';
@@ -43,6 +44,9 @@ function App() {
 
               <Route path="/" element={<Layout />}>
                 <Route index element={<Home />} />
+              </Route>
+              <Route path="/help" element={<Layout />}>
+                <Route index element={<Help />} />
               </Route>
 
             </Routes>
