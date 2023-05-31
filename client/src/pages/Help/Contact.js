@@ -32,7 +32,7 @@ function Contact() {
 
     const validateForm = (e) => {
         if (!e.target.value) {
-            setErrorMessage(`***${e.target.name} is required`);
+            setErrorMessage(`***${e.target.name.charAt(0).toUpperCase() + e.target.name.slice(1).toLowerCase()} is required`);
         }
     }
 
@@ -70,52 +70,43 @@ function Contact() {
     };
 
     return (
-        <section>
-            <h1>Get in touch</h1>
-            <p>If you still have questions after reading our FAQ section feel free to send us a message and we'll back to you ASAP!</p>
+        <section className='contact-section'>
+            <h1>Get In Touch</h1>
+            <p>If you still have questions after reading our FAQ section, feel free to send us a message and we'll get back to you ASAP!</p>
             <h4>Write us a message</h4>
             <form ref={form} >
-                <div>
-                    <label
-                        for="name">
-                        Your name:
-                    </label>
-                    <input
-                        value={name}
-                        name="name"
-                        type="text"
-                        placeholder="Name"
-                        onChange={handleInputChange}
-                        onBlur={validateForm}
-                    />
+                <div className="form-row">
+                    <div className="form-field">
+                        <input
+                            value={name}
+                            name="name"
+                            type="text"
+                            placeholder="Name"
+                            onChange={handleInputChange}
+                            onBlur={validateForm}
+                        />
+                    </div>
+                    <div className="form-field">
+                        <input
+                            value={email}
+                            name="email"
+                            type="email"
+                            placeholder="Email"
+                            onChange={handleInputChange}
+                            onBlur={validateForm}
+                        />
+                    </div>
                 </div>
                 <div>
-                    <label
-                        for="email">
-                        Your email address:
-                    </label>
-                    <input
-                        value={email}
-                        name="email"
-                        type="email"
-                        placeholder="Email"
-                        onChange={handleInputChange}
-                        onBlur={validateForm}
-                    />
-                </div>
-                <div>
-                    <label
-                        for="message">
-                        Your message here:
-                    </label>
                     <textarea
                         value={message}
                         name="message"
+                        placeholder="Message"
                         onChange={handleInputChange}
                         onBlur={validateForm}
                     />
                 </div>
-                <div>
+                <div className="form-button">
                     <button
                         type="submit"
                         onClick={handleFormSubmit}>
