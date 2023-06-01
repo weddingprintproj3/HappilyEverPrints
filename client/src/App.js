@@ -12,8 +12,10 @@ import Layout from './components/Layout';
 import Home from './pages/Home';
 import Help from './pages/Help/Help';
 import Login from './pages/Login/Login';
+import Logout from './pages/Login/Logout';
 import Signup from './pages/Login/Signup';
 import Cart from './pages/Cart/Cart';
+import Profile from './pages/Login/Profile';
 
 import { StoreProvider } from './utils/GlobalState';
 import './App.scss';
@@ -60,8 +62,10 @@ function App() {
                 <Route index element={<Home />} />
                 <Route path="/help" element={<Help />} />
                 <Route path="/login" element={<Login />} />
+                <Route path="/logout" element={<Logout />} />
                 <Route path="/signup" element={<Signup />} />
                 <Route path="/cart" element={<Cart />} />
+                <Route path="/profile" element={<Profile />} />
               </Route>
 
             </Routes>
