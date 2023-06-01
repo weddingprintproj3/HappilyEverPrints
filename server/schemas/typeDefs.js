@@ -5,21 +5,48 @@ const typeDefs = gql`
     _id: ID
     name: String
   }
+ 
+  type Textfield {
+    label: String
+    input: String
+  }
+  
+  input TextfieldInput {
+    label: String
+    input: String
+  }
+
+  type Mod {
+    attribute: String
+    value: String
+  }
+
+  input ModInput {
+    attribute: String
+    value: String
+  }
+  
+  input CategoryInput {
+    _id: ID
+    name: String
+  }
 
   type Product {
     _id: ID
     name: String
     description: String
     image: String
-    quantity: Int
     price: Float
     category: Category
+    textFields: [Textfield]
+    mods: [Mod]
   }
 
   type Order {
     _id: ID
+    orderQuantity: Int
     purchaseDate: String
-    products: [Product]
+    product: Product
   }
 
   type User {
@@ -50,7 +77,7 @@ const typeDefs = gql`
       email: String!
       password: String!
     ): Auth
-    addOrder(products: [ID]!): Order
+    addOrder(productID: ID!, orderQuantity: Int!): Order
     updateUser(
       firstName: String
       lastName: String
@@ -58,6 +85,15 @@ const typeDefs = gql`
       password: String
     ): User
     updateProduct(_id: ID!, quantity: Int!): Product
+    addProduct(
+      name: String
+      description: String
+      image: String
+      price: Float
+      category: CategoryInput
+    ): Product
+    addTextField(productID: ID!, textfield: TextfieldInput): Product
+    addMod(productID: ID!, mod: ModInput): Product
     login(email: String!, password: String!): Auth
   }
 `;
