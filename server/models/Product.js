@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 
 const { Schema } = mongoose;
+const textSchema = require('./Textfield');
+const modSchema = require('./Mod');
 
 const productSchema = new Schema({
   name: {
@@ -19,16 +21,13 @@ const productSchema = new Schema({
     required: true,
     min: 0.99,
   },
-  quantity: {
-    type: Number,
-    min: 0,
-    default: 0,
-  },
   category: {
     type: Schema.Types.ObjectId,
     ref: 'Category',
     required: true,
   },
+  textFields: [textSchema],
+  mods: [modSchema],
 });
 
 const Product = mongoose.model('Product', productSchema);
