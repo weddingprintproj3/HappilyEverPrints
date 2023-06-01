@@ -1,7 +1,9 @@
 import React from "react";
 import { Link } from 'react-router-dom';
-import Hero from '../../assets/images/Hero.jpg'
-import CategoryMenu from "../../components/CategoryMenu"
+import Hero from '../../assets/images/Hero.jpg';
+import CategoryMenu from "../../components/CategoryMenu";
+import ProductList from "../../components/ProductList"
+
 import './index.scss';
 
 const Home = () => {
@@ -15,6 +17,7 @@ const Home = () => {
       </div>
       <div className="category-menu">
       <CategoryMenu />
+      <ProductList />
       </div>
     </div>
   );
