@@ -54,7 +54,7 @@ function App() {
     <ApolloProvider client={client}>
       <Router>
       <ScrollToTop />
-        <div>
+        <>
           <StoreProvider>
             <Routes>
 
@@ -70,7 +70,7 @@ function App() {
 
             </Routes>
           </StoreProvider>
-        </div>
+        </>
       </Router>
     </ApolloProvider>
   );
