@@ -18,10 +18,10 @@ const resolvers = {
         };
       }
 
-      return Product.find(params).populate('category');
+      return Product.find(params).populate('category').populate('textFields').populate('mods');
     },
     product: async (parent, { id }) =>
-      Product.findById(id).populate('category'),
+      Product.findById(id).populate('category').populate('textFields').populate('mods'),
 
     user: async (parent, args, context) => {
       if (context.user) {
@@ -57,10 +57,10 @@ const resolvers = {
 
       return { token, user };
     },
-    addOrder: async (parent, { products }, context) => {
-      console.log(context);
+    addOrder: async (parent, { orderQuantity, productID }, context) => {
+      const product = await Product.findById(productID)
       if (context.user) {
-        const order = new Order({ products });
+        const order = new Order({ orderQuantity, product });
 
         await User.findByIdAndUpdate(context.user.id, {
           $push: { orders: order },
@@ -68,7 +68,6 @@ const resolvers = {
 
         return order;
       }
-
       throw new AuthenticationError('Not logged in');
     },
     updateUser: async (parent, args, context) => {
@@ -80,24 +79,54 @@ const resolvers = {
 
       throw new AuthenticationError('Not logged in');
     },
-    updateProduct: async (parent, { id, quantity }) => {
-      const decrement = Math.abs(quantity) * -1;
-
-      return Product.findByIdAndUpdate(
-        id,
-        { $inc: { quantity: decrement } },
-        { new: true }
+    addProduct: async (parent, args) => {
+      console.log(args);
+      category = await Category.findOne(
+        { name: args.category.name},
       );
+      console.log(category)
+      const newProduct = await Product.create(
+        {
+          name: args.name,
+          description: args.description,
+          image: args.image,
+          price: args.price,
+          category: category,
+        });
+      return newProduct
+    },
+    updateProduct: async (parent, args) => {
+      const product = await Product.findOneAndUpdate(
+        { _id: args.product.__id },
+        { $set: req.body }, 
+        { runValidators: true, new: true } 
+      );
+    },
+    addTextField: async (parent, {productID, textfield }, context) => {
+        const updatedProduct = await Product.findOneAndUpdate(
+          { _id: productID },
+          { $addToSet: { textFields: textfield } },
+          { new: true, runValidators: true }
+        ).populate('category').populate('textFields').populate('mods');
+        return updatedProduct;
+    },
+    addMod: async (parent, {productID, mod }, context) => {
+      const updatedProduct = await Product.findOneAndUpdate(
+        { _id: productID },
+        { $addToSet: { mods: mod } },
+        { new: true, runValidators: true }
+      ).populate('category').populate('textFields').populate('mods');
+      return updatedProduct;
     },
     login: async (parent, { email, password }) => {
       const user = await User.findOne({ email });
-
+      console.log(user);
       if (!user) {
         throw new AuthenticationError('Incorrect credentials');
       }
 
       const correctPw = await user.isCorrectPassword(password);
-
+      console.log(correctPw);
       if (!correctPw) {
         throw new AuthenticationError('Incorrect credentials');
       }
