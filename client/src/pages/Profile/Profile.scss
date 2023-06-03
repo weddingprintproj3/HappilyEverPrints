@@ -13,8 +13,8 @@
         width: 170px;
         margin: 0;
         padding: 0;
-        color: white;
-        background: #3c3e43;
+        color: #454545;
+        background: #fafafa;
     }
 
     .react-tabs__tab {
@@ -28,13 +28,13 @@
     .react-tabs__tab--selected {
         background: #1c1d1f;
         border-color: #1c1d1f;
-        border-left: 4px solid #6eb800;
+        border-left: 4px solid #adbea3;
         color: white;
     }
 
     .react-tabs__tab-panel {
         display: none;
-        width: 300px;
+        width: 800px;
     }
 
     .react-tabs__tab-panel--selected {

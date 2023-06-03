@@ -36,6 +36,7 @@ const typeDefs = gql`
     name: String
     description: String
     image: String
+    quantity: Int
     price: Float
     category: Category
     textFields: [Textfield]
@@ -46,7 +47,7 @@ const typeDefs = gql`
     _id: ID
     orderQuantity: Int
     purchaseDate: String
-    product: Product
+    products: [Product]
   }
 
   type User {
