@@ -34,8 +34,8 @@ export const ADD_PROD = gql`
   }
 `;
 export const ADD_ORDER = gql`
-  mutation AddOrder( $productId: ID!, $orderQuantity: Int!) {
-    addOrder(productID: $productId, orderQuantity: $orderQuantity) {
+  mutation AddOrder( $productId: ID!, $orderQuantity: Int!, $status: String!) {
+    addOrder(productID: $productId, orderQuantity: $orderQuantity, status: $status) {
       _id
       orderQuantity
       product {
@@ -43,6 +43,7 @@ export const ADD_ORDER = gql`
         price
       }
       purchaseDate
+      status
     }
   }
 `;

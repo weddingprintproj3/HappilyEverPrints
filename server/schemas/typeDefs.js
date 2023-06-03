@@ -47,6 +47,7 @@ const typeDefs = gql`
     orderQuantity: Int
     purchaseDate: String
     product: Product
+    status: String
   }
 
   type User {
@@ -77,7 +78,7 @@ const typeDefs = gql`
       email: String!
       password: String!
     ): Auth
-    addOrder(productID: ID!, orderQuantity: Int!): Order
+    addOrder(productID: ID!, orderQuantity: Int!, status: String!): Order
     updateUser(
       firstName: String
       lastName: String

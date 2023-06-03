@@ -165,7 +165,8 @@ function Product() {
     const { data } = await addOrder({
       variables: {
         productId: productID, 
-        orderQuantity: parseInt(document.getElementById("productQuantity").value) 
+        orderQuantity: parseInt(document.getElementById("productQuantity").value),
+        status: "PENDING" 
       },
     });
     console.log(data);
