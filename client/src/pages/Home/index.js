@@ -12,7 +12,7 @@ const Home = () => {
       <div className="hero">
         <h1>Welcome!</h1>
         <p>Happily Ever Prints is your one-stop destination for beautifully designed and personalized wedding printables. From save-the-dates and invitations to thank you cards and custom stationery, we aim to enhance the uniqueness of your special day. Our mission is to help bring your ideas to life beautifully, making every moment special.</p>
-        <Link to="login" className="flat-button">GET STARTED</Link>
+        <Link to="signup" className="flat-button">GET STARTED</Link>
         <img src={Hero} className="hero-img" alt="Hero"></img>
       </div>
       <div className="category-menu">

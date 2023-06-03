@@ -1,4 +1,4 @@
-.signup-page {
+.login-page {
     min-height: calc(100vh - 80px);
     display: flex;
     flex-direction: column;
@@ -63,6 +63,14 @@
                         font-weight: 600;
                     }
                 }
+
+                .error {
+                    margin-bottom: 30px;
+                    
+                    p {
+                        color: salmon;
+                    }
+                }
             }
 
             .form-button {
@@ -86,7 +94,6 @@
                     border: 1px solid #adbea3;
                     white-space: nowrap;
                     margin-bottom: 30px;
-
 
                     &:hover {
                         background-color: #bdcbb5;
