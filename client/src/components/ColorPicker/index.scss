@@ -1,0 +1,10 @@
+.colorSwatches {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.colorSwatch {
+    height: 2rem;
+    width: 2rem;
+}
