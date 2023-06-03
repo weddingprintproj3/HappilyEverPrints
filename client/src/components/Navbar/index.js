@@ -2,7 +2,7 @@ import { Link, NavLink } from 'react-router-dom';
 import './index.scss';
 import Logo from '../../assets/images/Logo.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHome, faCircleQuestion, faHeart, faCartShopping, faRightToBracket } from '@fortawesome/free-solid-svg-icons';
+import { faHome, faCircleQuestion, faUser, faCartShopping, faRightToBracket, faRightFromBracket } from '@fortawesome/free-solid-svg-icons';
 import Auth from '../../utils/auth';
 
 function Navbar() {
@@ -13,7 +13,7 @@ function Navbar() {
             return (
                 <NavLink exact="true" activeclassname="active" className="login-link" to="/logout">
                     <div className="icon-container">
-                        <FontAwesomeIcon icon={faRightToBracket} color="#343131" />
+                        <FontAwesomeIcon icon={faRightFromBracket} color="#343131" />
                     </div>
                     <div className="text-container">
                         <span>LOGOUT</span>
@@ -59,12 +59,12 @@ function Navbar() {
                         <span>HELP</span>
                     </div>
                 </NavLink>
-                <NavLink exact="true" activeclassname="active" to="/my-favorites">
+                <NavLink exact="true" activeclassname="active" to="/profile">
                     <div className="icon-container">
-                        <FontAwesomeIcon icon={faHeart} color="#343131" />
+                        <FontAwesomeIcon icon={faUser} color="#343131" />
                     </div>
                     <div className="text-container">
-                        <span>SAVED</span>
+                        <span>PROFILE</span>
                     </div>
                 </NavLink>
                 <NavLink exact="true" activeclassname="active" className="cart-link" to="/cart">

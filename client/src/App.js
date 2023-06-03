@@ -12,7 +12,7 @@ import Layout from './components/Layout';
 import Home from './pages/Home';
 import Help from './pages/Help/Help';
 import Login from './pages/Login/Login';
-import Logout from './pages/Login/Logout';
+import Logout from './pages/Logout/Logout';
 import Signup from './pages/Signup/Signup';
 import Cart from './pages/Cart/Cart';
 import Profile from './pages/Login/Profile';
