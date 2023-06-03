@@ -10,21 +10,40 @@ export const LOGIN = gql`
     }
   }
 `;
-
-export const ADD_ORDER = gql`
-  mutation addOrder($products: [ID]!) {
-    addOrder(products: $products) {
-      purchaseDate
-      products {
+export const ADD_PROD = gql`
+  mutation AddProduct($name: String, $description: String, $image: String, $price: Float, $category: CategoryInput, $textFields: [TextfieldInput], $groupFields: [GroupFieldInput]) {
+    addProduct(name: $name, description: $description, image: $image, price: $price, category: $category, textFields: $textFields, groupFields: $groupFields) {
+      _id
+      category {
         _id
         name
-        description
-        price
-        quantity
-        category {
-          name
-        }
       }
+      description
+      groupFields {
+        fields
+        group
+      }
+      image
+      name
+      price
+      textFields {
+        input
+        label
+      }
+    }
+  }
+`;
+export const ADD_ORDER = gql`
+  mutation AddOrder( $productId: ID!, $orderQuantity: Int!, $status: String!) {
+    addOrder(productID: $productId, orderQuantity: $orderQuantity, status: $status) {
+      _id
+      orderQuantity
+      product {
+        name
+        price
+      }
+      purchaseDate
+      status
     }
   }
 `;
