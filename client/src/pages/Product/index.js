@@ -69,10 +69,10 @@ function Product() {
       textfields.push({label:id, input:document.getElementById(id).value})
     });
     const product = {
-      name: "Invitation",
-      description: "card",
+      name: document.getElementById('productName').innerText,
+      description: document.getElementById('productDescirption').innerText,
       image: "/images/stuff.png",
-      price: 9.99,
+      price: parseFloat(document.getElementById('productPrice').innerText),
       category: {
         name: "Invitations"
       },
@@ -103,10 +103,10 @@ function Product() {
       multifields.push({group:`table${id}members`, fields:Array.from(document.getElementById(`table${id}members`).children, ({textContent}) => textContent)})
     });
     const product = {
-      name: "Guest List",
-      description: "card",
+      name: document.getElementById('productName').innerText,
+      description: document.getElementById('productDescirption').innerText,
       image: "/images/stuff.png",
-      price: 10.99,
+      price: parseFloat(document.getElementById('productPrice').innerText),
       category: {
         name: "Guest List"
       },
@@ -139,10 +139,10 @@ function Product() {
       multifields.push({group:`${id.toLowerCase()}list`, fields:Array.from(document.getElementById(`${id.toLowerCase()}list`).children, ({textContent}) => textContent)})
     });
     const product = {
-      name: "Menu",
-      description: "card",
+      name: document.getElementById('productName').innerText,
+      description: document.getElementById('productDescirption').innerText,
       image: "/images/stuff.png",
-      price: 10.99,
+      price: parseFloat(document.getElementById('productPrice').innerText),
       category: {
         name: "Menu"
       },
@@ -171,10 +171,10 @@ function Product() {
     });
     
     const product = {
-      name: "Thank You Card",
-      description: "card",
+      name: document.getElementById('productName').innerText,
+      description: document.getElementById('productDescirption').innerText,
       image: "/images/stuff.png",
-      price: 2.99,
+      price: parseFloat(document.getElementById('productPrice').innerText),
       category: {
         name: "Thank You Card"
       },

@@ -48,7 +48,7 @@ function ModificationMenu({inputs, saved, cartHandler, states}){
             <div className="productData">
                 <h2 id="productName">{inputs.names[productNumber]}</h2>
                 <div id="productDescirption">{inputs.descriptions[productNumber]}</div>
-                <div id="productPrice">${inputs.prices[productNumber]}</div>
+                <div>$<span id="productPrice">{inputs.prices[productNumber]}</span></div>
             </div>
             {inputs.textfields.length !==0 && textfields()}
             {inputs.multifields.length !==0 && multifields()}
