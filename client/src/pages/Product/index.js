@@ -229,6 +229,9 @@ function Product() {
   const categoryComponents = {
     invitation:{
         type: "invitation",
+        names: ["White Green Watercolor Invitation Card"],
+        descriptions:["A subtle, watercolor inspired card with muted greens and a white background"],
+        prices:[1.99],
         component: <Invitation 
           brideState={brideName} 
           groomState={groomName}
@@ -248,6 +251,9 @@ function Product() {
     },
     guestlist: {
         type: 'guestlist',
+        names: ["White Green Watercolor Guest List"],
+        descriptions:["A subtle, watercolor inspired card with muted greens and a white background"],
+        prices:[5.99],
         component: <GuestList 
           brideState={brideName} 
           groomState={groomName} 
@@ -264,6 +270,9 @@ function Product() {
     },
     menu: {
         type: 'menu',
+        names: ["Floral Botanical Wedding Menu"],
+        descriptions:["Featuring elegant illustrations of delicate blooms and lush greenery, this Floral Botanical Wedding Menu is a tasteful accent that turns your meal selection into a work of art."],
+        prices:[2.99],
         component: <Menu 
         brideState={brideName} 
         groomState={groomName} 
@@ -280,6 +289,9 @@ function Product() {
     },
     thankyou: {
         type: 'thankyou',
+        names: ["Black and White Caligraphy Thank You Card"],
+        descriptions:["Infused with gratitude and elegance, this Handwritten Luxury Wedding Thank You Card features beautiful calligraphy on high-quality paper, offering a thoughtful and stylish way to express your appreciation to your guests."],
+        prices:[2.99],
         component: <ThankYou 
         brideState={brideName} 
         groomState={groomName} 
