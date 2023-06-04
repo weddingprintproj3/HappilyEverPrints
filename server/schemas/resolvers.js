@@ -22,16 +22,21 @@ const resolvers = {
     },
     product: async (parent, { _id }) => {
       console.log(_id);
-      const product =await Product.findById(_id).populate('category').populate('textFields').populate('groupFields')
+      const product = await Product.findById(_id).populate('category').populate('textFields').populate('groupFields')
       console.log(product)
       return product;
     },
     user: async (parent, args, context) => {
       if (context.user) {
-        const user = await User.findById(context.user._id).populate({
-          path: 'orders.products',
-          populate: 'category',
-        });
+        const user = await User.findById(context.user._id)
+          .populate({
+            path: 'orders.products',
+            populate: 'category',
+          })
+          .populate({
+            path: 'savedProducts',
+            populate: 'category',
+          });
 
         user.orders.sort((a, b) => b.purchaseDate - a.purchaseDate);
 
@@ -73,21 +78,54 @@ const resolvers = {
     },
     updateUser: async (parent, args, context) => {
       if (context.user) {
-        return User.findByIdAndUpdate(context.user.id, args, {
+        let updatedUser = {};
+        if (args.firstName && args.firstName.length > 0) {
+          updatedUser.firstName = args.firstName;
+        }
+        if (args.lastName && args.lastName.length > 0) {
+          updatedUser.lastName = args.lastName;
+        }
+        if (args.email && args.email.length > 0) {
+          updatedUser.email = args.email;
+        }
+        //checking if password is being updated
+        if (args.password && args.password.length > 0 && args.currentPassword && args.currentPassword.length > 0) {
+          const user = await User.findById(context.user._id);
+          const correctPw = await user.isCorrectPassword(args.currentPassword);
+          if (!correctPw) {
+            throw new AuthenticationError('Incorrect credentials');
+          }
+          updatedUser.password = await user.hashPassword(args.password);
+        }
+
+        return User.findByIdAndUpdate(context.user._id, updatedUser, {
           new: true,
         });
       }
 
       throw new AuthenticationError('Not logged in');
     },
+    deleteUser: async (parent, args, context) => {
+      if (context.user) {
+        if (args.password && args.password.length > 0) {
+          const user = await User.findById(context.user._id);
+          const correctPw = await user.isCorrectPassword(args.password);
+          if (!correctPw) {
+            throw new AuthenticationError('Incorrect credentials');
+          }
+          await User.findByIdAndDelete(context.user._id);
+          return { message: 'Your account has been deleted!' };
+        }
+      };
+    },
     addProduct: async (parent, args, context) => {
       console.log(context.user);
       category = await Category.findOne(
-        { name: args.category.name},
+        { name: args.category.name },
       );
       if (context.user) {
         const newProduct = await Product.create(
-        {
+          {
             name: args.name,
             description: args.description,
             image: args.image,
@@ -106,8 +144,8 @@ const resolvers = {
     updateProduct: async (parent, args, context) => {
       const product = await Product.findOneAndUpdate(
         { _id: args.product._id },
-        { $set: req.body }, 
-        { runValidators: true, new: true } 
+        { $set: req.body },
+        { runValidators: true, new: true }
       );
     },
     deleteProduct: async (parent, args, context) => {
@@ -115,10 +153,10 @@ const resolvers = {
       console.log('Product deleted')
       if (context.user) {
         await User.findByIdAndUpdate(context.user._id, { $pull: { savedProducts: args.productID } });
-        return {message: 'Product deleted successfully'}; 
+        return { message: 'Product deleted successfully' };
       }
       throw new AuthenticationError('Not logged in');
-       
+
     },
 
     login: async (parent, { email, password }) => {

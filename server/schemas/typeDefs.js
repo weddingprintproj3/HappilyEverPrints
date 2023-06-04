@@ -69,6 +69,7 @@ const typeDefs = gql`
     lastName: String
     email: String
     orders: [Order]
+    savedProducts: [Product]
   }
 
   type Auth {
@@ -101,7 +102,9 @@ const typeDefs = gql`
       lastName: String
       email: String
       password: String
+      currentPassword: String
     ): User
+    deleteUser(password: String): DeleteMessage
     updateProduct(
       _id: ID!, 
       name: String
