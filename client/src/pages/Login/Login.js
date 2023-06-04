@@ -3,6 +3,7 @@ import { useMutation } from '@apollo/client';
 import { Link } from 'react-router-dom';
 import { LOGIN } from '../../utils/mutations';
 import Auth from '../../utils/auth';
+import './index.scss';
 
 function Login(props) {
     const [formState, setFormState] = useState({ email: '', password: '' });
@@ -30,28 +31,30 @@ function Login(props) {
     };
 
     return (
-        <div>
-            <h2>Login</h2>
-            <form onSubmit={handleFormSubmit}>
-                <div>
-                    <input
-                        placeholder="Email address"
-                        name="email"
-                        type="email"
-                        id="email"
-                        onChange={handleChange}
-                    />
-                </div>
-                <div>
-                    <input
-                        placeholder="Password"
-                        name="password"
-                        type="password"
-                        id="pwd"
-                        onChange={handleChange}
-                    />
-                </div>
-                {/* <div>
+        <div className="container login-page">
+            <div className="page-content">
+                <h1>Log In</h1>
+                <form onSubmit={handleFormSubmit}>
+                    <div className="form-row">
+                        <div className="form-field">
+                            <input
+                                placeholder="Email address"
+                                name="email"
+                                type="email"
+                                id="email"
+                                onChange={handleChange}
+                            />
+                        </div>
+                        <div className="form-field">
+                            <input
+                                placeholder="Password"
+                                name="password"
+                                type="password"
+                                id="pwd"
+                                onChange={handleChange}
+                            />
+                        </div>
+                        {/* <div>
                     <input
                         type="checkbox"
                         id="rememberMe"
@@ -62,16 +65,18 @@ function Login(props) {
                         Remember me
                     </label>
                 </div> */}
-                {error ? (
-                    <div>
-                        <p>Incorrect email address or password</p>
+                        {error ? (
+                            <div className="error">
+                                <p>Incorrect email or password</p>
+                            </div>
+                        ) : null}
+                        <div className="form-button">
+                            <button type="submit">Login</button>
+                        </div>
                     </div>
-                ) : null}
-                <div>
-                    <button type="submit">Login</button>
-                </div>
-            </form>
-            <h3>Don't have an account? Register <Link to="/signup">here</Link></h3>
+                </form>
+                <p>Don't have an account? Register <Link to="/signup">here</Link>.</p>
+            </div>
         </div>
     );
 }

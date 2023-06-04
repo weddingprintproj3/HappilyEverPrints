@@ -6,6 +6,7 @@ import { useStoreContext } from '../../utils/GlobalState';
 import { UPDATE_PRODUCTS } from '../../utils/actions';
 import { QUERY_PRODUCTS } from '../../utils/queries';
 import spinner from '../../assets/spinner.gif';
+import './index.scss';
 
 function ProductList() {
   const [state, dispatch] = useStoreContext();
@@ -34,10 +35,9 @@ function ProductList() {
   }
 
   return (
-    <div className="my-2">
-      <h2>Our Products:</h2>
+    <div className="product-list">
       {state.products.length ? (
-        <div className="flex-row">
+        <div className="product-grid">
           {filterProducts().map((product) => (
             <ProductItem
               key={product._id}
