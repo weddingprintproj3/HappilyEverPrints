@@ -2,7 +2,7 @@ import { Link, NavLink } from 'react-router-dom';
 import './index.scss';
 import Logo from '../../assets/images/Logo.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHome, faCircleQuestion, faHeart, faCartShopping, faRightToBracket } from '@fortawesome/free-solid-svg-icons';
+import { faHome, faCircleQuestion, faHeart, faCartShopping, faRightToBracket, faUser } from '@fortawesome/free-solid-svg-icons';
 import Auth from '../../utils/auth';
 
 function Navbar() {
@@ -11,14 +11,24 @@ function Navbar() {
     function ifLogged() {
         if (Auth.loggedIn()) {
             return (
-                <NavLink exact="true" activeclassname="active" className="login-link" to="/logout">
-                    <div className="icon-container">
-                        <FontAwesomeIcon icon={faRightToBracket} color="#343131" />
-                    </div>
-                    <div className="text-container">
-                        <span>LOGOUT</span>
-                    </div>
-                </NavLink>
+                <>
+                    <NavLink exact="true" activeclassname="active" className="profile-link" to="/profile">
+                        <div className="icon-container">
+                            <FontAwesomeIcon icon={faUser} color="#343131" />
+                        </div>
+                        <div className="text-container">
+                            <span>PROFILE</span>
+                        </div>
+                    </NavLink>
+                    <NavLink exact="true" activeclassname="active" className="login-link" to="/logout">
+                        <div className="icon-container">
+                            <FontAwesomeIcon icon={faRightToBracket} color="#343131" />
+                        </div>
+                        <div className="text-container">
+                            <span>LOGOUT</span>
+                        </div>
+                    </NavLink>
+                </>
             )
         } else {
             return (

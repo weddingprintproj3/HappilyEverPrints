@@ -17,6 +17,7 @@ import Signup from './pages/Login/Signup';
 import Cart from './pages/Cart/Cart';
 import Profile from './pages/Login/Profile';
 import Product from './pages/Product';
+
 import { StoreProvider } from './utils/GlobalState';
 import './App.scss';
 
@@ -54,12 +55,13 @@ function App() {
     <ApolloProvider client={client}>
       <Router>
       <ScrollToTop />
-        <div>
+        <>
           <StoreProvider>
             <Routes>
 
               <Route path="/" element={<Layout />}>
                 <Route index element={<Home />} />
+                <Route path="*" element={<Home />} />
                 <Route path="/help" element={<Help />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/logout" element={<Logout />} />
@@ -74,7 +76,7 @@ function App() {
 
             </Routes>
           </StoreProvider>
-        </div>
+        </>
       </Router>
     </ApolloProvider>
   );
