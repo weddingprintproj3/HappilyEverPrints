@@ -15,7 +15,7 @@ import Login from './pages/Login/Login';
 import Logout from './pages/Login/Logout';
 import Signup from './pages/Login/Signup';
 import Cart from './pages/Cart/Cart';
-import Profile from './pages/Login/Profile';
+import Profile from './pages/Profile/Profile';
 import Product from './pages/Product';
 
 import { StoreProvider } from './utils/GlobalState';
