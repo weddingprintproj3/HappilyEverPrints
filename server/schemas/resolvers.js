@@ -81,22 +81,10 @@ const resolvers = {
       throw new AuthenticationError('Not logged in');
     },
     addProduct: async (parent, args, context) => {
-      console.log(args);
+      console.log(context.user);
       category = await Category.findOne(
         { name: args.category.name},
       );
-      console.log(category);
-      const newProduct = await Product.create(
-        {
-          name: args.name,
-          description: args.description,
-          image: args.image,
-          price: args.price,
-          category: category,
-          textFields:args.textFields,
-          groupFields:args.groupFields  
-        });
-
       if (context.user) {
         const newProduct = await Product.create(
         {
@@ -106,13 +94,14 @@ const resolvers = {
             price: args.price,
             category: category,
             textFields:args.textFields,
-            groupFields:args.groupFields  
+            groupFields:args.groupFields,
+            mods:args.mods    
         });
         await User.findByIdAndUpdate(context.user._id, { $push: { savedProducts: newProduct } });
         return newProduct;
+        console.log(newProduct);
       }
       throw new AuthenticationError('Not logged in');    
-      return newProduct
     },
     updateProduct: async (parent, args, context) => {
       const product = await Product.findOneAndUpdate(

@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import './index.scss';
-
+import Auth from '../../utils/auth';
 
 function ModificationMenu({inputs, saved, cartHandler, states}){
     const [productNumber, setProductNumber] = useState(0)
@@ -52,7 +52,7 @@ function ModificationMenu({inputs, saved, cartHandler, states}){
             </div>
             {inputs.textfields.length !==0 && textfields()}
             {inputs.multifields.length !==0 && multifields()}
-            <button className='saveCard' onClick={inputs.handleSave}>Save</button>
+            {Auth.loggedIn()? <button className='saveCard' onClick={inputs.handleSave}>Save</button>:false}
             {saved? (
                 <div className="checkOut">
                     <label for='productQuantity'>QTY</label>    

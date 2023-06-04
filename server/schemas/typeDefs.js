@@ -25,6 +25,17 @@ const typeDefs = gql`
     group: String
     fields: [String]
   }
+  type ModField {
+    element_id: String
+    posTop: String
+    posLeft: String
+  }
+
+  input ModFieldInput {
+    element_id: String
+    posTop: String
+    posLeft: String
+  }
   
   input CategoryInput {
     _id: ID
@@ -41,6 +52,7 @@ const typeDefs = gql`
     category: Category
     textFields: [Textfield]
     groupFields: [GroupField]
+    mods: [ModField]
   }
 
   type Order {
@@ -99,6 +111,7 @@ const typeDefs = gql`
       category: CategoryInput
       textFields: [TextfieldInput]
       groupFields: [GroupFieldInput]
+      mods: [ModFieldInput]
     ): Product
     addProduct(
       name: String
@@ -108,6 +121,7 @@ const typeDefs = gql`
       category: CategoryInput
       textFields: [TextfieldInput]
       groupFields: [GroupFieldInput]
+      mods: [ModFieldInput]
     ): Product
     deleteProduct(productID: ID!): DeleteMessage
     login(email: String!, password: String!): Auth

@@ -43,6 +43,11 @@ export const QUERY_SINGLE_PRODUCTS = gql`
         name
         _id
       }
+      mods {
+        element_id
+        posTop
+        posLeft
+      }
       _id
     }
   }
