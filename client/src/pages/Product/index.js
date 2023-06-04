@@ -1,6 +1,6 @@
 import React , {useState} from 'react';
 import {useQuery, useMutation } from '@apollo/client';
-import { ADD_PROD, ADD_ORDER } from '../../utils/mutations'
+import { ADD_PROD, ADD_ORDER, DELETE_PROD  } from '../../utils/mutations'
 import { QUERY_SINGLE_PRODUCTS } from '../../utils/queries'
 import Invitation from "../../components/Invitation"
 import GuestList from "../../components/GuestList"
@@ -21,6 +21,7 @@ function Product() {
   const [invitationLocation, setInvitationLocation] = useState("123 Fake Street");
   const [addProd, {error}] = useMutation(ADD_PROD)
   const [addOrder, {error: error2}] = useMutation(ADD_ORDER)
+  const [deleteProd, {error: error3}] = useMutation(DELETE_PROD)
   const { loading, data } = useQuery(QUERY_SINGLE_PRODUCTS, {variables: {"id": productID}});
 
   const setters = {
@@ -29,6 +30,13 @@ function Product() {
     date:setInvitationDate, 
     time:setInvitationTime, 
     location:setInvitationLocation
+  }
+  const states = {
+    bride:brideName, 
+    groom:groomName, 
+    date:invitationDate, 
+    time:invitationTime, 
+    location:invitationLocation
   }
   if (loading) {
     return <h2>LOADING...</h2>;
@@ -60,7 +68,6 @@ function Product() {
     textfieldids.forEach(id =>{
       textfields.push({label:id, input:document.getElementById(id).value})
     });
-    console.log(textfields)
     const product = {
       name: "Invitation",
       description: "card",
@@ -71,10 +78,16 @@ function Product() {
       },
       textFields: textfields
     }
+    const urlRedirect = `http://${window.location.host}/products/invitation/`
+    if(productID) {
+      const { data } = await deleteProd({
+        variables: {productID: productID},
+      });
+    }
     const { data } = await addProd({
       variables: {...product },
     });
-    window.location.assign(`${window.location.href}/${data.addProduct._id}`)
+    window.location.replace(urlRedirect + data.addProduct._id)
   }
 
   async function guestlistSave(event) {
@@ -100,10 +113,16 @@ function Product() {
       textFields: textfields,
       groupFields: multifields
     }
+    const urlRedirect = `http://${window.location.host}/products/guestlist/`
+    if(productID) {
+      const { data } = await deleteProd({
+        variables: {productID: productID},
+      });
+    }
     const { data } = await addProd({
       variables: {...product },
     });
-    window.location.assign(`${window.location.href}/${data.addProduct._id}`)
+    window.location.replace(urlRedirect + data.addProduct._id)
   }
 
   async function menuSave(event) {
@@ -130,11 +149,17 @@ function Product() {
       textFields: textfields,
       groupFields: multifields
     }
+    const urlRedirect = `http://${window.location.host}/products/menu/`
+    if(productID) {
+      const { data } = await deleteProd({
+        variables: {productID: productID},
+      });
+    }
     const { data } = await addProd({
       variables: {...product },
     });
 
-    window.location.assign(`${window.location.href}/${data.addProduct._id}`)
+    window.location.replace(urlRedirect + data.addProduct._id)
   }
   
   async function thankyouSave(event) {
@@ -155,10 +180,17 @@ function Product() {
       },
       textFields: textfields,
     }
+    const urlRedirect = `http://${window.location.host}/products/thankyou/`
+    if(productID) {
+      const { data } = await deleteProd({
+        variables: {productID: productID},
+      });
+    }
     const { data } = await addProd({
       variables: {...product },
     });
-    window.location.assign(`${window.location.href}/${data.addProduct._id}`)
+    console.log(urlRedirect + data.addProduct._id);
+    window.location.replace(urlRedirect + data.addProduct._id)
   }
   
   async function cartHandler(event){
@@ -269,6 +301,7 @@ function Product() {
             inputs={categoryComponents[category]} 
             saved={productID? true: false}
             cartHandler={cartHandler}
+            states={states}
             />
         </div>
     </section>

@@ -63,6 +63,10 @@ const typeDefs = gql`
     user: User
   }
 
+  type DeleteMessage {
+    message: String
+  }
+
   type Query {
     categories: [Category]
     products(category: ID, name: String): [Product]
@@ -104,6 +108,7 @@ const typeDefs = gql`
       textFields: [TextfieldInput]
       groupFields: [GroupFieldInput]
     ): Product
+    deleteProduct(productID: ID!): DeleteMessage
     login(email: String!, password: String!): Auth
   }
 `;

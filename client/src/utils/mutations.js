@@ -33,6 +33,14 @@ export const ADD_PROD = gql`
     }
   }
 `;
+
+export const DELETE_PROD = gql`
+  mutation DeleteProduct($productID: ID!) {
+    deleteProduct(productID: $productID) {
+      message
+    }
+  }
+`;
 export const ADD_ORDER = gql`
   mutation AddOrder( $productId: ID!, $orderQuantity: Int!, $status: String!) {
     addOrder(productID: $productId, orderQuantity: $orderQuantity, status: $status) {
