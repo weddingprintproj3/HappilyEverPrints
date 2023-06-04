@@ -18,11 +18,14 @@ const resolvers = {
         };
       }
 
-      return Product.find(params).populate('category').populate('textFields').populate('mods');
+      return Product.find(params).populate('category').populate('textFields').populate('groupFields');
     },
-    product: async (parent, { id }) =>
-      Product.findById(id).populate('category').populate('textFields').populate('mods'),
-
+    product: async (parent, { _id }) => {
+      console.log(_id);
+      const product =await Product.findById(_id).populate('category').populate('textFields').populate('groupFields')
+      console.log(product)
+      return product;
+    },
     user: async (parent, args, context) => {
       if (context.user) {
         const user = await User.findById(context.user.id).populate({
@@ -57,15 +60,13 @@ const resolvers = {
 
       return { token, user };
     },
-    addOrder: async (parent, { orderQuantity, productID }, context) => {
+    addOrder: async (parent, { orderQuantity, productID, status }, context) => {
       const product = await Product.findById(productID)
+      console.log(status)
       if (context.user) {
-        const order = new Order({ orderQuantity, product });
-
-        await User.findByIdAndUpdate(context.user.id, {
-          $push: { orders: order },
-        });
-
+        const order = new Order({ orderQuantity, product, status });
+        console.log(context.user);
+        await User.findByIdAndUpdate(context.user._id, { $push: { orders: order } });
         return order;
       }
       throw new AuthenticationError('Not logged in');
@@ -79,12 +80,12 @@ const resolvers = {
 
       throw new AuthenticationError('Not logged in');
     },
-    addProduct: async (parent, args) => {
+    addProduct: async (parent, args, context) => {
       console.log(args);
       category = await Category.findOne(
         { name: args.category.name},
       );
-      console.log(category)
+      console.log(category);
       const newProduct = await Product.create(
         {
           name: args.name,
@@ -92,32 +93,45 @@ const resolvers = {
           image: args.image,
           price: args.price,
           category: category,
+          textFields:args.textFields,
+          groupFields:args.groupFields  
         });
+
+      if (context.user) {
+        const newProduct = await Product.create(
+        {
+            name: args.name,
+            description: args.description,
+            image: args.image,
+            price: args.price,
+            category: category,
+            textFields:args.textFields,
+            groupFields:args.groupFields  
+        });
+        await User.findByIdAndUpdate(context.user._id, { $push: { savedProducts: newProduct } });
+        return newProduct;
+      }
+      throw new AuthenticationError('Not logged in');    
       return newProduct
     },
-    updateProduct: async (parent, args) => {
+    updateProduct: async (parent, args, context) => {
       const product = await Product.findOneAndUpdate(
-        { _id: args.product.__id },
+        { _id: args.product._id },
         { $set: req.body }, 
         { runValidators: true, new: true } 
       );
     },
-    addTextField: async (parent, {productID, textfield }, context) => {
-        const updatedProduct = await Product.findOneAndUpdate(
-          { _id: productID },
-          { $addToSet: { textFields: textfield } },
-          { new: true, runValidators: true }
-        ).populate('category').populate('textFields').populate('mods');
-        return updatedProduct;
+    deleteProduct: async (parent, args, context) => {
+      await Product.findByIdAndDelete(args.productID);
+      console.log('Product deleted')
+      if (context.user) {
+        await User.findByIdAndUpdate(context.user._id, { $pull: { savedProducts: args.productID } });
+        return {message: 'Product deleted successfully'}; 
+      }
+      throw new AuthenticationError('Not logged in');
+       
     },
-    addMod: async (parent, {productID, mod }, context) => {
-      const updatedProduct = await Product.findOneAndUpdate(
-        { _id: productID },
-        { $addToSet: { mods: mod } },
-        { new: true, runValidators: true }
-      ).populate('category').populate('textFields').populate('mods');
-      return updatedProduct;
-    },
+
     login: async (parent, { email, password }) => {
       const user = await User.findOne({ email });
       console.log(user);
