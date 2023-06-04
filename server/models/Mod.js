@@ -2,11 +2,15 @@ const { Schema } = require('mongoose');
 
 
 const modSchema = new Schema({
-  attribute: {
+  element_id: {
     type: String,
     required: true,
   },
-  value: {
+  posTop: {
+    type: String,
+    required: true,
+  },
+  posLeft: {
     type: String,
     required: true,
   },

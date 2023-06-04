@@ -8,23 +8,23 @@ function Menu(props){
             alt='invitation card' 
             src='/images/Floral-Botanical-Wedding-Menu-no-text.png' 
             className="card-image"/>
-            <div className="appetizers">
+            <div id="appetizersCourse" className="appetizers draggableField" style={{top: '35%', left: '40%'}}>
                 <ul id="appetizerslist">
 
                 </ul>
             </div>
-            <div className="entrees">
+            <div id="entreesCourse" className="entrees draggableField" style={{top: '51%', left: '40%'}}>
                 <ul id="entreeslist">
                     
                 </ul>
             </div>
-            <div className="deserts">
+            <div id="desertCourse" className="deserts draggableField" style={{top: '67%', left: '40%'}}>
                 <ul id="desertslist">
                     
                 </ul>
             </div>
             
-            <div className="sideText" id="mnmessage">The {props.brideState} and {props.groomState} Wedding</div>
+            <div className="sideText draggableField" id="mnmessage" style={{top: '-3%', left: '7%'}}>The {props.brideState} and {props.groomState} Wedding</div>
         </div>
     );
 }

@@ -11,8 +11,8 @@ export const LOGIN = gql`
   }
 `;
 export const ADD_PROD = gql`
-  mutation AddProduct($name: String, $description: String, $image: String, $price: Float, $category: CategoryInput, $textFields: [TextfieldInput], $groupFields: [GroupFieldInput]) {
-    addProduct(name: $name, description: $description, image: $image, price: $price, category: $category, textFields: $textFields, groupFields: $groupFields) {
+  mutation AddProduct($name: String, $description: String, $image: String, $price: Float, $category: CategoryInput, $textFields: [TextfieldInput], $groupFields: [GroupFieldInput], $mods: [ModFieldInput]) {
+    addProduct(name: $name, description: $description, image: $image, price: $price, category: $category, textFields: $textFields, groupFields: $groupFields, mods: $mods) {
       _id
       category {
         _id
@@ -30,6 +30,11 @@ export const ADD_PROD = gql`
         input
         label
       }
+      mods {
+        element_id
+        posTop
+        posLeft
+      }
     }
   }
 `;
@@ -46,7 +51,7 @@ export const ADD_ORDER = gql`
     addOrder(productID: $productId, orderQuantity: $orderQuantity, status: $status) {
       _id
       orderQuantity
-      product {
+      products {
         name
         price
       }
