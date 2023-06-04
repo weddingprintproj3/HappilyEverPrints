@@ -2,6 +2,7 @@ import React , {useState} from 'react';
 import {useQuery, useMutation } from '@apollo/client';
 import { ADD_PROD, ADD_ORDER, DELETE_PROD  } from '../../utils/mutations'
 import { QUERY_SINGLE_PRODUCTS } from '../../utils/queries'
+import {dragElement} from "../../utils/draggable"
 import Invitation from "../../components/Invitation"
 import GuestList from "../../components/GuestList"
 import Menu from "../../components/Menu"
@@ -41,9 +42,15 @@ function Product() {
   if (loading) {
     return <h2>LOADING...</h2>;
   }
+  
+     
   document.addEventListener('readystatechange', event => {
+    const draggableFields = document.getElementsByClassName('draggableField');
+    Array.prototype.forEach.call(draggableFields, function(field){dragElement(field)});
+    
+    
     if (data) {
-      console.log(data.product.textFields);
+      console.log(data.product);
       data.product.textFields.forEach(textfield=>{
         setters[textfield.label](textfield.input)
       });
@@ -59,14 +66,26 @@ function Product() {
           });
         });
       }
+      if (data.product.mods){
+        data.product.mods.forEach(mod=>{
+          
+          document.getElementById(mod.element_id).style.top = mod.posTop
+          document.getElementById(mod.element_id).style.left = mod.posLeft
+        });
+      }
     }
   });
   
   async function invitationSave(event) {
     const textfields = []
+    const mods = []
     const textfieldids = categoryComponents[category].textfields
     textfieldids.forEach(id =>{
       textfields.push({label:id, input:document.getElementById(id).value})
+    });
+    const draggableFields = document.getElementsByClassName('draggableField');
+    Array.prototype.forEach.call(draggableFields, function(field){
+      mods.push({element_id:field.id, posTop: field.style.top, posLeft: field.style.left})  
     });
     const product = {
       name: document.getElementById('productName').innerText,
@@ -76,7 +95,8 @@ function Product() {
       category: {
         name: "Invitations"
       },
-      textFields: textfields
+      textFields: textfields,
+      mods: mods
     }
     const urlRedirect = `http://${window.location.host}/products/invitation/`
     if(productID) {
@@ -93,7 +113,7 @@ function Product() {
   async function guestlistSave(event) {
     const textfields = []
     const multifields = []
-
+    const mods = []
     const textfieldids = categoryComponents[category].textfields
     textfieldids.forEach(id =>{
       textfields.push({label:id, input:document.getElementById(id).value})
@@ -101,6 +121,10 @@ function Product() {
     const multifieldids = categoryComponents[category].categories
     multifieldids.forEach(id =>{
       multifields.push({group:`table${id}members`, fields:Array.from(document.getElementById(`table${id}members`).children, ({textContent}) => textContent)})
+    });
+    const draggableFields = document.getElementsByClassName('draggableField');
+    Array.prototype.forEach.call(draggableFields, function(field){
+      mods.push({element_id:field.id, posTop: field.style.top, posLeft: field.style.left})  
     });
     const product = {
       name: document.getElementById('productName').innerText,
@@ -111,7 +135,8 @@ function Product() {
         name: "Guest List"
       },
       textFields: textfields,
-      groupFields: multifields
+      groupFields: multifields,
+      mods: mods
     }
     const urlRedirect = `http://${window.location.host}/products/guestlist/`
     if(productID) {
@@ -128,15 +153,18 @@ function Product() {
   async function menuSave(event) {
     const textfields = []
     const multifields = []
-
+    const mods = []
     const textfieldids = categoryComponents[category].textfields
     textfieldids.forEach(id =>{
       textfields.push({label:id, input:document.getElementById(id).value})
     });
     const multifieldids = categoryComponents[category].categories
     multifieldids.forEach(id =>{
-      
       multifields.push({group:`${id.toLowerCase()}list`, fields:Array.from(document.getElementById(`${id.toLowerCase()}list`).children, ({textContent}) => textContent)})
+    });
+    const draggableFields = document.getElementsByClassName('draggableField');
+    Array.prototype.forEach.call(draggableFields, function(field){
+      mods.push({element_id:field.id, posTop: field.style.top, posLeft: field.style.left})  
     });
     const product = {
       name: document.getElementById('productName').innerText,
@@ -147,7 +175,8 @@ function Product() {
         name: "Menu"
       },
       textFields: textfields,
-      groupFields: multifields
+      groupFields: multifields,
+      mods: mods
     }
     const urlRedirect = `http://${window.location.host}/products/menu/`
     if(productID) {
@@ -164,12 +193,15 @@ function Product() {
   
   async function thankyouSave(event) {
     const textfields = []
-
+    const mods = []
     const textfieldids = categoryComponents[category].textfields
     textfieldids.forEach(id =>{
       textfields.push({label:id, input:document.getElementById(id).value})
     });
-    
+    const draggableFields = document.getElementsByClassName('draggableField');
+    Array.prototype.forEach.call(draggableFields, function(field){
+      mods.push({element_id:field.id, posTop: field.style.top, posLeft: field.style.left})  
+    });
     const product = {
       name: document.getElementById('productName').innerText,
       description: document.getElementById('productDescirption').innerText,
@@ -179,6 +211,7 @@ function Product() {
         name: "Thank You Card"
       },
       textFields: textfields,
+      mods: mods
     }
     const urlRedirect = `http://${window.location.host}/products/thankyou/`
     if(productID) {
