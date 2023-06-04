@@ -47,7 +47,7 @@ const typeDefs = gql`
     _id: ID
     orderQuantity: Int
     purchaseDate: String
-    product: Product
+    products: [Product]
     status: String
   }
 
