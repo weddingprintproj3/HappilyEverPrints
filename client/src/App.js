@@ -15,7 +15,8 @@ import Login from './pages/Login/Login';
 import Logout from './pages/Login/Logout';
 import Signup from './pages/Login/Signup';
 import Cart from './pages/Cart/Cart';
-import Profile from './pages/Profile/Profile';
+import Profile from './pages/Login/Profile';
+import Product from './pages/Product';
 
 import { StoreProvider } from './utils/GlobalState';
 import './App.scss';
@@ -67,6 +68,10 @@ function App() {
                 <Route path="/signup" element={<Signup />} />
                 <Route path="/cart" element={<Cart />} />
                 <Route path="/profile" element={<Profile />} />
+                <Route 
+                path="/products/:category/:productID?" 
+                element={<Product />} 
+              />
               </Route>
 
             </Routes>

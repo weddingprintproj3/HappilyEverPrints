@@ -1,0 +1,23 @@
+.canvas{
+    display: flex;
+    flex-direction: row;
+}
+
+.canvas :first-child {
+	margin: 0 3rem;
+    flex-grow: 4;
+
+}
+
+.modMenu {
+    width: 50rem;
+}
+
+section{
+    width: 90%;
+    margin: 2rem auto;
+}
+
+.textFields {
+    margin: 1rem !important;
+}
