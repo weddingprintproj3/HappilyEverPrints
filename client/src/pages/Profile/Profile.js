@@ -4,10 +4,11 @@ import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import { Link } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
 import { QUERY_USER } from '../../utils/queries';
+import AccountDetails from './AccountDetails';
 
 import './Profile.scss'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faAddressBook, faCartShopping, faRightToBracket, faHeart, faGaugeHigh, faUser } from '@fortawesome/free-solid-svg-icons';
+import { faCartShopping, faRightToBracket, faHeart, faGaugeHigh, faUser } from '@fortawesome/free-solid-svg-icons';
 
 function Profile() {
     const navigate = useNavigate();
@@ -24,7 +25,7 @@ function Profile() {
                 {user ? (
                     <div className="panel-content">
                         <h1>Hello <span>{user.firstName}</span> (not <span>{user.firstName}</span>? <Link to="/logout">Log out</Link>)</h1>
-                        <h2>From your account dashboard you can view your recent orders, view your favorite designs, manage your shipping addresses, and edit your password and account details.</h2>
+                        <h2>From your account dashboard you can view your recent orders, view your favorite designs, and edit your password and account details.</h2>
                     </div>
                 ) : "loading..."}
             </>
@@ -62,25 +63,25 @@ function Profile() {
 
     function Favorites() {
         return (
-            <div className="panel-content">
-                <h1>Favorites</h1>
-            </div>
-        )
-    }
-
-    function Addresses() {
-        return (
-            <div className="panel-content">
-                <h1>Addresses</h1>
-            </div>
-        )
-    }
-
-    function AccountDetails() {
-        return (
-            <div className="panel-content">
-                <h1>Account Details</h1>
-            </div>
+            <>
+                {user ? (
+                    <>
+                        {user.savedProducts.length > 0 ? (
+                            <>
+                                {user.savedProducts.map(({ _id, name, price, image }, index) => (
+                                    <div key={index}>
+                                        <h3>
+                                            <Link to={`/products/${_id}`}>{name}</Link>
+                                            {image}
+                                            ${price}
+                                        </h3>
+                                    </div>
+                                ))}
+                            </>
+                        ) : <h3>You haven't saved any products yet</h3>}
+                    </>
+                ) : "loading..."}
+            </>
         )
     }
 
@@ -98,9 +99,6 @@ function Profile() {
                             </Tab>
                             <Tab>
                                 <p>Favorites <span><FontAwesomeIcon icon={faHeart} color="#343131" /></span></p>
-                            </Tab>
-                            <Tab>
-                                <p>Addresses <span><FontAwesomeIcon icon={faAddressBook} color="#343131" /></span></p>
                             </Tab>
                             <Tab>
                                 <p>Account details <span><FontAwesomeIcon icon={faUser} color="#343131" /></span></p>
@@ -121,10 +119,7 @@ function Profile() {
                             {Favorites()}
                         </TabPanel>
                         <TabPanel>
-                            {Addresses()}
-                        </TabPanel>
-                        <TabPanel>
-                            {AccountDetails()}
+                            <AccountDetails />
                         </TabPanel>
                         <TabPanel>
                             {/* <>This section is blank on purpose to avoid an error message because there are X tabs and there must be X tab panels. Log out redirects to logout page</> */}

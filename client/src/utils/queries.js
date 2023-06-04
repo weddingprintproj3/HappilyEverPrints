@@ -85,6 +85,7 @@ export const QUERY_USER = gql`
     user {
       firstName
       lastName
+      email
       orders {
         _id
         purchaseDate
@@ -96,6 +97,14 @@ export const QUERY_USER = gql`
           quantity
           image
         }
+      }
+      savedProducts {
+        _id
+        name
+        description
+        price
+        quantity
+        image
       }
     }
   }
