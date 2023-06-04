@@ -7,6 +7,7 @@ import GuestList from "../../components/GuestList"
 import Menu from "../../components/Menu"
 import ThankYou from "../../components/ThankYou"
 import ModificationMenu from "../../components/ModificationMenu"
+import DesignCanvas from '../../components/DesignCanvas';
 import {handleGuestSubmit} from "../../utils/guestHandlers"
 import {handleMenuSubmit} from "../../utils/menuHandlers"
 import './index.scss';
@@ -308,7 +309,8 @@ function Product() {
   return (
     <section>
         <div className="canvas">
-            {categoryComponents[category].component}
+            {/* {categoryComponents[category].component} */}
+            <DesignCanvas/>
             <ModificationMenu 
             inputs={categoryComponents[category]} 
             saved={productID? true: false}
