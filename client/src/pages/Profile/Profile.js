@@ -18,6 +18,48 @@ function Profile() {
         user = data.user;
     }
 
+    function Dashboard() {
+        return (
+            <>
+                {user ? (
+                    <div className="panel-content">
+                        <h1>Hello <span>{user.firstName}</span> (not <span>{user.firstName}</span>? <Link to="/logout">Log out</Link>)</h1>
+                        <h2>From your account dashboard you can view your recent orders, view your favorite designs, manage your shipping addresses, and edit your password and account details.</h2>
+                    </div>
+                ) : "loading..."}
+            </>
+        )
+    }
+
+    function Orders() {
+        return (
+            <>
+                {user ? (
+                    <>
+                        {user.orders.map((order) => (
+                            <div key={order._id}>
+                                <h3>
+                                    {new Date(parseInt(order.purchaseDate)).toLocaleDateString()}
+                                </h3>
+                                <div>
+                                    {order.products.map(({ _id, name, price, quantity }, index) => (
+                                        <div key={index}>
+                                            <div>
+                                                <span>{quantity}</span>
+                                                <Link to={`/products/${_id}`}>{name}</Link>
+                                                <span>${price}</span>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        ))}
+                    </>
+                ) : "loading..."}
+            </>
+        )
+    }
+
     function Favorites() {
         return (
             <div className="panel-content">
@@ -70,38 +112,10 @@ function Profile() {
                     </aside>
                     <section>
                         <TabPanel>
-                            {user ? (
-                                <div className="panel-content">
-                                    <h1>Hello <span>{user.firstName}</span> (not <span>{user.firstName}</span>? <Link to="/logout">Log out</Link>)</h1>
-                                    <h2>From your account dashboard you can view your recent orders, view your favorite designs, manage your shipping addresses, and edit your password and account details.</h2>
-                                </div>
-                            ) : "loading..."}
+                            {Dashboard()}
                         </TabPanel>
                         <TabPanel>
-                            {user ? (
-                                <>
-                                    {user.orders.map((order) => (
-                                        <div key={order._id} className="my-2">
-                                            <h3>
-                                                {new Date(parseInt(order.purchaseDate)).toLocaleDateString()}
-                                            </h3>
-                                            <div className="flex-row">
-                                                {order.products.map(({ _id, image, name, price }, index) => (
-                                                    <div key={index} className="card px-1 py-1">
-                                                        <Link to={`/products/${_id}`}>
-                                                            <img alt={name} src={`/images/${image}`} />
-                                                            <p>{name}</p>
-                                                        </Link>
-                                                        <div>
-                                                            <span>${price}</span>
-                                                        </div>
-                                                    </div>
-                                                ))}
-                                            </div>
-                                        </div>
-                                    ))}
-                                </>
-                            ) : "loading..."}
+                            {Orders()}
                         </TabPanel>
                         <TabPanel>
                             {Favorites()}
