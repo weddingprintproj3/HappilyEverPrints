@@ -89,8 +89,8 @@ export const UPDATE_USER = gql`
 `
 
 export const DELETE_USER = gql`
-  mutation DeleteUser($userID: ID!) {
-    deleteUser(userID: $userID) {
+  mutation DeleteUser($password: String) {
+    deleteUser(password: $password) {
       message
     }
   }

@@ -97,7 +97,7 @@ const resolvers = {
           }
           updatedUser.password = await user.hashPassword(args.password);
         }
-        
+
         return User.findByIdAndUpdate(context.user._id, updatedUser, {
           new: true,
         });
@@ -107,9 +107,16 @@ const resolvers = {
     },
     deleteUser: async (parent, args, context) => {
       if (context.user) {
-        await User.findByIdAndDelete(context.user._id);
-        return { message: 'Your account has been deleted!' };
-      }
+        if (args.password && args.password.length > 0) {
+          const user = await User.findById(context.user._id);
+          const correctPw = await user.isCorrectPassword(args.password);
+          if (!correctPw) {
+            throw new AuthenticationError('Incorrect credentials');
+          }
+          await User.findByIdAndDelete(context.user._id);
+          return { message: 'Your account has been deleted!' };
+        }
+      };
     },
     addProduct: async (parent, args, context) => {
       console.log(args);

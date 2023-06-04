@@ -1,13 +1,17 @@
 import React, { useState } from 'react';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
+import { Link } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
 import { QUERY_USER } from '../../utils/queries';
 import { useMutation } from '@apollo/client';
 import { UPDATE_USER, DELETE_USER } from '../../utils/mutations';
+import Auth from "../../utils/auth";
+
 
 function AccountDetails() {
     const { data } = useQuery(QUERY_USER);
     const [updateUser] = useMutation(UPDATE_USER);
+    const [deleteUser] = useMutation(DELETE_USER);
     const [modalShow, setModalShow] = React.useState(false);
 
     let user;
@@ -47,7 +51,7 @@ function AccountDetails() {
         }
     };
 
-    const updatePassword = async (event) => {
+    const updatePasswordForm = async (event) => {
         event.preventDefault();
         try {
             await updateUser({
@@ -63,15 +67,16 @@ function AccountDetails() {
         }
     };
 
-    const deleteUser = (event) => {
+    const handleDeleteUser = async (event) => {
         event.preventDefault();
         try {
-            DELETE_USER({
+            await deleteUser({
                 variables: {
-                    userID: event.target.userID.value,
+                    password: event.target.password.value,
                 },
             });
-
+            setModalShow(true)
+            
         } catch (e) {
             console.log(e);
         }
@@ -145,7 +150,7 @@ function AccountDetails() {
                             )}
                         </TabPanel>
                         <TabPanel>
-                            <form onSubmit={updatePassword}>
+                            <form onSubmit={updatePasswordForm}>
                                 <div>
                                     <label>Current Password</label>
                                     <input
@@ -178,7 +183,30 @@ function AccountDetails() {
                             )}
                         </TabPanel>
                         <TabPanel>
-                            <h2>Delete your account here</h2>
+                            <h2>Are you sure you want to delete your account? If you delete your account you will no longer have access to your order history and saved designs. Deleting your account is a non reversible action and you will have to create a new account to have access to all features again.</h2>
+                            <h3>If you are sure you want to delete your account, please enter your password below:</h3>
+                            <form onSubmit={handleDeleteUser}>
+                                <div>
+                                    <input
+                                        placeholder="Password"
+                                        name="password"
+                                        type="password"
+                                        id="pwd"
+                                    />
+                                </div>
+                                <div>
+                                    <button type="submit">Submit</button>
+                                </div>
+                            </form>
+                            {modalShow && (
+                                <div className="modal">
+                                    <div>
+                                        <button className="close" onClick={() => {setModalShow(false); Auth.logout()}}>&times;</button>
+                                        <p>Your account has been deleted.</p>
+                                        <p>We're sorry to see you go, <Link to="/signup">create a new account</Link> if you have changed your mind.</p>
+                                    </div>
+                                </div>
+                            )}
                         </TabPanel>
                     </section>
                 </Tabs>

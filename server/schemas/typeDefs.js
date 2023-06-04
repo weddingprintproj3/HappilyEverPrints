@@ -92,7 +92,7 @@ const typeDefs = gql`
       password: String
       currentPassword: String
     ): User
-    deleteUser(userID: ID!): DeleteMessage
+    deleteUser(password: String): DeleteMessage
     updateProduct(
       _id: ID!, 
       name: String
