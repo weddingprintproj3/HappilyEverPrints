@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 const textSchema = require('./Textfield');
 const groupSchema = require('./GroupFields');
+const modSchema = require('./Mod');
 
 const productSchema = new Schema({
   name: {
@@ -28,7 +29,7 @@ const productSchema = new Schema({
   },
   textFields: [textSchema],
   groupFields: [groupSchema],
-  
+  mods: [modSchema],
 });
 
 const Product = mongoose.model('Product', productSchema);

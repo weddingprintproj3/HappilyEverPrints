@@ -25,6 +25,17 @@ const typeDefs = gql`
     group: String
     fields: [String]
   }
+  type ModField {
+    element_id: String
+    posTop: String
+    posLeft: String
+  }
+
+  input ModFieldInput {
+    element_id: String
+    posTop: String
+    posLeft: String
+  }
   
   input CategoryInput {
     _id: ID
@@ -36,17 +47,19 @@ const typeDefs = gql`
     name: String
     description: String
     image: String
+    quantity: Int
     price: Float
     category: Category
     textFields: [Textfield]
     groupFields: [GroupField]
+    mods: [ModField]
   }
 
   type Order {
     _id: ID
     orderQuantity: Int
     purchaseDate: String
-    product: Product
+    products: [Product]
     status: String
   }
 
@@ -56,6 +69,7 @@ const typeDefs = gql`
     lastName: String
     email: String
     orders: [Order]
+    savedProducts: [Product]
   }
 
   type Auth {
@@ -88,7 +102,9 @@ const typeDefs = gql`
       lastName: String
       email: String
       password: String
+      currentPassword: String
     ): User
+    deleteUser(password: String): DeleteMessage
     updateProduct(
       _id: ID!, 
       name: String
@@ -98,6 +114,7 @@ const typeDefs = gql`
       category: CategoryInput
       textFields: [TextfieldInput]
       groupFields: [GroupFieldInput]
+      mods: [ModFieldInput]
     ): Product
     addProduct(
       name: String
@@ -107,6 +124,7 @@ const typeDefs = gql`
       category: CategoryInput
       textFields: [TextfieldInput]
       groupFields: [GroupFieldInput]
+      mods: [ModFieldInput]
     ): Product
     deleteProduct(productID: ID!): DeleteMessage
     login(email: String!, password: String!): Auth

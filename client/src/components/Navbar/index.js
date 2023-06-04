@@ -11,14 +11,16 @@ function Navbar() {
     function ifLogged() {
         if (Auth.loggedIn()) {
             return (
-                <NavLink exact="true" activeclassname="active" className="login-link" to="/logout">
-                    <div className="icon-container">
-                        <FontAwesomeIcon icon={faRightFromBracket} color="#343131" />
-                    </div>
-                    <div className="text-container">
-                        <span>LOGOUT</span>
-                    </div>
-                </NavLink>
+                <>
+                    <NavLink exact="true" activeclassname="active" className="login-link" to="/logout">
+                        <div className="icon-container">
+                            <FontAwesomeIcon icon={faRightToBracket} color="#343131" />
+                        </div>
+                        <div className="text-container">
+                            <span>LOGOUT</span>
+                        </div>
+                    </NavLink>
+                </>
             )
         } else {
             return (

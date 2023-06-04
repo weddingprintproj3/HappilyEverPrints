@@ -43,6 +43,11 @@ export const QUERY_SINGLE_PRODUCTS = gql`
         name
         _id
       }
+      mods {
+        element_id
+        posTop
+        posLeft
+      }
       _id
     }
   }
@@ -85,6 +90,7 @@ export const QUERY_USER = gql`
     user {
       firstName
       lastName
+      email
       orders {
         _id
         purchaseDate
@@ -96,6 +102,14 @@ export const QUERY_USER = gql`
           quantity
           image
         }
+      }
+      savedProducts {
+        _id
+        name
+        description
+        price
+        quantity
+        image
       }
     }
   }
