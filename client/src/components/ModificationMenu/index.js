@@ -2,7 +2,7 @@ import React from 'react';
 import './index.scss';
 
 
-function ModificationMenu({inputs, saved, cartHandler}){
+function ModificationMenu({inputs, saved, cartHandler, states}){
 
     function textfields(){
         return(
@@ -12,7 +12,7 @@ function ModificationMenu({inputs, saved, cartHandler}){
                     return (
                         <div className="textField">
                             <label for={value}>{value}</label>
-                            <input name={value} id={value.replaceAll(" ", "")} onChange={inputs.setter}></input>
+                            <input value={states[value]} name={value} id={value.replaceAll(" ", "")} onChange={inputs.setter}></input>
                         </div>
                     )
                 })}

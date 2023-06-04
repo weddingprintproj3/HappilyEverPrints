@@ -114,13 +114,24 @@ const resolvers = {
       throw new AuthenticationError('Not logged in');    
       return newProduct
     },
-    updateProduct: async (parent, args) => {
+    updateProduct: async (parent, args, context) => {
       const product = await Product.findOneAndUpdate(
         { _id: args.product._id },
         { $set: req.body }, 
         { runValidators: true, new: true } 
       );
     },
+    deleteProduct: async (parent, args, context) => {
+      await Product.findByIdAndDelete(args.productID);
+      console.log('Product deleted')
+      if (context.user) {
+        await User.findByIdAndUpdate(context.user._id, { $pull: { savedProducts: args.productID } });
+        return {message: 'Product deleted successfully'}; 
+      }
+      throw new AuthenticationError('Not logged in');
+       
+    },
+
     login: async (parent, { email, password }) => {
       const user = await User.findOne({ email });
       console.log(user);
