@@ -102,6 +102,8 @@ export const QUERY_USER = gql`
           quantity
           image
         }
+        status
+        orderQuantity
       }
       savedProducts {
         _id

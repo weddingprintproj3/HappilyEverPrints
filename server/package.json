@@ -21,7 +21,8 @@
     "@emailjs/browser": "^3.11.0",
     "@emailjs/nodejs": "^2.2.0",
     "dotenv": "^16.0.3",
-    "nodemon": "^2.0.4"
+    "nodemon": "^2.0.4",
+    "stripe": "^8.67.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.2"

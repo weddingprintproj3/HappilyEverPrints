@@ -1,7 +1,7 @@
 const { AuthenticationError } = require('apollo-server-express');
 const { User, Product, Category, Order } = require('../models');
 const { signToken } = require('../utils/auth');
-
+const stripe = require('stripe')('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');
 const resolvers = {
   Query: {
     categories: async () => Category.find(),
@@ -21,23 +21,14 @@ const resolvers = {
       return Product.find(params).populate('category').populate('textFields').populate('groupFields');
     },
     product: async (parent, { _id }) => {
-      console.log(_id);
       const product = await Product.findById(_id).populate('category').populate('textFields').populate('groupFields')
-      console.log(product)
       return product;
     },
     user: async (parent, args, context) => {
       if (context.user) {
         const user = await User.findById(context.user._id)
-          .populate({
-            path: 'orders.products',
-            populate: 'category',
-          })
-          .populate({
-            path: 'savedProducts',
-            populate: 'category',
-          });
-
+          .populate('orders')
+          .populate('savedProducts');
         user.orders.sort((a, b) => b.purchaseDate - a.purchaseDate);
 
         return user;
@@ -62,6 +53,7 @@ const resolvers = {
         throw new AuthenticationError('Not logged in');
       }
       const url = new URL(context.headers.referer).origin;
+      console.log(url);
       const line_items = [];
       const {orders} = await User.findById(context.user._id)
           .populate('orders')
@@ -71,22 +63,25 @@ const resolvers = {
         quantity =  orders[i].orderQuantity
         products = orders[i].products
         for (let i = 0; i < products.length; i++) {
-          const product = await stripe.products.create({
-            name: products[i].name,
-            description: products[i].description,
-            images: [`${url}/images/${products[i].image}`]
+          const product = await Product.findById(products[i])
+          console.log(product.name)
+          const stripeProduct = await stripe.products.create({
+            name: product.name,
+            // description: product.description,
+            // images: [`${url}${product.image}`]
           });
-  
+          console.log(product.price)
           const price = await stripe.prices.create({
-            product: product.id,
-            unit_amount: products[i].price * 100,
-            currency: 'usd',
+            product: stripeProduct.id,
+            unit_amount: product.price * 100,
+            currency: 'cad',
           });
-  
+
           line_items.push({
             price: price.id,
             quantity: quantity
           });
+          console.log(line_items)
         }
       }
 
@@ -97,7 +92,7 @@ const resolvers = {
         success_url: `${url}/success?session_id={CHECKOUT_SESSION_ID}`,
         cancel_url: `${url}/`
       });
-
+      console.log(session)
       return { session: session.id };
     }
   },
@@ -110,10 +105,11 @@ const resolvers = {
     },
     addOrder: async (parent, { orderQuantity, productID, status }, context) => {
       const product = await Product.findById(productID)
-      console.log(status)
+
       if (context.user) {
-        const order = new Order({ orderQuantity, product, status });
-        console.log(context.user);
+        const order = new Order({ orderQuantity, products:productID,status } );
+        //await Order.findByIdAndUpdate(order._id,{ $addToSet: { products: product._id } })
+
         await User.findByIdAndUpdate(context.user._id, { $push: { orders: order } });
         return order;
       }
@@ -162,7 +158,7 @@ const resolvers = {
       };
     },
     addProduct: async (parent, args, context) => {
-      console.log(context.user);
+
       category = await Category.findOne(
         { name: args.category.name },
       );
@@ -180,7 +176,7 @@ const resolvers = {
         });
         await User.findByIdAndUpdate(context.user._id, { $push: { savedProducts: newProduct } });
         return newProduct;
-        console.log(newProduct);
+
       }
       throw new AuthenticationError('Not logged in');    
     },

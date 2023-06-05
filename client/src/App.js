@@ -17,6 +17,7 @@ import Signup from './pages/Signup/Signup';
 import Cart from "./components/Cart/Cart";
 import Profile from './pages/Profile/Profile';
 import Product from './pages/Product';
+import Success from './pages/Success';
 
 import { StoreProvider } from './utils/GlobalState';
 import './App.scss';
@@ -71,6 +72,10 @@ function App() {
                 <Route 
                 path="/products/:category/:productID?" 
                 element={<Product />} 
+              />
+              <Route 
+                path="/success" 
+                element={<Success />} 
               />
               </Route>
 
