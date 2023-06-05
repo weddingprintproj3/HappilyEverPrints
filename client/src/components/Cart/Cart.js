@@ -1,14 +1,14 @@
 import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import CartItem from '../CartItem';
-import Auth from '../utils/auth';
+import CartItem from '../CartItem/CartItem';
+import Auth from '../../utils/auth';
 
 // importation for stripe (payment)
 import { loadStripe } from '@stripe/stripe-js';
 import { useLazyQuery } from '@apollo/client';
-import { QUERY_CHECKOUT } from '../utils/queries'; // query
+import { QUERY_CHECKOUT } from '../../utils/queries'; // query
 
-const stripePromise = loadStripe('API_KEY'); // Stripe API key wll be added
+const stripePromise = loadStripe('pk_live_51MBSGXHxM1wHJ7zi2itQjXky3AQ91Ud6Clahvy8yIhNDQClEzI357kPUnymD8Lip2dAGbjtuvT3PQcptK8KppjlC00tStvDCdZ'); // Stripe API key wll be added
 
 function Cart() {
   const state = useSelector(state => state);

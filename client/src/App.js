@@ -14,7 +14,7 @@ import Help from './pages/Help/Help';
 import Login from './pages/Login/Login';
 import Logout from './pages/Logout/Logout';
 import Signup from './pages/Signup/Signup';
-import Cart from './pages/Cart/Cart';
+import Cart from "./components/Cart/Cart";
 import Profile from './pages/Profile/Profile';
 import Product from './pages/Product';
 

@@ -54,8 +54,8 @@ export const QUERY_SINGLE_PRODUCTS = gql`
 `;
 
 export const QUERY_CHECKOUT = gql`
-  query getCheckout($products: [ID]!) {
-    checkout(products: $products) {
+  query getCheckout {
+    checkout {
       session
     }
   }

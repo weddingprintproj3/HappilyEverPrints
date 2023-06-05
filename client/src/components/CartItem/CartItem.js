@@ -1,13 +1,13 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { removeFromCart, updateCartQuantity } from '../utils/actions';
-import { idbPromise } from '../utils/helpers';
+import { REMOVE_FROM_CART, UPDATE_CART_QUANTITY } from '../../utils/actions';
+import { idbPromise } from '../../utils/helpers';
 
 const CartItem = ({ item }) => {
   const dispatch = useDispatch();
 
   const removeItemFromCart = () => {
-    dispatch(removeFromCart(item._id));
+    dispatch(REMOVE_FROM_CART(item._id));
     idbPromise('cart', 'delete', { ...item });
   };
 
@@ -15,10 +15,10 @@ const CartItem = ({ item }) => {
     const value = e.target.value;
 
     if (value === '0') {
-      dispatch(removeFromCart(item._id));
+      dispatch(REMOVE_FROM_CART(item._id));
       idbPromise('cart', 'delete', { ...item });
     } else {
-      dispatch(updateCartQuantity(item._id, parseInt(value)));
+      dispatch(UPDATE_CART_QUANTITY(item._id, parseInt(value)));
       idbPromise('cart', 'put', { ...item, quantity: parseInt(value) });
     }
   };
