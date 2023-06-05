@@ -76,7 +76,7 @@ function AccountDetails() {
                 },
             });
             setModalShow(true)
-            
+
         } catch (e) {
             console.log(e);
         }
@@ -84,6 +84,9 @@ function AccountDetails() {
 
     return (
         <>
+            <div>
+                <h2>Account Details</h2>
+            </div>
             <div className="account-details-page">
                 <Tabs>
                     <aside>
@@ -201,7 +204,7 @@ function AccountDetails() {
                             {modalShow && (
                                 <div className="modal">
                                     <div>
-                                        <button className="close" onClick={() => {setModalShow(false); Auth.logout()}}>&times;</button>
+                                        <button className="close" onClick={() => { setModalShow(false); Auth.logout() }}>&times;</button>
                                         <p>Your account has been deleted.</p>
                                         <p>We're sorry to see you go, <Link to="/signup">create a new account</Link> if you have changed your mind.</p>
                                     </div>
