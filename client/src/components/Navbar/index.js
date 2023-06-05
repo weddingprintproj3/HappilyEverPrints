@@ -5,9 +5,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHome, faCircleQuestion, faUser, faCartShopping, faRightToBracket, faRightFromBracket } from '@fortawesome/free-solid-svg-icons';
 import Auth from '../../utils/auth';
 
-function NavItem({to, activeClassName, className, icon, text }) {
+function NavItem({ to, className, icon, text }) {
     return (
-        <NavLink exact activeClassName={activeClassName} className={className} to={to} >
+        <NavLink exact="true" activeclassname="active" className={className} to={to}>
             <div className="icon-container">
                 <FontAwesomeIcon icon={icon} color="#343131" />
             </div>
@@ -27,16 +27,16 @@ function Navbar() {
                 </Link>
             </div>
             <nav>
-                <NavItem to="/" activeClassName="active" icon={faHome} text="HOME" />
-                <NavItem to="/help" activeClassName="active" icon={faCircleQuestion} text="HELP" />
-                {Auth.loggedIn() && 
-                    <NavItem to="/profile" activeClassName="active" icon={faUser} text="PROFILE" />
+                <NavItem to="/" className="home-link" icon={faHome} text="HOME" />
+                <NavItem to="/help" className="help-link" icon={faCircleQuestion} text="HELP" />
+                {Auth.loggedIn() &&
+                    <NavItem to="/profile" className="profile-link" icon={faUser} text="PROFILE" />
                 }
-                <NavItem to="/cart" activeClassName="active" className="cart-link" icon={faCartShopping} text="CART" />
+                <NavItem to="/cart" className="cart-link" icon={faCartShopping} text="CART" />
                 {Auth.loggedIn() ?
-                    <NavItem to="/logout" activeClassName="active" className="logout-link" icon={faRightFromBracket} text="LOGOUT" />
-                :
-                    <NavItem to="/login" activeClassName="active" className="login-link" icon={faRightToBracket} text="LOGIN" />
+                    <NavItem to="/logout" className="logout-link" icon={faRightFromBracket} text="LOGOUT" />
+                    :
+                    <NavItem to="/login" className="login-link" icon={faRightToBracket} text="LOGIN" />
                 }
             </nav>
         </header>

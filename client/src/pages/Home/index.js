@@ -2,7 +2,6 @@ import React from "react";
 import { Link } from 'react-router-dom';
 import Hero from '../../assets/images/Hero.jpg';
 import CategoryMenu from "../../components/CategoryMenu";
-import ProductList from "../../components/ProductList"
 import Auth from '../../utils/auth';
 
 import './index.scss';
@@ -22,7 +21,6 @@ function Home() {
         <img src={Hero} className="hero-img" alt="Hero"></img>
       </div>
       <CategoryMenu />
-      <ProductList />
     </div>
   );
 };
