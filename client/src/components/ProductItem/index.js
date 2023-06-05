@@ -7,7 +7,6 @@ function ProductItem(item) {
     image,
     name,
     _id,
-    price
   } = item;
 
   return (
@@ -19,10 +18,6 @@ function ProductItem(item) {
         />
         <p>{name}</p>
       </Link>
-      <div>
-        <span>${price}</span>
-      </div>
-      <button>Add to cart</button>
     </div>
   );
 }

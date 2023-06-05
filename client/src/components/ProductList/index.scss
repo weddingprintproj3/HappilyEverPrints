@@ -1,0 +1,12 @@
+.product-list {
+    text-align: center;
+    width: 80%;
+    margin: 20px 0px;
+
+    .product-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 30px;
+        margin: 0 40px;
+    }
+}

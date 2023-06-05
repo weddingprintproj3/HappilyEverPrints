@@ -107,7 +107,9 @@ function Product() {
     const { data } = await addProd({
       variables: {...product },
     });
+
     window.location.replace(urlRedirect + data.addProduct._id)
+    alert("Product has been saved") 
   }
 
   async function guestlistSave(event) {
@@ -148,6 +150,7 @@ function Product() {
       variables: {...product },
     });
     window.location.replace(urlRedirect + data.addProduct._id)
+    alert("Product has been saved") 
   }
 
   async function menuSave(event) {
@@ -189,6 +192,7 @@ function Product() {
     });
 
     window.location.replace(urlRedirect + data.addProduct._id)
+    alert("Product has been saved") 
   }
   
   async function thankyouSave(event) {
@@ -222,11 +226,15 @@ function Product() {
     const { data } = await addProd({
       variables: {...product },
     });
-    console.log(urlRedirect + data.addProduct._id);
     window.location.replace(urlRedirect + data.addProduct._id)
+    alert("Product has been saved") 
   }
   
   async function cartHandler(event){
+    if(!document.getElementById("productQuantity").value){
+      alert("Product quantity must be specified") 
+      return false
+    } 
     const { data } = await addOrder({
       variables: {
         productId: productID, 
@@ -234,7 +242,7 @@ function Product() {
         status: "PENDING" 
       },
     });
-    console.log(data);
+    alert("Product has been added to cart") 
   }
 
   function setBrideGroomInput(event) {
