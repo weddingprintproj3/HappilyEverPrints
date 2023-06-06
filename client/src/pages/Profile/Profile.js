@@ -48,16 +48,16 @@ function Profile() {
                     {user ? (
                         <>
                             {user.orders.map((order) => (
-                                <div key={order._id}>
+                                <div className="panel-content" key={order._id}>
                                     <h3>
                                         {new Date(parseInt(order.purchaseDate)).toLocaleDateString()}
                                     </h3>
                                     <div>
                                         {order.products.map(({ _id, name, price, quantity }, index) => (
                                             <div key={index}>
-                                                <div>
+                                                <div className='order-card'>
                                                     <span>{quantity}</span>
-                                                    <Link to={`/products/${_id}`}>{name}</Link>
+                                                    <Link className="product-link" to={`/products/${_id}`}>{name}</Link>
                                                     <span>${price}</span>
                                                 </div>
                                             </div>
@@ -74,7 +74,7 @@ function Profile() {
 
     function Favorites() {
         return (
-            <>
+            <div className='container'>
                 <div>
                     <h2>Favourites</h2>
                 </div>
@@ -84,12 +84,12 @@ function Profile() {
                             {user.savedProducts.length > 0 ? (
                                 <>
                                     {user.savedProducts.map(({ _id, name, price, image }, index) => (
-                                        <div key={index}>
-                                            <h3>
-                                                <Link to={`/products/${_id}`}>{name}</Link>
-                                                {image}
-                                                ${price}
-                                            </h3>
+                                        <div className="panel-content" key={index}>
+                                            <div className='fav-card'>
+                                                <Link className="product-link" to={`/products/${_id}`}>{name}</Link>
+                                                <span className="product-img">{image}</span>
+                                                <span>${price}</span>
+                                            </div>
                                         </div>
                                     ))}
                                 </>
@@ -97,7 +97,7 @@ function Profile() {
                         </>
                     ) : "loading..."}
                 </div>
-            </>
+            </div>
         )
     }
 
