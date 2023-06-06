@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import CartItem from '../CartItem/CartItem';
 import Auth from '../../utils/auth';
+import './index.scss';
 
 // importation for stripe (payment)
 import { loadStripe } from '@stripe/stripe-js';
@@ -64,15 +65,16 @@ function Cart() {
       
   }
 
+
   if (Auth.loggedIn()){ 
     return (
       <section>
         <h1>Shopping Cart</h1>
         {renderCartItems()}
         {user_data.user.orders.length > 0 && (
-          <div>
-            <p>Total: ${calculateTotal()}</p>
-            <button onClick={submitCheckout}>Checkout</button>
+          <div className="cart-summary">
+            <p>Total: <span className="total-price">${calculateTotal()}</span></p>
+            <button className="checkout-button"  onClick={submitCheckout}>Checkout</button>
           </div>
   
         )}
@@ -81,6 +83,7 @@ function Cart() {
   } else {
     return <p>Please <a href="/login" >log in</a> to proceed to checkout.</p>
   }
+
 }
 
 export default Cart;
