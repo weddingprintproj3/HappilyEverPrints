@@ -292,8 +292,8 @@ function Product() {
     },
     guestlist: {
         type: 'guestlist',
-        names: ["White Green Watercolor Guest List"],
-        descriptions:["A subtle, watercolor inspired card with muted greens and a white background"],
+        names: ["White Green Floral Wedding Seating Chart"],
+        descriptions:["This chart, designed for six tables, boasts a clean white backdrop adorned with hand-painted green floral illustrations, seamlessly merging elegance and functionality for your memorable celebration."],
         prices:[5.99],
         component: <GuestList 
           brideState={brideName} 
@@ -304,7 +304,7 @@ function Product() {
         multifields: ['Guest first name', 'Guest last name'],
         multifieldslabel:"Guests",
         category:'table number',
-        categories: [1,2,3,4,5,6,7,8],
+        categories: [1,2,3,4,5,6],
         handlers: handleGuestSubmit,
         handleSave: guestlistSave,
         setter: setBrideGroomInput
@@ -330,8 +330,8 @@ function Product() {
     },
     thankyou: {
         type: 'thankyou',
-        names: ["Black and White Caligraphy Thank You Card"],
-        descriptions:["Infused with gratitude and elegance, this Handwritten Luxury Wedding Thank You Card features beautiful calligraphy on high-quality paper, offering a thoughtful and stylish way to express your appreciation to your guests."],
+        names: ["Green Floral Watercolor Thank You Card"],
+        descriptions:["Discover the Green Floral Watercolor Thank You Card, a vibrant expression of gratitude. This card features lush, hand-painted watercolor illustrations, turning your heartfelt thanks into an enchanting, cherished keepsake."],
         prices:[2.99],
         component: <ThankYou 
         brideState={brideName} 

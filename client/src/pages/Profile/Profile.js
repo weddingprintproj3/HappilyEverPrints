@@ -22,7 +22,7 @@ function Profile() {
 
     function Dashboard() {
         return (
-            <>
+            <div className='container'>
                 <div>
                     <h2>Dashboard</h2>
                 </div>
@@ -34,13 +34,13 @@ function Profile() {
                         </div>
                     ) : "loading..."}
                 </div>
-            </>
+            </div>
         )
     }
 
     function Orders() {
         return (
-            <>
+            <div className='container'>
                 <div>
                     <h2>Orders</h2>
                 </div>
@@ -68,7 +68,7 @@ function Profile() {
                         </>
                     ) : "loading..."}
                 </div>
-            </>
+            </div>
         )
     }
 
