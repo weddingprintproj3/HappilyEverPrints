@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import CartItem from '../CartItem/CartItem';
 import Auth from '../../utils/auth';
+import './index.scss';
 
 // importation for stripe (payment)
 import { loadStripe } from '@stripe/stripe-js';
@@ -64,19 +65,22 @@ function Cart() {
   }
 
   return (
-    <section>
+    <section className="cart-section">
       <h1>Shopping Cart</h1>
       {renderCartItems()}
       {user_data.user.orders.length > 0 && (
-        <div>
-          <p>Total: ${calculateTotal()}</p>
+        <div className="cart-summary">
+          <p>
+            Total: <span className="total-price">${calculateTotal()}</span>
+          </p>
           {Auth.loggedIn() ? (
-            <button onClick={submitCheckout}>Checkout</button>
+            <button className="checkout-button" onClick={submitCheckout}>
+              Checkout
+            </button>
           ) : (
             <p>Please log in to proceed to checkout.</p>
           )}
         </div>
-
       )}
     </section>
   );

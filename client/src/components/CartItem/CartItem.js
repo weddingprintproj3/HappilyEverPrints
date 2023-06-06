@@ -1,5 +1,5 @@
 import React from 'react';
-
+import './index.scss';
 
 const CartItem = ({ item }) => {
 
@@ -15,7 +15,7 @@ const CartItem = ({ item }) => {
       <div>
         <h3>{item.products[0].name}</h3>
         <p>${item.products[0].price}</p>
-        <button onClick={removeItemFromCart}>Remove from Cart</button>
+        <button className="remove-button" onClick={removeItemFromCart}>Remove from Cart</button>
       </div>
     </div>
   );
