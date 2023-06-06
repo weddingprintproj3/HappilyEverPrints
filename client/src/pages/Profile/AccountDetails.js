@@ -85,6 +85,9 @@ function AccountDetails() {
 
     return (
         <>
+            <div>
+                <h2>Account Details</h2>
+            </div>
             <div className="account-details-page">
                 <Tabs>
                     <aside>
