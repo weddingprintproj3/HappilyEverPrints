@@ -30,12 +30,12 @@ function Navbar() {
 
     const closeMobileMenu = () => {
         setIsOpen(false);
-      };
+    };
 
     function ifLogged() {
         if (Auth.loggedIn()) {
             return (
-                <NavLink exact={true} activeClassName="active" className="login-link" to="/logout">
+                <NavLink exact={true} activeclassname="active" className="login-link" to="/logout">
                     <div className="icon-container">
                         <FontAwesomeIcon icon={faRightToBracket} color="#343131" />
                     </div>
@@ -46,7 +46,7 @@ function Navbar() {
             )
         } else {
             return (
-                <NavLink exact={true} activeClassName="active" className="login-link" to="/login">
+                <NavLink exact={true} activeclassname="active" className="login-link" to="/login">
                     <div className="icon-container">
                         <FontAwesomeIcon icon={faRightToBracket} color="#343131" />
                     </div>
@@ -83,11 +83,17 @@ function Navbar() {
             </button>
             {isOpen && (
                 <div className="mobile-menu">
-                    <NavLink exact={true} activeClassName="active" to="/" onClick={closeMobileMenu}>HOME</NavLink>
-                    <NavLink exact={true} activeClassName="active" to="/help" onClick={closeMobileMenu}>HELP</NavLink>
-                    <NavLink exact={true} activeClassName="active" to="/my-favorites" onClick={closeMobileMenu}>SAVED</NavLink>
-                    <NavLink exact={true} activeClassName="active" to="/cart" onClick={closeMobileMenu}>CART</NavLink>
-                    {ifLogged()}
+                    <NavLink exact={true} activeclassname="active" to="/" onClick={closeMobileMenu}>HOME</NavLink>
+                    <NavLink exact={true} activeclassname="active" to="/help" onClick={closeMobileMenu}>HELP</NavLink>
+                    {Auth.loggedIn() &&
+                        <NavLink exact={true} activeclassname="active" to="/profile" onClick={closeMobileMenu}>PROFILE</NavLink>
+                    }
+                    <NavLink exact={true} activeclassname="active" to="/cart" onClick={closeMobileMenu}>CART</NavLink>
+                    {Auth.loggedIn() ?
+                        <NavLink exact={true} activeclassname="active" to="logout" onClick={closeMobileMenu}>LOGOUT</NavLink>
+                        :
+                        <NavLink exact={true} activeclassname="active" to="login" onClick={closeMobileMenu}>LOGIN</NavLink>
+                    }
                 </div>
             )}
         </header>
