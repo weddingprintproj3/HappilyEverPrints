@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import './index.scss';
 import Auth from '../../utils/auth';
 
 function ModificationMenu({ inputs, saved, cartHandler, states }) {

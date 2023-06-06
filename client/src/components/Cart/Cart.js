@@ -44,14 +44,14 @@ function Cart() {
   const renderCartItems = () => {
     if (user_data.user.orders.length === 0) {
       return (
-        <div>
+        <div className='cartItem'>
           <p>Your Shopping Cart is Empty</p>
         </div>
       );
     }
 
     return (
-      <div>
+      <div className='cartItem'>
         {user_data.user.orders.map(item => (
           <CartItem key={item._id} item={item} />
         ))}
@@ -68,7 +68,7 @@ function Cart() {
 
   if (Auth.loggedIn()){ 
     return (
-      <section>
+      <div className="container cart-page">
         <h1>Shopping Cart</h1>
         {renderCartItems()}
         {user_data.user.orders.length > 0 && (
@@ -78,7 +78,7 @@ function Cart() {
           </div>
   
         )}
-      </section>
+      </div>
     );
   } else {
     return <p>Please <a href="/login" >log in</a> to proceed to checkout.</p>
