@@ -90,7 +90,7 @@ function Product() {
     const product = {
       name: document.getElementById('productName').innerText,
       description: document.getElementById('productDescirption').innerText,
-      image: "/images/stuff.png",
+      image: "/images/White-Green-Watercolor-Floral-Border-Wedding-Invitation-no-text.png",
       price: parseFloat(document.getElementById('productPrice').innerText),
       category: {
         name: "Invitations"
@@ -131,7 +131,7 @@ function Product() {
     const product = {
       name: document.getElementById('productName').innerText,
       description: document.getElementById('productDescirption').innerText,
-      image: "/images/stuff.png",
+      image: "/images/White-Green-Watercolor-Leaf-Wedding-Seating-Chart-no-text.png",
       price: parseFloat(document.getElementById('productPrice').innerText),
       category: {
         name: "Guest List"
@@ -172,7 +172,7 @@ function Product() {
     const product = {
       name: document.getElementById('productName').innerText,
       description: document.getElementById('productDescirption').innerText,
-      image: "/images/stuff.png",
+      image: "/images/Floral-Botanical-Wedding-Menu-no-text.png",
       price: parseFloat(document.getElementById('productPrice').innerText),
       category: {
         name: "Menu"
@@ -209,7 +209,7 @@ function Product() {
     const product = {
       name: document.getElementById('productName').innerText,
       description: document.getElementById('productDescirption').innerText,
-      image: "/images/stuff.png",
+      image: "/images/Black-and-White-Calligraphy-Thank-You-Wedding-Card-no-text.png",
       price: parseFloat(document.getElementById('productPrice').innerText),
       category: {
         name: "Thank You Card"

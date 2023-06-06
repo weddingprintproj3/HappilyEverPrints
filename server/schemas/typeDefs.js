@@ -131,6 +131,8 @@ const typeDefs = gql`
       mods: [ModFieldInput]
     ): Product
     deleteProduct(productID: ID!): DeleteMessage
+    deleteOrder(orderId: ID!): DeleteMessage
+    updateOrder: DeleteMessage
     login(email: String!, password: String!): Auth
   }
 `;
