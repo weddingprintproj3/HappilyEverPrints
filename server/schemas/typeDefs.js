@@ -80,13 +80,17 @@ const typeDefs = gql`
   type DeleteMessage {
     message: String
   }
-
+  type Checkout {
+    session: ID
+  }
+  
   type Query {
     categories: [Category]
     products(category: ID, name: String): [Product]
     product(_id: ID!): Product
     user: User
     order(_id: ID!): Order
+    checkout: Checkout
   }
 
   type Mutation {

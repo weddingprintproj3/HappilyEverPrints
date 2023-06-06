@@ -42,6 +42,7 @@ function AccountDetails() {
             await updateUser({
                 variables: {
                     email: event.target.email.value,
+                    password: event.target.password.value,
                 },
             });
             setModalShow(true)
@@ -137,6 +138,14 @@ function AccountDetails() {
                                         name="email"
                                         type="email"
                                         id="email"
+                                    />
+                                </div>
+                                <div>
+                                    <input
+                                        placeholder="Password"
+                                        name="password"
+                                        type="password"
+                                        id="pwd"
                                     />
                                 </div>
                                 <div>

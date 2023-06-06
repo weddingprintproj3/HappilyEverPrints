@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
 import { QUERY_USER } from '../../utils/queries';
 import AccountDetails from './AccountDetails';
+import Auth from '../../utils/auth';
 
 import './Profile.scss'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -100,13 +101,14 @@ function Profile() {
         )
     }
 
-    return (
-        <>
-            <div className="profile-page">
-                <Tabs>
-                    <aside>
-                        <TabList>
-                            <Tab>
+    if (Auth.loggedIn()) {
+        return (
+            <>
+                <div className="profile-page">
+                    <Tabs>
+                        <aside>
+                            <TabList>
+                                <Tab>
                                 <p><span><FontAwesomeIcon icon={faGaugeHigh} color="#343131" /></span>Dashboard</p>
                             </Tab>
                             <Tab>
@@ -121,29 +123,36 @@ function Profile() {
                             <Tab>
                                 <p onClick={() => navigate('/logout')}><span><FontAwesomeIcon icon={faRightFromBracket} color="#343131" /></span>Logout</p>
                             </Tab>
-                        </TabList>
-                    </aside>
-                    <section>
-                        <TabPanel>
-                            {Dashboard()}
-                        </TabPanel>
-                        <TabPanel>
-                            {Orders()}
-                        </TabPanel>
-                        <TabPanel>
-                            {Favorites()}
-                        </TabPanel>
-                        <TabPanel>
-                            <AccountDetails />
-                        </TabPanel>
-                        <TabPanel>
-                            {/* <>This section is blank on purpose to avoid an error message because there are X tabs and there must be X tab panels. Log out redirects to logout page</> */}
-                        </TabPanel>
-                    </section>
-                </Tabs>
-            </div>
-        </>
-    )
+                            </TabList>
+                        </aside>
+                        <section>
+                            <TabPanel>
+                                {Dashboard()}
+                            </TabPanel>
+                            <TabPanel>
+                                {Orders()}
+                            </TabPanel>
+                            <TabPanel>
+                                {Favorites()}
+                            </TabPanel>
+                            <TabPanel>
+                                <AccountDetails />
+                            </TabPanel>
+                            <TabPanel>
+                                {/* <>This section is blank on purpose to avoid an error message because there are X tabs and there must be X tab panels. Log out redirects to logout page</> */}
+                            </TabPanel>
+                        </section>
+                    </Tabs>
+                </div>
+            </>
+        )
+    } else {
+        return (
+            <>
+            <h1>Oops! You need log in / create an account if you want access to this section.</h1>
+            </>
+        )
+    }
 }
 
 export default Profile;
