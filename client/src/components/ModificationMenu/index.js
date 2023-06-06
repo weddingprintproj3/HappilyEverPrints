@@ -29,6 +29,7 @@ function ModificationMenu({inputs, saved, cartHandler, states}){
                         return (
                             <option value={value}>{value}</option>
                         )
+                        
                     })}
                 </select>
                 {inputs.multifields.map((value, index) => {
@@ -44,11 +45,11 @@ function ModificationMenu({inputs, saved, cartHandler, states}){
         )
     }
     return (
-        <div className="card modMenu">
+        <div className="modMenu">
             <div className="productData">
                 <h2 id="productName">{inputs.names[productNumber]}</h2>
                 <div id="productDescirption">{inputs.descriptions[productNumber]}</div>
-                <div>$<span id="productPrice">{inputs.prices[productNumber]}</span></div>
+                <div>$ <span id="productPrice">{inputs.prices[productNumber]}</span></div>
             </div>
             {inputs.textfields.length !==0 && textfields()}
             {inputs.multifields.length !==0 && multifields()}

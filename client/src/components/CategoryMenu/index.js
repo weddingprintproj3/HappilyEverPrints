@@ -1,59 +1,33 @@
-import React, { useEffect } from 'react';
-import { useQuery } from '@apollo/client';
-import { useStoreContext } from '../../utils/GlobalState';
-import {
-  UPDATE_CATEGORIES,
-  UPDATE_CURRENT_CATEGORY,
-} from '../../utils/actions';
-import { QUERY_CATEGORIES } from '../../utils/queries';
-import { idbPromise } from '../../utils/helpers';
+import React from 'react';
+import invitationImg from '../../assets/images/home/White-Green-Watercolor-Floral-Border-Wedding-Invitation.png';
+import menuImg from '../../assets/images/home/Floral-Botanical-Wedding-Menu.png';
+import thankYouImg from '../../assets/images/home/Green-Floral-Watercolor-Thank-You-Card.png';
+import seatingChartImg from '../../assets/images/home/White-Green-And-Black-Floral-Wedding-Seating-Chart.png';
 import './index.scss';
 
 function CategoryMenu() {
-  const [state, dispatch] = useStoreContext();
 
-  const { categories } = state;
-
-  const { loading, data: categoryData } = useQuery(QUERY_CATEGORIES);
-
-  useEffect(() => {
-    if (categoryData) {
-      dispatch({
-        type: UPDATE_CATEGORIES,
-        categories: categoryData.categories,
-      });
-      categoryData.categories.forEach((category) => {
-        idbPromise('categories', 'put', category);
-      });
-    } else if (!loading) {
-      idbPromise('categories', 'get').then((categories) => {
-        dispatch({
-          type: UPDATE_CATEGORIES,
-          categories: categories,
-        });
-      });
-    }
-  }, [categoryData, loading, dispatch]);
-
-  const handleClick = (id) => {
-    dispatch({
-      type: UPDATE_CURRENT_CATEGORY,
-      currentCategory: id,
-    });
-  };
+  const categories = [
+    { title: "Invitations", image: invitationImg, link: "/products/invitation" },
+    { title: "Menus", image: menuImg, link: "/products/menu" },
+    { title: "Thank you cards", image: thankYouImg, link: "/products/thankyou" },
+    { title: "Seating charts", image: seatingChartImg, link: "/products/guestlist" }
+  ];
 
   return (
+
     <div className="category-menu">
-      {categories.map((item) => (
-        <button
-          key={item._id}
-          onClick={() => {
-            handleClick(item._id);
-          }}
-        >
-          {item.name}
-        </button>
-      ))}
+      <div className="title">
+        <h2>Choose a Category:</h2>
+      </div>
+      <div className="projects-grid">
+        {categories.map((category, index) => (
+          <a href={category.link} className="category-card" key={index}>
+            <img src={category.image} alt={category.title} />
+            <p>{category.title}</p>
+          </a>
+        ))}
+      </div>
     </div>
   );
 }
