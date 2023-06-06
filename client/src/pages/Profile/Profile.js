@@ -120,7 +120,7 @@ function Profile() {
                             <Tab>
                                 <p><span><FontAwesomeIcon icon={faUser} color="#343131" /></span>Account details</p>
                             </Tab>
-                            <Tab>
+                            <Tab onClick={() => navigate('/logout')}>
                                 <p onClick={() => navigate('/logout')}><span><FontAwesomeIcon icon={faRightFromBracket} color="#343131" /></span>Logout</p>
                             </Tab>
                             </TabList>
