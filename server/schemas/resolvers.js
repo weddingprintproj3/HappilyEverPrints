@@ -197,7 +197,24 @@ const resolvers = {
       throw new AuthenticationError('Not logged in');
 
     },
-
+    deleteOrder: async (parent, args, context) => {
+      if (context.user) {
+        await User.findByIdAndUpdate(context.user._id, { $pull: { orders: {_id:args.orderId} } });
+        console.log('Order deleted successfully');
+        return { message: 'Order deleted successfully' };
+      }
+      throw new AuthenticationError('Not logged in');
+    },
+    updateOrder: async (parent, args, context) => {
+      if (context.user) {
+        console.log('I am here');
+        await User.updateOne({_id:context.user._id, "orders.status": "PENDING"}, {'$set': {
+          'orders.$.status': 'COMPLETED',
+      }});
+        return { message: 'orders updated' };
+      }
+      throw new AuthenticationError('Not logged in');
+    },
     login: async (parent, { email, password }) => {
       const user = await User.findOne({ email });
       console.log(user);
