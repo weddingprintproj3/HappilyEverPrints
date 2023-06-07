@@ -86,7 +86,7 @@ function AccountDetails() {
     return (
         <div className='container'>
             <div>
-                <h2>Account Details</h2>
+                <h2 id="account">Account Details</h2>
             </div>
             <div className="account-details-page">
                 <Tabs>
@@ -101,7 +101,7 @@ function AccountDetails() {
                     <section>
                         <TabPanel>
                             <form onSubmit={updateNameForm}>
-                                <div>
+                                <div className="formInput">
                                     <input
                                         placeholder={user.firstName}
                                         name="firstName"
@@ -109,7 +109,7 @@ function AccountDetails() {
                                         id="firstName"
                                     />
                                 </div>
-                                <div>
+                                <div className="formInput">
                                     <input
                                         placeholder={user.lastName}
                                         name="lastName"
@@ -117,7 +117,7 @@ function AccountDetails() {
                                         id="lastName"
                                     />
                                 </div>
-                                <div>
+                                <div className="formInput">
                                     <button type="submit">Update</button>
                                 </div>
                             </form>
@@ -132,7 +132,7 @@ function AccountDetails() {
                         </TabPanel>
                         <TabPanel>
                             <form onSubmit={updateEmailForm}>
-                                <div>
+                                <div className="formInput">
                                     <input
                                         placeholder={user.email}
                                         name="email"
@@ -140,7 +140,7 @@ function AccountDetails() {
                                         id="email"
                                     />
                                 </div>
-                                <div>
+                                <div className="formInput">
                                     <input
                                         placeholder="Password"
                                         name="password"
@@ -148,7 +148,7 @@ function AccountDetails() {
                                         id="pwd"
                                     />
                                 </div>
-                                <div>
+                                <div className="formInput">
                                     <button type="submit">Update</button>
                                 </div>
                             </form>
@@ -163,7 +163,7 @@ function AccountDetails() {
                         </TabPanel>
                         <TabPanel>
                             <form onSubmit={updatePasswordForm}>
-                                <div>
+                                <div className="formInput">
                                     <label>Current Password</label>
                                     <input
                                         placeholder="Password"
@@ -172,7 +172,7 @@ function AccountDetails() {
                                         id="current-pwd"
                                     />
                                 </div>
-                                <div>
+                                <div className="formInput">
                                     <label>New Password</label>
                                     <input
                                         placeholder="Password"
@@ -181,7 +181,7 @@ function AccountDetails() {
                                         id="pwd"
                                     />
                                 </div>
-                                <div>
+                                <div className="formInput">
                                     <button type="submit">Update</button>
                                 </div>
                             </form>
@@ -195,10 +195,10 @@ function AccountDetails() {
                             )}
                         </TabPanel>
                         <TabPanel>
-                            <h2>Are you sure you want to delete your account? If you delete your account you will no longer have access to your order history and saved designs. Deleting your account is a non reversible action and you will have to create a new account to have access to all features again.</h2>
-                            <h3>If you are sure you want to delete your account, please enter your password below:</h3>
+                            <p>Are you sure you want to delete your account? If you delete your account you will no longer have access to your order history and saved designs. Deleting your account is a non reversible action and you will have to create a new account to have access to all features again.</p>
+                            <p>If you are sure you want to delete your account, please enter your password below:</p>
                             <form onSubmit={handleDeleteUser}>
-                                <div>
+                                <div className="formInput">
                                     <input
                                         placeholder="Password"
                                         name="password"
@@ -206,8 +206,8 @@ function AccountDetails() {
                                         id="pwd"
                                     />
                                 </div>
-                                <div>
-                                    <button type="submit">Submit</button>
+                                <div className="formInput">
+                                    <button className="delete-button" type="submit">Submit</button>
                                 </div>
                             </form>
                             {modalShow && (

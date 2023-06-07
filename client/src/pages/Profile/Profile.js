@@ -69,8 +69,8 @@ function Profile() {
                                         {order.products.map((product, index) => (
                                             <div key={index}>
                                                 <div className='order-card'>
-                                                    <Link className="product-link" to={`${categoryToUrl(product.category.name)}/${product._id}`}>{product.name}</Link>
                                                     <img className="product-img" src={product.image} alt="product.name" />
+                                                    <Link className="product-link" to={`${categoryToUrl(product.category.name)}/${product._id}`}>{product.name}</Link>
                                                 </div>
                                             </div>
                                         ))}
@@ -98,8 +98,8 @@ function Profile() {
                                     {user.savedProducts.map((product, index) => (
                                         <div className="panel-content" key={index}>
                                             <div className='fav-card'>
-                                                <Link className="product-link" to={`${categoryToUrl(product.category.name)}/${product._id}`}>{product.name}</Link>
                                                 <img className="product-img" src={product.image} alt={product.name} />
+                                                <Link className="product-link" to={`${categoryToUrl(product.category.name)}/${product._id}`}>{product.name}</Link>
                                             </div>
                                         </div>
                                     ))}
@@ -160,7 +160,7 @@ function Profile() {
     } else {
         return (
             <>
-                <h1>Oops! You need log in / create an account if you want access to this section.</h1>
+                <h3>Oops! You need log in / create an account if you want access to this section.</h3>
             </>
         )
     }
