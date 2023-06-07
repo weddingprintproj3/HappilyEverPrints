@@ -16,11 +16,11 @@ function Invitation(props){
             alt='invitation card' 
             src='/images/White-Green-Watercolor-Floral-Border-Wedding-Invitation-no-text.png' 
             className="card-image"/>
-            <span className="draggableField" id="invitationbride" style={{top: '36%', left: '12%',}}>{props.brideState}</span>
-            <span className="draggableField" id="invitationgroom" style={{top: '49%', left: '12%',}}>{props.groomState}</span>
-            <span className="draggableField" id="invitationdate" style={{top: '70%', left: '12%',}}>{props.invitationDate}</span>
-            <span className="draggableField" id="invitationtime" style={{top: '73%', left: '12%',}}>{props.invitationTime}</span>
-            <span className="draggableField" id="invitationlocation" style={{top: '76%', left: '12%',}}>{props.invitationLocation}</span>
+            <span className="draggableField" id="invitationbride" style={{top: '36%', left: '12%',}} draggable="true">{props.brideState}</span>
+            <span className="draggableField" id="invitationgroom" style={{top: '49%', left: '12%',}} draggable="true">{props.groomState}</span>
+            <span className="draggableField" id="invitationdate" style={{top: '70%', left: '12%',}} draggable="true">{props.invitationDate}</span>
+            <span className="draggableField" id="invitationtime" style={{top: '73%', left: '12%',}} draggable="true">{props.invitationTime}</span>
+            <span className="draggableField" id="invitationlocation" style={{top: '76%', left: '12%',}} draggable="true">{props.invitationLocation}</span>
         </div>
     );
 }

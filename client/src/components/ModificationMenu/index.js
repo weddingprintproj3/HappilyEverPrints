@@ -23,7 +23,7 @@ function ModificationMenu({ inputs, saved, cartHandler, states }) {
             <section className="multifields">
                 <h3>{inputs.multifieldslabel}</h3>
                 <div className="textField">
-                    <label for={inputs.category.replaceAll(" ", "")}>{inputs.category}</label>
+                    <label htmlFor={inputs.category.replaceAll(" ", "")}>{inputs.category}</label>
                     <select id={inputs.category.replaceAll(" ", "")}>
                         {inputs.categories.map((value, index) => {
                             return (
@@ -36,7 +36,7 @@ function ModificationMenu({ inputs, saved, cartHandler, states }) {
                 {inputs.multifields.map((value, index) => {
                     return (
                         <div className="textField">
-                            <label for={value.replaceAll(" ", "")}>{value}</label>
+                            <label htmlFor={value.replaceAll(" ", "")}>{value}</label>
                             <input name={value.replaceAll(" ", "")} id={value.replaceAll(" ", "")}></input>
                         </div>
                     )
@@ -57,7 +57,7 @@ function ModificationMenu({ inputs, saved, cartHandler, states }) {
             {Auth.loggedIn() ? <button className='saveCard' onClick={inputs.handleSave}>Save</button> : false}
             {saved ? (
                 <div className="checkOut">
-                    <label for='productQuantity'>QTY</label>
+                    <label htmlFor='productQuantity'>QTY</label>
                     <input id='productQuantity' name='productQuantity' type='number' />
                     <button className='addCart' onClick={cartHandler}>Add to Cart</button>
                 </div>

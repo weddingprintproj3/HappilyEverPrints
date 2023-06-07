@@ -14,9 +14,9 @@ function ThankYou(props){
             alt='thank you card' 
             src='/images/Green-Floral-Watercolor-Thank-You-Card-no-text.png' 
             className="card-image"/>
-            <span className="draggableField"  id="thankyoubride" style={{top: '67%', left: '13%'}}>{props.brideState}</span>
-            <span className="draggableField"  id="tyampersand" style={{top: '67%', left: '42%'}}>And</span>
-            <span className="draggableField"  id="thankyougroom" style={{top: '67%', left: '60%'}}>{props.groomState}</span>
+            <span className="draggableField"  id="thankyoubride" style={{top: '67%', left: '13%'}} draggable="true">{props.brideState}</span>
+            <span className="draggableField"  id="tyampersand" style={{top: '67%', left: '42%'}} draggable="true">And</span>
+            <span className="draggableField"  id="thankyougroom" style={{top: '67%', left: '60%'}} draggable="true">{props.groomState}</span>
         </div>
     );
 }
