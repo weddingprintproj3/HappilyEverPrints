@@ -27,8 +27,14 @@ const resolvers = {
     user: async (parent, args, context) => {
       if (context.user) {
         const user = await User.findById(context.user._id)
-          .populate('orders')
-          .populate('savedProducts');
+          .populate({
+            path: 'orders.products',
+            populate: 'category',
+          })
+          .populate({
+            path: 'savedProducts',
+            populate: 'category',
+          });
         user.orders.sort((a, b) => b.purchaseDate - a.purchaseDate);
 
         return user;
@@ -38,10 +44,11 @@ const resolvers = {
     },
     order: async (parent, { id }, context) => {
       if (context.user) {
-        const user = await User.findById(context.user.id).populate({
-          path: 'orders.products',
-          populate: 'category',
-        });
+        const user = await User.findById(context.user.id)
+          .populate({
+            path: 'orders.products',
+            populate: 'category',
+          });
 
         return user.orders.id(id);
       }
@@ -55,12 +62,12 @@ const resolvers = {
       const url = new URL(context.headers.referer).origin;
       console.log(url);
       const line_items = [];
-      const {orders} = await User.findById(context.user._id)
-          .populate('orders')
-          .populate('savedProducts');
-      
+      const { orders } = await User.findById(context.user._id)
+        .populate('orders')
+        .populate('savedProducts');
+
       for (let i = 0; i < orders.length; i++) {
-        quantity =  orders[i].orderQuantity
+        quantity = orders[i].orderQuantity
         products = orders[i].products
         for (let i = 0; i < products.length; i++) {
           const product = await Product.findById(products[i])
@@ -107,7 +114,7 @@ const resolvers = {
       const product = await Product.findById(productID)
 
       if (context.user) {
-        const order = new Order({ orderQuantity, products:productID,status } );
+        const order = new Order({ orderQuantity, products: productID, status });
         //await Order.findByIdAndUpdate(order._id,{ $addToSet: { products: product._id } })
 
         await User.findByIdAndUpdate(context.user._id, { $push: { orders: order } });
@@ -170,15 +177,15 @@ const resolvers = {
             image: args.image,
             price: args.price,
             category: category,
-            textFields:args.textFields,
-            groupFields:args.groupFields,
-            mods:args.mods    
-        });
+            textFields: args.textFields,
+            groupFields: args.groupFields,
+            mods: args.mods
+          });
         await User.findByIdAndUpdate(context.user._id, { $push: { savedProducts: newProduct } });
         return newProduct;
 
       }
-      throw new AuthenticationError('Not logged in');    
+      throw new AuthenticationError('Not logged in');
     },
     updateProduct: async (parent, args, context) => {
       const product = await Product.findOneAndUpdate(
@@ -199,7 +206,7 @@ const resolvers = {
     },
     deleteOrder: async (parent, args, context) => {
       if (context.user) {
-        await User.findByIdAndUpdate(context.user._id, { $pull: { orders: {_id:args.orderId} } });
+        await User.findByIdAndUpdate(context.user._id, { $pull: { orders: { _id: args.orderId } } });
         console.log('Order deleted successfully');
         return { message: 'Order deleted successfully' };
       }
@@ -208,9 +215,11 @@ const resolvers = {
     updateOrder: async (parent, args, context) => {
       if (context.user) {
         console.log('I am here');
-        await User.updateOne({_id:context.user._id, "orders.status": "PENDING"}, {'$set': {
-          'orders.$.status': 'COMPLETED',
-      }});
+        await User.updateOne({ _id: context.user._id, "orders.status": "PENDING" }, {
+          '$set': {
+            'orders.$.status': 'COMPLETED',
+          }
+        });
         return { message: 'orders updated' };
       }
       throw new AuthenticationError('Not logged in');

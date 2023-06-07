@@ -101,6 +101,10 @@ export const QUERY_USER = gql`
           price
           quantity
           image
+          category {
+            _id
+            name
+          }
         }
         status
         orderQuantity
@@ -112,6 +116,10 @@ export const QUERY_USER = gql`
         price
         quantity
         image
+        category {
+          _id
+          name
+        }
       }
     }
   }

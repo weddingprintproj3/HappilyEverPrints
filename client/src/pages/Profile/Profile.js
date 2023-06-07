@@ -38,7 +38,20 @@ function Profile() {
         )
     }
 
+    function categoryToUrl(category) {
+        if (category === "Invitations") {
+            return "/products/invitation";
+        } else if (category === "Menus") {
+            return "/products/menu";
+        } else if (category === "Thank You Cards") {
+            return "/products/thankyou";
+        } else if (category === "Seating Charts") {
+            return "/products/guestlist";
+        }
+    }
+
     function Orders() {
+        
         return (
             <>
                 <div>
@@ -50,15 +63,14 @@ function Profile() {
                             {user.orders.map((order) => (
                                 <div key={order._id}>
                                     <h3>
-                                        {new Date(parseInt(order.purchaseDate)).toLocaleDateString()}
+                                        Your order from {new Date(parseInt(order.purchaseDate)).toLocaleDateString()} contained the following items:
                                     </h3>
                                     <div>
-                                        {order.products.map(({ _id, name, price, quantity }, index) => (
+                                        {order.products.map((product, index) => (
                                             <div key={index}>
                                                 <div>
-                                                    <span>{quantity}</span>
-                                                    <Link to={`/products/${_id}`}>{name}</Link>
-                                                    <span>${price}</span>
+                                                    <Link to={`${categoryToUrl(product.category.name)}/${product._id}`}>{product.name}</Link>
+                                                <img src={`images/${product.image}`} alt="product.name"/>
                                                 </div>
                                             </div>
                                         ))}
@@ -76,19 +88,18 @@ function Profile() {
         return (
             <>
                 <div>
-                    <h2>Favourites</h2>
+                    <h2>Favorites</h2>
                 </div>
                 <div>
                     {user ? (
                         <>
                             {user.savedProducts.length > 0 ? (
                                 <>
-                                    {user.savedProducts.map(({ _id, name, price, image }, index) => (
+                                    {user.savedProducts.map((product, index) => (
                                         <div key={index}>
                                             <h3>
-                                                <Link to={`/products/${_id}`}>{name}</Link>
-                                                {image}
-                                                ${price}
+                                                <Link to={`${categoryToUrl(product.category.name)}/${product._id}`}>{product.name}</Link>
+                                                <img src={`images/${product.image}`} alt="product.name"/>
                                             </h3>
                                         </div>
                                     ))}
@@ -109,20 +120,20 @@ function Profile() {
                         <aside>
                             <TabList>
                                 <Tab>
-                                <p><span><FontAwesomeIcon icon={faGaugeHigh} color="#343131" /></span>Dashboard</p>
-                            </Tab>
-                            <Tab>
-                                <p><span><FontAwesomeIcon icon={faCartShopping} color="#343131" /></span>Orders</p>
-                            </Tab>
-                            <Tab>
-                                <p><span><FontAwesomeIcon icon={faHeart} color="#343131" /></span>Favorites</p>
-                            </Tab>
-                            <Tab>
-                                <p><span><FontAwesomeIcon icon={faUser} color="#343131" /></span>Account details</p>
-                            </Tab>
-                            <Tab onClick={() => navigate('/logout')}>
-                                <p onClick={() => navigate('/logout')}><span><FontAwesomeIcon icon={faRightFromBracket} color="#343131" /></span>Logout</p>
-                            </Tab>
+                                    <p><span><FontAwesomeIcon icon={faGaugeHigh} color="#343131" /></span>Dashboard</p>
+                                </Tab>
+                                <Tab>
+                                    <p><span><FontAwesomeIcon icon={faCartShopping} color="#343131" /></span>Orders</p>
+                                </Tab>
+                                <Tab>
+                                    <p><span><FontAwesomeIcon icon={faHeart} color="#343131" /></span>Favorites</p>
+                                </Tab>
+                                <Tab>
+                                    <p><span><FontAwesomeIcon icon={faUser} color="#343131" /></span>Account details</p>
+                                </Tab>
+                                <Tab onClick={() => navigate('/logout')}>
+                                    <p onClick={() => navigate('/logout')}><span><FontAwesomeIcon icon={faRightFromBracket} color="#343131" /></span>Logout</p>
+                                </Tab>
                             </TabList>
                         </aside>
                         <section>
@@ -149,7 +160,7 @@ function Profile() {
     } else {
         return (
             <>
-            <h1>Oops! You need log in / create an account if you want access to this section.</h1>
+                <h1>Oops! You need log in / create an account if you want access to this section.</h1>
             </>
         )
     }
