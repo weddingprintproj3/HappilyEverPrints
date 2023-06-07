@@ -10,7 +10,7 @@ import Auth from "../../utils/auth";
 
 function AccountDetails() {
     const { data } = useQuery(QUERY_USER);
-    const [updateUser] = useMutation(UPDATE_USER);
+    const [updateUser, { error }] = useMutation(UPDATE_USER);
     const [deleteUser] = useMutation(DELETE_USER);
     const [modalShow, setModalShow] = React.useState(false);
 
@@ -102,16 +102,16 @@ function AccountDetails() {
                         <TabPanel>
                             <form onSubmit={updateNameForm}>
                                 <div className="formInput">
+                                    <label>First Name:</label>
                                     <input
-                                        placeholder={user.firstName}
                                         name="firstName"
                                         type="firstName"
                                         id="firstName"
                                     />
                                 </div>
                                 <div className="formInput">
+                                    <label>Last Name:</label>
                                     <input
-                                        placeholder={user.lastName}
                                         name="lastName"
                                         type="lastName"
                                         id="lastName"
@@ -133,13 +133,14 @@ function AccountDetails() {
                         <TabPanel>
                             <form onSubmit={updateEmailForm}>
                                 <div className="formInput">
+                                    <label>New email address:</label>
                                     <input
-                                        placeholder={user.email}
                                         name="email"
                                         type="email"
                                         id="email"
                                     />
                                 </div>
+                                <label>Please provide your password to validate this change:</label>
                                 <div className="formInput">
                                     <input
                                         placeholder="Password"
@@ -152,6 +153,11 @@ function AccountDetails() {
                                     <button type="submit">Update</button>
                                 </div>
                             </form>
+                            {error ? (
+                                <div className="error">
+                                    <p>Incorrect password</p>
+                                </div>
+                            ) : null}
                             {modalShow && (
                                 <div className="modal">
                                     <div>
@@ -185,6 +191,11 @@ function AccountDetails() {
                                     <button type="submit">Update</button>
                                 </div>
                             </form>
+                            {error ? (
+                                <div className="error">
+                                    <p>Incorrect password</p>
+                                </div>
+                            ) : null}
                             {modalShow && (
                                 <div className="modal">
                                     <div>
