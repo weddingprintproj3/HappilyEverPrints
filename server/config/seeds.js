@@ -62,6 +62,15 @@ db.once('open', async () => {
     lastName: 'Holt',
     email: 'eholt@testmail.com',
     password: 'password12345',
+    orders: [
+      { purchaseDate: new Date().setDate(new Date().getDate() - 10),
+        products: [products[0]._id, products[1]._id, products[2]._id],
+        status: 'COMPLETED',
+      }
+    ],
+    savedProducts: [
+      products[0]._id, products[1]._id, products[2]._id
+    ]
   });
 
   console.log('users seeded');

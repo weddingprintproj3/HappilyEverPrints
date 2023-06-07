@@ -1,0 +1,269 @@
+.canvas {
+    min-height: calc(100vh - 80px);
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    margin: 30px auto;
+
+    .card {
+        position: relative;
+        width: 100%;
+        display: flex;
+        align-items: flex-start;
+        margin-bottom: 30px;
+
+        .card-image {
+            width: 100%;
+        }
+
+        .draggableField {
+            position: absolute;
+        }
+    }
+
+    .modMenu {
+        width: 100%;
+        background-color: #fafafa;
+        padding: 30px;
+
+        .productData {
+            line-height: 1.5;
+
+            h2 {
+                font-size: 40px;
+                padding-bottom: 20px;
+                font-family: 'Gistesy', sans-serif;
+                letter-spacing: 2px;
+                text-align: center;
+                font-weight: 200;
+            }
+
+            #productDescirption {
+                margin-bottom: 10px;
+            }
+
+            > :last-child {
+                font-weight: 600;
+                margin-bottom: 10px;
+            }
+
+        }
+
+        .textFields {
+            h3 {
+                text-align: center;
+                padding-bottom: 12px;
+            }
+
+            .textField {
+                display: flex;
+                flex-direction: column;
+                padding-bottom: 12px;
+
+                label {
+                    text-transform: uppercase;
+                    padding-bottom: 4px;
+                }
+
+                input {
+                    width: 100%;
+                    border: 0;
+                    background: #E4e4e4;
+                    font-size: 14px;
+                    padding: 10px;
+                    font-family: inherit;
+                    font-weight: 600;
+                }
+            }
+        }
+
+        .multifields {
+            h3 {
+                text-align: center;
+                padding-bottom: 12px;
+                margin-top: 8px;
+            }
+
+            .textField {
+                display: flex;
+                flex-direction: column;
+                padding-bottom: 12px;
+
+                label {
+                    text-transform: uppercase;
+                    padding-bottom: 4px;
+                }
+
+
+                select,
+                input {
+                    width: 100%;
+                    border: 0;
+                    background: #E4e4e4;
+                    font-size: 14px;
+                    padding: 10px;
+                    font-family: inherit;
+                    font-weight: 600;
+                }
+            }
+
+            .addNew {
+                margin-bottom: 40px;
+                color: inherit;
+                font: inherit;
+                cursor: pointer;
+                text-transform: uppercase;
+                font-size: 12px;
+                font-weight: 600;
+                letter-spacing: 3px;
+                text-decoration: none;
+                padding: 12px 0;
+                border: 1px solid #adbea3;
+                white-space: nowrap;
+                margin-top: 10px;
+                width: 200px;
+
+                &:hover {
+                    background-color: #bdcbb5;
+                    border: 1px solid #bdcbb5;
+                }
+            }
+        }
+
+        .saveCard {
+            background: #adbea3;
+            color: inherit;
+            font: inherit;
+            cursor: pointer;
+            text-transform: uppercase;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 3px;
+            text-decoration: none;
+            padding: 12px 40px;
+            border: 1px solid #adbea3;
+            white-space: nowrap;
+            margin-top: 10px;
+            width: 200px;
+
+            &:hover {
+                background-color: #bdcbb5;
+                border: 1px solid #bdcbb5;
+            }
+        }
+
+        .checkOut {
+            display: flex;
+            flex-direction: column;
+            margin-top: 40px;
+
+            label {
+                text-transform: uppercase;
+                padding-bottom: 4px;
+            }
+
+            input {
+                width: 100%;
+                border: 0;
+                background: #E4e4e4;
+                font-size: 14px;
+                padding: 10px;
+                font-family: inherit;
+                font-weight: 600;
+            }
+
+            .addCart {
+                background: #adbea3;
+                color: inherit;
+                font: inherit;
+                cursor: pointer;
+                text-transform: uppercase;
+                font-size: 12px;
+                font-weight: 600;
+                letter-spacing: 3px;
+                text-decoration: none;
+                padding: 12px 20px;
+                border: 1px solid #adbea3;
+                white-space: nowrap;
+                margin-top: 22px;
+                margin-bottom: 20px;
+                width: 200px;
+
+                &:hover {
+                    background-color: #bdcbb5;
+                    border: 1px solid #bdcbb5;
+                }
+            }
+        }
+    }
+
+}
+
+@media (min-width: 992px) {
+    .canvas {
+        flex-direction: row;
+        width: 70%;
+        gap: 40px;
+
+        .card {
+            width: 40%;
+            margin-bottom: 0;
+        }
+
+        .modMenu {
+            width: 60%;
+        }
+    }
+}
+
+// .textFields {
+//     margin: 1rem !important;
+// }
+
+/* The Modal (background) */
+.modal {
+    display: none;
+    /* Hidden by default */
+    position: fixed;
+    /* Stay in place */
+    z-index: 1;
+    /* Sit on top */
+    padding-top: 100px;
+    /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%;
+    /* Full width */
+    height: 100%;
+    /* Full height */
+    overflow: auto;
+    /* Enable scroll if needed */
+    background-color: rgb(0, 0, 0);
+    /* Fallback color */
+    background-color: rgba(0, 0, 0, 0.4);
+    /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+    background-color: #fefefe;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+}
+
+/* The Close Button */
+.close {
+    color: #aaaaaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}

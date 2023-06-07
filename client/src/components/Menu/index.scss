@@ -1,0 +1,28 @@
+ul {
+    list-style-type: none;
+}
+
+.appetizers {
+    font-size: 0.7em;
+    text-align: center;
+}
+
+.entrees {
+    font-size: 0.7em;
+    text-align: center;
+}
+
+ .deserts{
+  position: absolute;
+  font-size: 0.7em;
+  text-align: center;
+}
+
+#mnmessage {
+    position: absolute;
+    font-family: 'BeautifullyDelicious', cursive;
+    writing-mode: vertical-lr;
+    transform: rotate(180deg);
+    font-size: 3.2em;
+    height: 100%;
+}

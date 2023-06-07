@@ -24,9 +24,38 @@ export const QUERY_PRODUCTS = gql`
   }
 `;
 
+export const QUERY_SINGLE_PRODUCTS = gql`
+  query Product($id: ID!) {
+    product(_id: $id) {
+      textFields {
+        label
+        input
+      }
+      price
+      name
+      image
+      groupFields {
+        group
+        fields
+      }
+      description
+      category {
+        name
+        _id
+      }
+      mods {
+        element_id
+        posTop
+        posLeft
+      }
+      _id
+    }
+  }
+`;
+
 export const QUERY_CHECKOUT = gql`
-  query getCheckout($products: [ID]!) {
-    checkout(products: $products) {
+  query getCheckout {
+    checkout {
       session
     }
   }
@@ -61,6 +90,7 @@ export const QUERY_USER = gql`
     user {
       firstName
       lastName
+      email
       orders {
         _id
         purchaseDate
@@ -71,6 +101,24 @@ export const QUERY_USER = gql`
           price
           quantity
           image
+          category {
+            _id
+            name
+          }
+        }
+        status
+        orderQuantity
+      }
+      savedProducts {
+        _id
+        name
+        description
+        price
+        quantity
+        image
+        category {
+          _id
+          name
         }
       }
     }

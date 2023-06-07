@@ -1,44 +1,37 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
-import { removeFromCart, updateCartQuantity } from '../utils/actions';
-import { idbPromise } from '../utils/helpers';
+
+import { useMutation } from '@apollo/client';
+import { DELETE_ORDER } from '../../utils/mutations'
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrash } from '@fortawesome/free-solid-svg-icons';
+
+
+import './index.scss';
 
 const CartItem = ({ item }) => {
-  const dispatch = useDispatch();
-
-  const removeItemFromCart = () => {
-    dispatch(removeFromCart(item._id));
-    idbPromise('cart', 'delete', { ...item });
-  };
-
-  const onChange = (e) => {
-    const value = e.target.value;
-
-    if (value === '0') {
-      dispatch(removeFromCart(item._id));
-      idbPromise('cart', 'delete', { ...item });
-    } else {
-      dispatch(updateCartQuantity(item._id, parseInt(value)));
-      idbPromise('cart', 'put', { ...item, quantity: parseInt(value) });
+  const [deleteOrder] = useMutation(DELETE_ORDER)
+  console.log(item)
+  const removeItemFromCart = async (event) => {
+    console.log(event.target.id)
+    const { data } = await deleteOrder({
+      variables: { orderId: event.target.id },
+    });
+    if (data) {
+      window.location.reload();
     }
   };
 
+
   return (
-    <div className="cart-item">
-      <img src={`/images/${item.image}`} alt={item.name} />
-      <div>
-        <h3>{item.name}</h3>
-        <p>${item.price}</p>
-        <div>
-          <label htmlFor={`quantity-${item._id}`}>Quantity:</label>
-          <input
-            type="number"
-            id={`quantity-${item._id}`}
-            value={item.quantity}
-            onChange={onChange}
-          />
+    <div className="cart-card">
+      <img src={`${item.products[0].image}`} alt={item.products[0].name} />
+      <div className='card-text'>
+        <h3>{item.products[0].name}</h3>
+        <p>${item.products[0].price}</p>
+        <div className="button-container">
+          <button className="remove-button" id={item._id} onClick={removeItemFromCart}><span><FontAwesomeIcon icon={faTrash} color="#343131" /></span>Remove from Cart</button>
         </div>
-        <button onClick={removeItemFromCart}>Remove from Cart</button>
       </div>
     </div>
   );

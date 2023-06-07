@@ -1,0 +1,210 @@
+.profile-page {
+    width: 100%;
+    min-height: calc(100vh - 80px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .react-tabs {
+        display: flex;
+        background-color: #fafafa;
+        flex-direction: row;
+        width: 100%;
+
+        .react-tabs__tab-list {
+            display: flex;
+            flex-direction: column;
+            width: 214px;
+            color: #454545;
+            background: #fafafa;
+            height: calc(100vh - 80px);
+
+            .react-tabs__tab {
+                height: 80px;
+                list-style: none;
+                padding: 14px;
+                cursor: pointer;
+                color: #bbb;
+                text-align: left;
+                display: flex;
+                justify-content: left;
+                align-items: center;
+                border-bottom: 1px solid lightgrey;
+            }
+
+            .react-tabs__tab p span {
+                margin-right: 10px;
+            }
+
+            .react-tabs__tab--selected {
+                background: #adbea3;
+                border-color: #adbea3;
+                border-left: 4px solid #1c1d1f;
+                color: white;
+            }
+        }
+
+        .react-tabs__tab-panel {
+            // background-color: blue;
+            display: flex;
+            flex-direction: column;
+            text-align: center;
+            align-items: center;
+
+            .container {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                width: calc(100vw - 231px);
+                background-color: white;
+                padding: 30px;
+                margin: 0 auto;
+                min-height: calc(100vh - 80px);
+
+                h2 {
+                    font-size: 40px;
+                    padding-bottom: 20px;
+                    font-family: 'Gistesy', sans-serif;
+                    letter-spacing: 2px;
+                    text-align: center;
+                    font-weight: 200;
+                }
+
+                .panel-content {
+                    text-align: center;
+                    background-color: #f3f3f3;
+                    padding: 14px;
+                    margin-bottom: 20px;
+
+                    h3 {
+                        margin-bottom: 10px;
+                        font-size: 1.3em;
+                    }
+
+                    p {
+                        max-width: 700px;
+                        font-size: 1.2em;
+                        line-height: 1.5;
+                    }
+
+                    .order-card,
+                    .fav-card {
+                        display: flex;
+                        flex-direction: column;
+
+                        .product-link {
+                            margin-bottom: 10px;
+                            text-decoration: none;
+                            text-transform: uppercase;
+                            color: black;
+
+                            &:hover {
+                                text-decoration: underline;
+                                color: #749a5e;
+                            }
+                        }
+
+                        .product-img {
+                            margin-bottom: 10px;
+                        }
+                    }
+                }
+
+                .account-details-page {
+
+                    .react-tabs {
+                        display: flex;
+                        margin-left: 0px;
+                        height: 400px;
+                        // background-color: orange;
+                        width: calc(100vw - 231px);
+
+                        .react-tabs__tab-list {
+                            display: flex;
+                            flex-direction: column;
+                            width: 170px;
+                            color: #454545;
+                            background: #fafafa;
+                            height: auto;
+
+                            .react-tabs__tab {
+                                height: 80px;
+                                list-style: none;
+                                padding: 14px;
+                                cursor: pointer;
+                                color: #bbb;
+                                text-align: left;
+                                display: flex;
+                                justify-content: left;
+                                align-items: center;
+                                border-bottom: 1px solid lightgrey;
+                            }
+
+                            .react-tabs__tab--selected {
+                                background: #adbea3;
+                                border-color: #adbea3;
+                                border-left: 4px solid #1c1d1f;
+                                color: white;
+                            } 
+                        }
+
+                        // .react-tabs__tab-panel {
+                        //     display: none;
+                        //     width: 100%;
+
+                        //     .modal {
+                        //         display: flex;
+                        //         position: fixed;
+                        //         justify-content: center;
+                        //         align-items: center;
+                        //         top: 0;
+                        //         left: 0;
+                        //         width: 100%;
+                        //         height: 100%;
+                        //         overflow: auto;
+                        //         background-color: rgba(0, 0, 0, 0.4);
+                        //         z-index: 1000;
+
+                        //         .modal div {
+                        //             background-color: #fefefe;
+                        //             padding: 30px 30px;
+                        //             border: 1px solid #888;
+                        //             width: 80%;
+                        //             max-width: 700px;
+
+                        //             p {
+                        //                 margin-bottom: 0px;
+                        //             }
+
+                        //             .close {
+                        //                 color: #aaa;
+                        //                 float: right;
+                        //                 font-size: 20px;
+                        //                 font-weight: bold;
+                        //                 padding: 0 6px;
+                        //                 margin-left: 10px;
+                        //             }
+
+                        //             .close:hover,
+                        //             .close:focus {
+                        //                 color: black;
+                        //                 text-decoration: none;
+                        //                 cursor: pointer;
+                        //             }
+                        //         }
+                        //     }
+                        // }
+
+                        // .react-tabs__tab-panel--selected {
+                        //     display: block;
+                        // }
+                    }
+                }
+            }
+        }
+
+        .react-tabs__tab-panel--selected {
+            display: block;
+        }
+    }
+}

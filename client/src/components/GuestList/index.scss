@@ -1,0 +1,52 @@
+.table1,
+.table2,
+.table3,
+.table4,
+.table5,
+.table6 {
+    font-size: 0.9em;
+    color: #96B290;
+}
+
+#guestlistbride {
+    font-size: 1.9em;
+    font-family: 'Tex Gyre Termes', cursive;
+    color: #96B290;
+    letter-spacing: 1.4px;
+}
+
+#glampersand {
+    font-size: 1.9em;
+    font-family: 'Tex Gyre Termes', cursive;
+    color: #96B290;
+}
+
+#guestlistgroom {
+    font-size: 1.9em;
+    font-family: 'Tex Gyre Termes', cursive;
+    color: #96B290;
+    letter-spacing: 1.4px;
+}
+
+.guestList {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+
+    h3 {
+        margin-bottom: 10px;
+    }
+
+    .tableMembers {
+        list-style-type: none;
+        text-align: center;
+
+        li {
+            margin: 0 !important;
+            padding: 1.2px;
+            font-size: 0.7em;
+            text-align: center;
+        }
+    }
+}

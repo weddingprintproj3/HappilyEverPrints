@@ -1,74 +1,89 @@
 import React, { useEffect } from 'react';
-import { useSelector } from 'react-redux';
-import CartItem from '../CartItem';
-import Auth from '../utils/auth';
+import CartItem from '../CartItem/CartItem';
+import Auth from '../../utils/auth';
+import './index.scss';
 
 // importation for stripe (payment)
 import { loadStripe } from '@stripe/stripe-js';
-import { useLazyQuery } from '@apollo/client';
-import { QUERY_CHECKOUT } from '../utils/queries'; // query
-
-const stripePromise = loadStripe('API_KEY'); // Stripe API key wll be added
+import { useLazyQuery, useQuery, useMutation } from '@apollo/client';
+import { QUERY_CHECKOUT, QUERY_USER } from '../../utils/queries'; // query
+import  {UPDATE_ORDER} from '../../utils/mutations';
+const stripePromise = loadStripe('pk_live_51MBSGXHxM1wHJ7zi2itQjXky3AQ91Ud6Clahvy8yIhNDQClEzI357kPUnymD8Lip2dAGbjtuvT3PQcptK8KppjlC00tStvDCdZ'); // Stripe API key wll be added
 
 function Cart() {
-  const state = useSelector(state => state);
+  
   const [getCheckout, { data }] = useLazyQuery(QUERY_CHECKOUT);
-
+  const { loading, error,data: user_data } = useQuery(QUERY_USER)
+  const [updateOrder] = useMutation(UPDATE_ORDER)
   useEffect(() => {
     if (data) {
+      console.log(data);
       stripePromise.then((stripe) => {
-        stripe.redirectToCheckout({ sessionId: data.checkout.sessionId });
+        stripe.redirectToCheckout({ sessionId: data.checkout.session });
       });
     }
   }, [data]);
+  if (loading) {
+    return <h2>LOADING...</h2>;
+  }
+  
 
+  
   function calculateTotal() {
     let total = 0;
-    state.cart.forEach(item => {
-      total += item.price * item.quantity;
+    user_data.user.orders.forEach(item => {
+      item.products.forEach(product => {
+        console.log(item)
+        total += product.price * item.orderQuantity;
+      });
+      
     });
     return total.toFixed(2);
   }
 
   const renderCartItems = () => {
-    if (state.cart.length === 0) {
+    if (user_data.user.orders.length === 0) {
       return (
-        <div>
+        <div className='cartItem'>
           <p>Your Shopping Cart is Empty</p>
         </div>
       );
     }
 
     return (
-      <div>
-        {state.cart.map(item => (
+      <div className='cartItem'>
+        {user_data.user.orders.map(item => (
           <CartItem key={item._id} item={item} />
         ))}
       </div>
     );
   };
 
-  function submitCheckout() {
+  async function submitCheckout() {
+    const { message } = await updateOrder();
     getCheckout();
+      
   }
 
-  return (
-    <section>
-      <h1>Shopping Cart</h1>
-      {renderCartItems()}
-      {state.cart.length > 0 && (
-        <div>
-          <p>Total: ${calculateTotal()}</p>
-          {Auth.loggedIn() ? (
-            <button onClick={submitCheckout}>Checkout</button>
-          ) : (
-            <p>Please log in to proceed to checkout.</p>
-          )}
-        </div>
 
-      )}
-    </section>
-  );
+  if (Auth.loggedIn()){ 
+    return (
+      <div className="container cart-page">
+        <h1>Shopping Cart</h1>
+        {renderCartItems()}
+        {user_data.user.orders.length > 0 && (
+          <div className="cart-summary">
+            <p>Total: <span className="total-price">${calculateTotal()}</span></p>
+            <button className="checkout-button"  onClick={submitCheckout}>Checkout</button>
+          </div>
+  
+        )}
+      </div>
+    );
+  } else {
+    return <p>Please <a href="/login" >log in</a> to proceed to checkout.</p>
+  }
+
 }
 
 export default Cart;
