@@ -54,7 +54,7 @@ function ModificationMenu({ inputs, saved, cartHandler, states }) {
             </div>
             {inputs.textfields.length !== 0 && textfields()}
             {inputs.multifields.length !== 0 && multifields()}
-            {Auth.loggedIn() ? <button className='saveCard' onClick={inputs.handleSave}>Save</button> : false}
+            {Auth.loggedIn() ? <button className='saveCard' onClick={inputs.handleSave}>Save</button> : <p>Please Login to Save</p>}
             {saved ? (
                 <div className="checkOut">
                     <label htmlFor='productQuantity'>QTY</label>

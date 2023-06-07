@@ -130,7 +130,7 @@ function Product() {
     const product = {
       name: document.getElementById('productName').innerText,
       description: document.getElementById('productDescirption').innerText,
-      image: "/images/White-Green-Watercolor-Leaf-Wedding-Seating-Chart-no-text.png",
+      image: "/images/White-Green-And-Black-Floral-Wedding-Seating-Chart-no-text",
       price: parseFloat(document.getElementById('productPrice').innerText),
       category: {
         name: "Guest Lists"
