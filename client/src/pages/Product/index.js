@@ -1,4 +1,5 @@
-import React , {useState} from 'react';
+import React , {useState, useEffect} from 'react';
+import { useNavigate  } from 'react-router-dom';
 import {useQuery, useMutation } from '@apollo/client';
 import { ADD_PROD, ADD_ORDER, DELETE_PROD  } from '../../utils/mutations'
 import { QUERY_SINGLE_PRODUCTS } from '../../utils/queries'
@@ -24,7 +25,7 @@ function Product() {
   const [addOrder, {error: error2}] = useMutation(ADD_ORDER)
   const [deleteProd, {error: error3}] = useMutation(DELETE_PROD)
   const { loading, data } = useQuery(QUERY_SINGLE_PRODUCTS, {variables: {"id": productID}});
-
+  const navigate = useNavigate()
   const setters = {
     bride:setBrideName, 
     groom:setGroomName, 
@@ -39,9 +40,7 @@ function Product() {
     time:invitationTime, 
     location:invitationLocation
   }
-  if (loading) {
-    return <h2>LOADING...</h2>;
-  }
+
   
      
   document.addEventListener('readystatechange', event => {
@@ -98,7 +97,7 @@ function Product() {
       textFields: textfields,
       mods: mods
     }
-    const urlRedirect = `http://${window.location.host}/products/invitation/`
+
     if(productID) {
       const { data } = await deleteProd({
         variables: {productID: productID},
@@ -107,8 +106,8 @@ function Product() {
     const { data } = await addProd({
       variables: {...product },
     });
+    navigate(`/products/invitation/${data.addProduct._id}`)
 
-    window.location.replace(urlRedirect + data.addProduct._id)
     alert("Product has been saved") 
   }
 
@@ -140,7 +139,7 @@ function Product() {
       groupFields: multifields,
       mods: mods
     }
-    const urlRedirect = `http://${window.location.host}/products/guestlist/`
+   
     if(productID) {
       const { data } = await deleteProd({
         variables: {productID: productID},
@@ -149,7 +148,7 @@ function Product() {
     const { data } = await addProd({
       variables: {...product },
     });
-    window.location.replace(urlRedirect + data.addProduct._id)
+    navigate(`/products/guestlist/${data.addProduct._id}`);
     alert("Product has been saved") 
   }
 
@@ -181,7 +180,7 @@ function Product() {
       groupFields: multifields,
       mods: mods
     }
-    const urlRedirect = `http://${window.location.host}/products/menu/`
+ 
     if(productID) {
       const { data } = await deleteProd({
         variables: {productID: productID},
@@ -191,7 +190,7 @@ function Product() {
       variables: {...product },
     });
 
-    window.location.replace(urlRedirect + data.addProduct._id)
+    navigate(`/products/menu/${data.addProduct._id}`);
     alert("Product has been saved") 
   }
   
@@ -217,7 +216,6 @@ function Product() {
       textFields: textfields,
       mods: mods
     }
-    const urlRedirect = `http://${window.location.host}/products/thankyou/`
     if(productID) {
       const { data } = await deleteProd({
         variables: {productID: productID},
@@ -226,7 +224,7 @@ function Product() {
     const { data } = await addProd({
       variables: {...product },
     });
-    window.location.replace(urlRedirect + data.addProduct._id)
+    navigate(`/products/thankyou/${data.addProduct._id}`);
     alert("Product has been saved") 
   }
   
