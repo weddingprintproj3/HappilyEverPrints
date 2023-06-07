@@ -70,7 +70,7 @@ function Profile() {
                                             <div key={index}>
                                                 <div className='order-card'>
                                                     <Link className="product-link" to={`${categoryToUrl(product.category.name)}/${product._id}`}>{product.name}</Link>
-                                                    <img src={`images/${product.image}`} alt="product.name" />
+                                                    <img className="product-img" src={product.image} alt="product.name" />
                                                 </div>
                                             </div>
                                         ))}
@@ -99,7 +99,7 @@ function Profile() {
                                         <div className="panel-content" key={index}>
                                             <div className='fav-card'>
                                                 <Link className="product-link" to={`${categoryToUrl(product.category.name)}/${product._id}`}>{product.name}</Link>
-                                                <img className="product-img" src={`images/${product.image}`} alt={product.name} />
+                                                <img className="product-img" src={product.image} alt={product.name} />
                                             </div>
                                         </div>
                                     ))}
