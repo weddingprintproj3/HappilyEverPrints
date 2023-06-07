@@ -41,11 +41,11 @@ function Profile() {
     function categoryToUrl(category) {
         if (category === "Invitations") {
             return "/products/invitation";
-        } else if (category === "Menus") {
+        } else if (category === "Menu") {
             return "/products/menu";
-        } else if (category === "Thank You Cards") {
+        } else if (category === "Thank You Card") {
             return "/products/thankyou";
-        } else if (category === "Seating Charts") {
+        } else if (category === "Seating Chart") {
             return "/products/guestlist";
         }
     }
@@ -70,6 +70,7 @@ function Profile() {
                                             <div key={index}>
                                                 <div className='order-card'>
                                                     <img className="product-img" src={product.image} alt="product.name" />
+      
                                                     <Link className="product-link" to={`${categoryToUrl(product.category.name)}/${product._id}`}>{product.name}</Link>
                                                 </div>
                                             </div>
