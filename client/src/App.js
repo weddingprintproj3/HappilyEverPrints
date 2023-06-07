@@ -55,29 +55,29 @@ function App() {
   return (
     <ApolloProvider client={client}>
       <Router>
-      <ScrollToTop />
+        <ScrollToTop />
         <>
           <StoreProvider>
             <Routes>
 
               <Route path="/" element={<Layout />}>
                 <Route index element={<Home />} />
-                <Route path="*" element={<Home />} />
                 <Route path="/help" element={<Help />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/logout" element={<Logout />} />
                 <Route path="/signup" element={<Signup />} />
                 <Route path="/cart" element={<Cart />} />
                 <Route path="/profile" element={<Profile />} />
-                <Route 
-                path="/products/:category/:productID?" 
-                element={<Product />} 
-              />
-              <Route 
-                path="/success" 
-                element={<Success />} 
-              />
+                <Route
+                  path="/products/:category/:productID?"
+                  element={<Product />}
+                />
+                <Route
+                  path="/success"
+                  element={<Success />}
+                />
               </Route>
+              <Route path="*" element={<Home />} />
 
             </Routes>
           </StoreProvider>

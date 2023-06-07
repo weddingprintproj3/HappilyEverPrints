@@ -69,8 +69,8 @@ function Profile() {
                                         {order.products.map((product, index) => (
                                             <div key={index}>
                                                 <div className='order-card'>
+                                                    <img className="product-img" src={`images/${product.image}`} alt="product.name" />
                                                     <Link className="product-link" to={`${categoryToUrl(product.category.name)}/${product._id}`}>{product.name}</Link>
-                                                    <img src={`images/${product.image}`} alt="product.name" />
                                                 </div>
                                             </div>
                                         ))}
@@ -98,8 +98,8 @@ function Profile() {
                                     {user.savedProducts.map((product, index) => (
                                         <div className="panel-content" key={index}>
                                             <div className='fav-card'>
-                                                <Link className="product-link" to={`${categoryToUrl(product.category.name)}/${product._id}`}>{product.name}</Link>
                                                 <img className="product-img" src={`images/${product.image}`} alt={product.name} />
+                                                <Link className="product-link" to={`${categoryToUrl(product.category.name)}/${product._id}`}>{product.name}</Link>
                                             </div>
                                         </div>
                                     ))}
