@@ -133,7 +133,7 @@ function Product() {
       image: "/images/White-Green-Watercolor-Leaf-Wedding-Seating-Chart-no-text.png",
       price: parseFloat(document.getElementById('productPrice').innerText),
       category: {
-        name: "Guest List"
+        name: "Guest Lists"
       },
       textFields: textfields,
       groupFields: multifields,
@@ -174,7 +174,7 @@ function Product() {
       image: "/images/Floral-Botanical-Wedding-Menu-no-text.png",
       price: parseFloat(document.getElementById('productPrice').innerText),
       category: {
-        name: "Menu"
+        name: "Menus"
       },
       textFields: textfields,
       groupFields: multifields,
@@ -208,10 +208,10 @@ function Product() {
     const product = {
       name: document.getElementById('productName').innerText,
       description: document.getElementById('productDescirption').innerText,
-      image: "/images/Black-and-White-Calligraphy-Thank-You-Wedding-Card-no-text.png",
+      image: "/images/Green-Floral-Watercolor-Thank-You-Card-no-text.png",
       price: parseFloat(document.getElementById('productPrice').innerText),
       category: {
-        name: "Thank You Card"
+        name: "Thank You Cards"
       },
       textFields: textfields,
       mods: mods
