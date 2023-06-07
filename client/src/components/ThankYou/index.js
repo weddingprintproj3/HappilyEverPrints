@@ -1,15 +1,22 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import './index.scss';
+
+const handleImageLoad = (e) => {
+    let cardElement = e.target.parentNode;
+    cardElement.style.height = `${e.target.offsetHeight}px`;
+};
+
 function ThankYou(props){
     return (
         <div className="card">
-            <img 
+            <img
+            onLoad={handleImageLoad} 
             alt='thank you card' 
-            src='/images/Black-and-White-Calligraphy-Thank-You-Wedding-Card-no-text.png' 
+            src='/images/Green-Floral-Watercolor-Thank-You-Card-no-text.png' 
             className="card-image"/>
-            <span className="draggableField"  id="thankyoubride" style={{top: '70%', left: '1%'}}>{props.brideState}</span>
-            <span className="draggableField"  id="tyampersand" style={{top: '70%', left: '45%'}}>&</span>
-            <span className="draggableField"  id="thankyougroom" style={{top: '70%', left: '50%'}}>{props.groomState}</span>
+            <span className="draggableField"  id="thankyoubride" style={{top: '67%', left: '13%'}}>{props.brideState}</span>
+            <span className="draggableField"  id="tyampersand" style={{top: '67%', left: '42%'}}>And</span>
+            <span className="draggableField"  id="thankyougroom" style={{top: '67%', left: '60%'}}>{props.groomState}</span>
         </div>
     );
 }

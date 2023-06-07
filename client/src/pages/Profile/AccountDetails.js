@@ -84,7 +84,7 @@ function AccountDetails() {
     };
 
     return (
-        <>
+        <div className='container'>
             <div>
                 <h2>Account Details</h2>
             </div>
@@ -224,7 +224,7 @@ function AccountDetails() {
                 </Tabs>
 
             </div >
-        </>
+        </div>
     )
 }
 

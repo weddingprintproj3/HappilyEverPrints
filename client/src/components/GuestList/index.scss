@@ -1,68 +1,52 @@
-// @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap');
-// .card {
-//     position: relative;    
-// }
+.table1,
+.table2,
+.table3,
+.table4,
+.table5,
+.table6 {
+    font-size: 0.9em;
+    color: #96B290;
+}
 
-// .table1{
-//    position: absolute;
-// }
+#guestlistbride {
+    font-size: 1.9em;
+    font-family: 'Tex Gyre Termes', cursive;
+    color: #96B290;
+    letter-spacing: 1.4px;
+}
 
-// .table2{
-//     position: absolute;
-//  }
+#glampersand {
+    font-size: 1.9em;
+    font-family: 'Tex Gyre Termes', cursive;
+    color: #96B290;
+}
 
-//  .table3{
-//     position: absolute;
-//  }
+#guestlistgroom {
+    font-size: 1.9em;
+    font-family: 'Tex Gyre Termes', cursive;
+    color: #96B290;
+    letter-spacing: 1.4px;
+}
 
-//  .table4{
-//     position: absolute;
-//  }
+.guestList {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
 
+    h3 {
+        margin-bottom: 10px;
+    }
 
-//  .table5{
-//     position: absolute;
-//  }
- 
-//  .table6{
-//      position: absolute;
-//   }
- 
-//   .table7{
-//      position: absolute;
-//   }
- 
-//   .table8{
-//      position: absolute;
-//   }
+    .tableMembers {
+        list-style-type: none;
+        text-align: center;
 
-// #guestlistbride{
-//    position: absolute;
-//    font-size: 4rem;
-//    font-family: 'Great Vibes', cursive;
-// }
-// #glampersand{
-//    position: absolute;
-//    font-size: 3rem;
-//    font-family: 'Great Vibes', cursive;
-// }
-// #guestlistgroom{
-//    position: absolute;
-//    font-size: 4rem;
-//    font-family: 'Great Vibes', cursive;
-// }
-
-// .card img{
-//     height: auto;
-//     width: 90%;
-//     margin: 1rem;
-// }
-// .tableMembers{
-//    list-style-type: none;
-// }
-// .tableMembers li{
-//    margin: 0 !important;
-//    padding: 0;
-//    font-size: .75rem;
-//    text-align: center;
-// }
+        li {
+            margin: 0 !important;
+            padding: 1.2px;
+            font-size: 0.7em;
+            text-align: center;
+        }
+    }
+}

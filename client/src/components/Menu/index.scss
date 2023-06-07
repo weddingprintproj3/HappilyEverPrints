@@ -1,49 +1,28 @@
-// @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap');
+ul {
+    list-style-type: none;
+}
 
-  
-//   .card {
-//       position: relative;    
-//   }
+.appetizers {
+    font-size: 0.7em;
+    text-align: center;
+}
 
-//   .appetizers{
-//     position: absolute;
-//     top: 35%;
-//     left: 40%;
-//     font-size: 1rem;
-//     text-align: center;
-//  }
+.entrees {
+    font-size: 0.7em;
+    text-align: center;
+}
 
+ .deserts{
+  position: absolute;
+  font-size: 0.7em;
+  text-align: center;
+}
 
-//  .entrees{
-//     position: absolute;
-//     top: 51%;
-//     left: 40%;
-//     font-size: 1rem;
-//     text-align: center;
-
-//  }
-
-//  .deserts{
-//   position: absolute;
-//   top: 67%;
-//   left: 40%;
-//   font-size: 1rem;
-//   text-align: center;
-// }
-
-// li {
-//     display: block;
-//     text-align: center;
-//     width: 100%;
-//     margin: 0!important;
-// }
-
-// #mnmessage{
-//   position: absolute;
-//   writing-mode: vertical-lr;
-//   transform: rotate(180deg);
-//   font-size: 2rem;
-//   top: -3%;
-//   left: 7%;
-//   height: 100%;
-// }
+#mnmessage {
+    position: absolute;
+    font-family: 'BeautifullyDelicious', cursive;
+    writing-mode: vertical-lr;
+    transform: rotate(180deg);
+    font-size: 3.2em;
+    height: 100%;
+}

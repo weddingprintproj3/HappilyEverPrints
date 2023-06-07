@@ -1,11 +1,10 @@
-import React, {useState} from 'react';
-import './index.scss';
+import React, { useState } from 'react';
 import Auth from '../../utils/auth';
 
-function ModificationMenu({inputs, saved, cartHandler, states}){
+function ModificationMenu({ inputs, saved, cartHandler, states }) {
     const [productNumber, setProductNumber] = useState(0)
-    function textfields(){
-        return(
+    function textfields() {
+        return (
             <section className="textFields">
                 <h3>{inputs.textfieldslabel}</h3>
                 {inputs.textfields.map((value, index) => {
@@ -19,19 +18,21 @@ function ModificationMenu({inputs, saved, cartHandler, states}){
             </section>
         )
     }
-    function multifields(){
-        return(
+    function multifields() {
+        return (
             <section className="multifields">
                 <h3>{inputs.multifieldslabel}</h3>
-                <label for={inputs.category.replaceAll(" ", "")}>{inputs.category}</label>
-                <select id={inputs.category.replaceAll(" ", "")}>
-                    {inputs.categories.map((value, index) => {
-                        return (
-                            <option value={value}>{value}</option>
-                        )
-                        
-                    })}
-                </select>
+                <div className="textField">
+                    <label for={inputs.category.replaceAll(" ", "")}>{inputs.category}</label>
+                    <select id={inputs.category.replaceAll(" ", "")}>
+                        {inputs.categories.map((value, index) => {
+                            return (
+                                <option value={value}>{value}</option>
+                            )
+
+                        })}
+                    </select>
+                </div>
                 {inputs.multifields.map((value, index) => {
                     return (
                         <div className="textField">
@@ -40,7 +41,7 @@ function ModificationMenu({inputs, saved, cartHandler, states}){
                         </div>
                     )
                 })}
-            <button className='addNew' onClick={inputs.handlers}>Add Another</button>  
+                <button className='addNew' onClick={inputs.handlers}>Add Another</button>
             </section>
         )
     }
@@ -51,16 +52,16 @@ function ModificationMenu({inputs, saved, cartHandler, states}){
                 <div id="productDescirption">{inputs.descriptions[productNumber]}</div>
                 <div>$ <span id="productPrice">{inputs.prices[productNumber]}</span></div>
             </div>
-            {inputs.textfields.length !==0 && textfields()}
-            {inputs.multifields.length !==0 && multifields()}
-            {Auth.loggedIn()? <button className='saveCard' onClick={inputs.handleSave}>Save</button>:false}
-            {saved? (
+            {inputs.textfields.length !== 0 && textfields()}
+            {inputs.multifields.length !== 0 && multifields()}
+            {Auth.loggedIn() ? <button className='saveCard' onClick={inputs.handleSave}>Save</button> : false}
+            {saved ? (
                 <div className="checkOut">
-                    <label for='productQuantity'>QTY</label>    
+                    <label for='productQuantity'>QTY</label>
                     <input id='productQuantity' name='productQuantity' type='number' />
                     <button className='addCart' onClick={cartHandler}>Add to Cart</button>
                 </div>
-            ):null}  
+            ) : null}
         </div>
     );
 }

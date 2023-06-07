@@ -22,7 +22,7 @@ function Profile() {
 
     function Dashboard() {
         return (
-            <>
+            <div className='container'>
                 <div>
                     <h2>Dashboard</h2>
                 </div>
@@ -34,7 +34,7 @@ function Profile() {
                         </div>
                     ) : "loading..."}
                 </div>
-            </>
+            </div>
         )
     }
 
@@ -51,9 +51,9 @@ function Profile() {
     }
 
     function Orders() {
-        
+
         return (
-            <>
+            <div className='container'>
                 <div>
                     <h2>Orders</h2>
                 </div>
@@ -61,16 +61,16 @@ function Profile() {
                     {user ? (
                         <>
                             {user.orders.map((order) => (
-                                <div key={order._id}>
+                                <div className="panel-content" key={order._id}>
                                     <h3>
                                         Your order from {new Date(parseInt(order.purchaseDate)).toLocaleDateString()} contained the following items:
                                     </h3>
                                     <div>
                                         {order.products.map((product, index) => (
                                             <div key={index}>
-                                                <div>
-                                                    <Link to={`${categoryToUrl(product.category.name)}/${product._id}`}>{product.name}</Link>
-                                                <img src={`images/${product.image}`} alt="product.name"/>
+                                                <div className='order-card'>
+                                                    <Link className="product-link" to={`${categoryToUrl(product.category.name)}/${product._id}`}>{product.name}</Link>
+                                                    <img src={`images/${product.image}`} alt="product.name" />
                                                 </div>
                                             </div>
                                         ))}
@@ -80,13 +80,13 @@ function Profile() {
                         </>
                     ) : "loading..."}
                 </div>
-            </>
+            </div>
         )
     }
 
     function Favorites() {
         return (
-            <>
+            <div className='container'>
                 <div>
                     <h2>Favorites</h2>
                 </div>
@@ -96,11 +96,11 @@ function Profile() {
                             {user.savedProducts.length > 0 ? (
                                 <>
                                     {user.savedProducts.map((product, index) => (
-                                        <div key={index}>
-                                            <h3>
-                                                <Link to={`${categoryToUrl(product.category.name)}/${product._id}`}>{product.name}</Link>
-                                                <img src={`images/${product.image}`} alt="product.name"/>
-                                            </h3>
+                                        <div className="panel-content" key={index}>
+                                            <div className='fav-card'>
+                                                <Link className="product-link" to={`${categoryToUrl(product.category.name)}/${product._id}`}>{product.name}</Link>
+                                                <img className="product-img" src={`images/${product.image}`} alt={product.name} />
+                                            </div>
                                         </div>
                                     ))}
                                 </>
@@ -108,7 +108,7 @@ function Profile() {
                         </>
                     ) : "loading..."}
                 </div>
-            </>
+            </div>
         )
     }
 
