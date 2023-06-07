@@ -21,6 +21,8 @@ function Profile() {
     }
 
     function Dashboard() {
+        const name = user.firstName.charAt(0).toUpperCase() + user.firstName.slice(1);
+
         return (
             <div className='container'>
                 <div>
@@ -29,7 +31,7 @@ function Profile() {
                 <div>
                     {user ? (
                         <div className="panel-content">
-                            <h3>Hello, <span>{user.firstName}!</span></h3>
+                            <h3>Hello, <span>{name}!</span></h3>
                             <p>From your account dashboard you can view your recent orders, view your favorite designs, and edit your password and account details.</p>
                         </div>
                     ) : "loading..."}
