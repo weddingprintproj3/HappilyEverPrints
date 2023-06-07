@@ -6,7 +6,7 @@ const resolvers = {
   Query: {
     categories: async () => Category.find(), // get all the categories
     // get all product and if name or category filter are provided return only product that match the criteria
-    products: async (parent, { category, name }) => { 
+    products: async (parent, { category, name }) => {
       const params = {};
 
       if (category) {
@@ -26,11 +26,17 @@ const resolvers = {
       return product;
     },
     // get the current logged in user data, include their orders and saved products
-    user: async (parent, args, context) => { 
+    user: async (parent, args, context) => {
       if (context.user) {
         const user = await User.findById(context.user._id)
-          .populate('orders')
-          .populate('savedProducts');
+          .populate({
+            path: 'orders.products',
+            populate: 'category',
+          })
+          .populate({
+            path: 'savedProducts',
+            populate: 'category',
+          });;
         user.orders.sort((a, b) => b.purchaseDate - a.purchaseDate);
 
         return user;
@@ -41,10 +47,11 @@ const resolvers = {
     // get an order by ID
     order: async (parent, { id }, context) => {
       if (context.user) {
-        const user = await User.findById(context.user.id).populate({
-          path: 'orders.products',
-          populate: 'category',
-        });
+        const user = await User.findById(context.user.id)
+          .populate({
+            path: 'orders.products',
+            populate: 'category',
+          })
 
         return user.orders.id(id);
       }
@@ -60,17 +67,17 @@ const resolvers = {
       const url = new URL(context.headers.referer).origin;
       const line_items = [];
       // get all the order pertaining to the current logged in user
-      const {orders} = await User.findById(context.user._id)
-          .populate('orders')
-          .populate('savedProducts');
-      
+      const { orders } = await User.findById(context.user._id)
+        .populate('orders')
+        .populate('savedProducts');
+
       for (let i = 0; i < orders.length; i++) {
-        
+
         // completed order persist in Users.orders in order to have order history
         // we need to ensure we only get orders that have not been completed
         if (orders[i].status === 'PENDING') {
-          
-          quantity =  orders[i].orderQuantity
+
+          quantity = orders[i].orderQuantity
           products = orders[i].products
           for (let i = 0; i < products.length; i++) {
             const product = await Product.findById(products[i])
@@ -88,9 +95,10 @@ const resolvers = {
               price: price.id,
               quantity: quantity
             });
-            
+
           }
-      }}
+        }
+      }
 
       const session = await stripe.checkout.sessions.create({
         payment_method_types: ['card'],
@@ -114,7 +122,7 @@ const resolvers = {
     addOrder: async (parent, { orderQuantity, productID, status }, context) => {
       const product = await Product.findById(productID)
       if (context.user) {
-        const order = new Order({ orderQuantity, products:productID,status } );
+        const order = new Order({ orderQuantity, products: productID, status });
         await User.findByIdAndUpdate(context.user._id, { $push: { orders: order } });
         return order;
       }
@@ -180,15 +188,15 @@ const resolvers = {
             image: args.image,
             price: args.price,
             category: category,
-            textFields:args.textFields,
-            groupFields:args.groupFields,
-            mods:args.mods    
-        });
+            textFields: args.textFields,
+            groupFields: args.groupFields,
+            mods: args.mods
+          });
         await User.findByIdAndUpdate(context.user._id, { $push: { savedProducts: newProduct } });
         return newProduct;
 
       }
-      throw new AuthenticationError('Not logged in');    
+      throw new AuthenticationError('Not logged in');
     },
     updateProduct: async (parent, args, context) => {
       const product = await Product.findOneAndUpdate(
@@ -200,7 +208,7 @@ const resolvers = {
     // delete the product and remove the ID from the user's saved products
     deleteProduct: async (parent, args, context) => {
       await Product.findByIdAndDelete(args.productID);
-      
+
       if (context.user) {
         await User.findByIdAndUpdate(context.user._id, { $pull: { savedProducts: args.productID } });
         return { message: 'Product deleted successfully' };
@@ -212,8 +220,8 @@ const resolvers = {
     // from the user's orders
     deleteOrder: async (parent, args, context) => {
       if (context.user) {
-        await User.findByIdAndUpdate(context.user._id, { $pull: { orders: {_id:args.orderId} } }); // pull order that matches id
-        
+        await User.findByIdAndUpdate(context.user._id, { $pull: { orders: { _id: args.orderId } } }); // pull order that matches id
+
         return { message: 'Order deleted successfully' };
       }
       throw new AuthenticationError('Not logged in');
@@ -223,22 +231,24 @@ const resolvers = {
     updateOrder: async (parent, args, context) => {
       if (context.user) {
         // get all existing PENDING orders and change them to COMPLETED
-        await User.updateOne({_id:context.user._id, "orders.status": "PENDING"}, {'$set': { 
-          'orders.$.status': 'COMPLETED',
-      }});
+        await User.updateOne({ _id: context.user._id, "orders.status": "PENDING" }, {
+          '$set': {
+            'orders.$.status': 'COMPLETED',
+          }
+        });
         return { message: 'orders updated' };
       }
       throw new AuthenticationError('Not logged in');
     },
     login: async (parent, { email, password }) => {
       const user = await User.findOne({ email });
-      
+
       if (!user) {
         throw new AuthenticationError('Incorrect credentials');
       }
 
       const correctPw = await user.isCorrectPassword(password);
-     
+
       if (!correctPw) {
         throw new AuthenticationError('Incorrect credentials');
       }
