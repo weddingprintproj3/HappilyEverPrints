@@ -138,10 +138,24 @@ const resolvers = {
         if (args.lastName && args.lastName.length > 0) {
           updatedUser.lastName = args.lastName;
         }
+        
+        // checking if both email and password are provided to indicate an email change
         if (args.email && args.email.length > 0) {
+          if (!args.password || args.password.length < 1) {
+            throw new AuthenticationError('Please provide your current password');
+          }
+          const user = await User.findById(context.user._id);
+          const correctPw = await user.isCorrectPassword(args.password);
+          if (!correctPw) {
+            throw new AuthenticationError('Incorrect credentials');
+          }
           updatedUser.email = args.email;
+          return User.findByIdAndUpdate(context.user._id, updatedUser, {
+            new: true,
+          });
         }
-        //checking if password is being updated
+
+        //checking if both current password and new password are provided to indicate a password change
         if (args.password && args.password.length > 0 && args.currentPassword && args.currentPassword.length > 0) {
           const user = await User.findById(context.user._id);
           const correctPw = await user.isCorrectPassword(args.currentPassword);

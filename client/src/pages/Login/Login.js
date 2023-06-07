@@ -55,17 +55,6 @@ function Login(props) {
                                 onChange={handleChange}
                             />
                         </div>
-                        {/* <div>
-                    <input
-                        type="checkbox"
-                        id="rememberMe"
-                    />
-                    <label
-                        htmlFor="rememberMe"
-                    >
-                        Remember me
-                    </label>
-                </div> */}
                         {error ? (
                             <div className="error">
                                 <p>Incorrect email or password</p>
