@@ -29,6 +29,7 @@ const CartItem = ({ item }) => {
       <div className='card-text'>
         <h3>{item.products[0].name}</h3>
         <p>${item.products[0].price}</p>
+        <p>Quantity: {item.orderQuantity}</p>
         <div className="button-container">
           <button className="remove-button" id={item._id} onClick={removeItemFromCart}><span><FontAwesomeIcon icon={faTrash} color="#343131" /></span>Remove from Cart</button>
         </div>
