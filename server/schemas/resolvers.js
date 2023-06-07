@@ -4,8 +4,9 @@ const { signToken } = require('../utils/auth');
 const stripe = require('stripe')('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');
 const resolvers = {
   Query: {
-    categories: async () => Category.find(),
-    products: async (parent, { category, name }) => {
+    categories: async () => Category.find(), // get all the categories
+    // get all product and if name or category filter are provided return only product that match the criteria
+    products: async (parent, { category, name }) => { 
       const params = {};
 
       if (category) {
@@ -18,23 +19,18 @@ const resolvers = {
         };
       }
 
-      return Product.find(params).populate('category').populate('textFields').populate('groupFields');
+      return Product.find(params).populate('category').populate('textFields').populate('groupFields').populate('mods');
     },
-    product: async (parent, { _id }) => {
-      const product = await Product.findById(_id).populate('category').populate('textFields').populate('groupFields')
+    product: async (parent, { _id }) => { // get product by id and get any field or placement modifications
+      const product = await Product.findById(_id).populate('category').populate('textFields').populate('groupFields').populate('mods');
       return product;
     },
-    user: async (parent, args, context) => {
+    // get the current logged in user data, include their orders and saved products
+    user: async (parent, args, context) => { 
       if (context.user) {
         const user = await User.findById(context.user._id)
-          .populate({
-            path: 'orders.products',
-            populate: 'category',
-          })
-          .populate({
-            path: 'savedProducts',
-            populate: 'category',
-          });
+          .populate('orders')
+          .populate('savedProducts');
         user.orders.sort((a, b) => b.purchaseDate - a.purchaseDate);
 
         return user;
@@ -42,55 +38,59 @@ const resolvers = {
 
       throw new AuthenticationError('Not logged in');
     },
+    // get an order by ID
     order: async (parent, { id }, context) => {
       if (context.user) {
-        const user = await User.findById(context.user.id)
-          .populate({
-            path: 'orders.products',
-            populate: 'category',
-          });
+        const user = await User.findById(context.user.id).populate({
+          path: 'orders.products',
+          populate: 'category',
+        });
 
         return user.orders.id(id);
       }
 
       throw new AuthenticationError('Not logged in');
     },
+    // create a tripe order and return a session id
     checkout: async (parent, args, context) => {
       if (!context.user) {
         throw new AuthenticationError('Not logged in');
       }
+      // get url of domain
       const url = new URL(context.headers.referer).origin;
-      console.log(url);
       const line_items = [];
-      const { orders } = await User.findById(context.user._id)
-        .populate('orders')
-        .populate('savedProducts');
-
+      // get all the order pertaining to the current logged in user
+      const {orders} = await User.findById(context.user._id)
+          .populate('orders')
+          .populate('savedProducts');
+      
       for (let i = 0; i < orders.length; i++) {
-        quantity = orders[i].orderQuantity
-        products = orders[i].products
-        for (let i = 0; i < products.length; i++) {
-          const product = await Product.findById(products[i])
-          console.log(product.name)
-          const stripeProduct = await stripe.products.create({
-            name: product.name,
-            // description: product.description,
-            // images: [`${url}${product.image}`]
-          });
-          console.log(product.price)
-          const price = await stripe.prices.create({
-            product: stripeProduct.id,
-            unit_amount: product.price * 100,
-            currency: 'cad',
-          });
+        
+        // completed order persist in Users.orders in order to have order history
+        // we need to ensure we only get orders that have not been completed
+        if (orders[i].status === 'PENDING') {
+          
+          quantity =  orders[i].orderQuantity
+          products = orders[i].products
+          for (let i = 0; i < products.length; i++) {
+            const product = await Product.findById(products[i])
+            const stripeProduct = await stripe.products.create({
+              name: product.name,
+            });
 
-          line_items.push({
-            price: price.id,
-            quantity: quantity
-          });
-          console.log(line_items)
-        }
-      }
+            const price = await stripe.prices.create({
+              product: stripeProduct.id,
+              unit_amount: product.price * 100,
+              currency: 'cad',
+            });
+
+            line_items.push({
+              price: price.id,
+              quantity: quantity
+            });
+            
+          }
+      }}
 
       const session = await stripe.checkout.sessions.create({
         payment_method_types: ['card'],
@@ -99,8 +99,8 @@ const resolvers = {
         success_url: `${url}/success?session_id={CHECKOUT_SESSION_ID}`,
         cancel_url: `${url}/`
       });
-      console.log(session)
-      return { session: session.id };
+
+      return { session: session.id };// return the session id for stripe
     }
   },
   Mutation: {
@@ -110,18 +110,17 @@ const resolvers = {
 
       return { token, user };
     },
+    // create an order and then push the order to the logged in users orders field
     addOrder: async (parent, { orderQuantity, productID, status }, context) => {
       const product = await Product.findById(productID)
-
       if (context.user) {
-        const order = new Order({ orderQuantity, products: productID, status });
-        //await Order.findByIdAndUpdate(order._id,{ $addToSet: { products: product._id } })
-
+        const order = new Order({ orderQuantity, products:productID,status } );
         await User.findByIdAndUpdate(context.user._id, { $push: { orders: order } });
         return order;
       }
       throw new AuthenticationError('Not logged in');
     },
+    // user update
     updateUser: async (parent, args, context) => {
       if (context.user) {
         let updatedUser = {};
@@ -151,6 +150,7 @@ const resolvers = {
 
       throw new AuthenticationError('Not logged in');
     },
+    // delete you account
     deleteUser: async (parent, args, context) => {
       if (context.user) {
         if (args.password && args.password.length > 0) {
@@ -164,6 +164,9 @@ const resolvers = {
         }
       };
     },
+    // since products are customized a product is only created when a user is done modifications and has saved
+    // every product then belongs to a user and therefore is assigned at creation
+    //create a product and then add the product to the current users savedProducts
     addProduct: async (parent, args, context) => {
 
       category = await Category.findOne(
@@ -177,15 +180,15 @@ const resolvers = {
             image: args.image,
             price: args.price,
             category: category,
-            textFields: args.textFields,
-            groupFields: args.groupFields,
-            mods: args.mods
-          });
+            textFields:args.textFields,
+            groupFields:args.groupFields,
+            mods:args.mods    
+        });
         await User.findByIdAndUpdate(context.user._id, { $push: { savedProducts: newProduct } });
         return newProduct;
 
       }
-      throw new AuthenticationError('Not logged in');
+      throw new AuthenticationError('Not logged in');    
     },
     updateProduct: async (parent, args, context) => {
       const product = await Product.findOneAndUpdate(
@@ -194,9 +197,10 @@ const resolvers = {
         { runValidators: true, new: true }
       );
     },
+    // delete the product and remove the ID from the user's saved products
     deleteProduct: async (parent, args, context) => {
       await Product.findByIdAndDelete(args.productID);
-      console.log('Product deleted')
+      
       if (context.user) {
         await User.findByIdAndUpdate(context.user._id, { $pull: { savedProducts: args.productID } });
         return { message: 'Product deleted successfully' };
@@ -204,35 +208,37 @@ const resolvers = {
       throw new AuthenticationError('Not logged in');
 
     },
+    // there is no actual order object therefore to delete an order we need to pull the order
+    // from the user's orders
     deleteOrder: async (parent, args, context) => {
       if (context.user) {
-        await User.findByIdAndUpdate(context.user._id, { $pull: { orders: { _id: args.orderId } } });
-        console.log('Order deleted successfully');
+        await User.findByIdAndUpdate(context.user._id, { $pull: { orders: {_id:args.orderId} } }); // pull order that matches id
+        
         return { message: 'Order deleted successfully' };
       }
       throw new AuthenticationError('Not logged in');
     },
+    // once and order has been purchased we change the status from PENDING to COMPLETED
+    // this allows us to have an order history attached to the user
     updateOrder: async (parent, args, context) => {
       if (context.user) {
-        console.log('I am here');
-        await User.updateOne({ _id: context.user._id, "orders.status": "PENDING" }, {
-          '$set': {
-            'orders.$.status': 'COMPLETED',
-          }
-        });
+        // get all existing PENDING orders and change them to COMPLETED
+        await User.updateOne({_id:context.user._id, "orders.status": "PENDING"}, {'$set': { 
+          'orders.$.status': 'COMPLETED',
+      }});
         return { message: 'orders updated' };
       }
       throw new AuthenticationError('Not logged in');
     },
     login: async (parent, { email, password }) => {
       const user = await User.findOne({ email });
-      console.log(user);
+      
       if (!user) {
         throw new AuthenticationError('Incorrect credentials');
       }
 
       const correctPw = await user.isCorrectPassword(password);
-      console.log(correctPw);
+     
       if (!correctPw) {
         throw new AuthenticationError('Incorrect credentials');
       }

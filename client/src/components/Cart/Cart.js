@@ -8,7 +8,7 @@ import { loadStripe } from '@stripe/stripe-js';
 import { useLazyQuery, useQuery, useMutation } from '@apollo/client';
 import { QUERY_CHECKOUT, QUERY_USER } from '../../utils/queries'; // query
 import  {UPDATE_ORDER} from '../../utils/mutations';
-const stripePromise = loadStripe('pk_live_51MBSGXHxM1wHJ7zi2itQjXky3AQ91Ud6Clahvy8yIhNDQClEzI357kPUnymD8Lip2dAGbjtuvT3PQcptK8KppjlC00tStvDCdZ'); // Stripe API key wll be added
+const stripePromise = loadStripe('pk_live_51MBSGXHxM1wHJ7zi2itQjXky3AQ91Ud6Clahvy8yIhNDQClEzI357kPUnymD8Lip2dAGbjtuvT3PQcptK8KppjlC00tStvDCdZ');
 
 function Cart() {
   
@@ -17,9 +17,11 @@ function Cart() {
   const [updateOrder] = useMutation(UPDATE_ORDER)
   useEffect(() => {
     if (data) {
-      console.log(data);
-      stripePromise.then((stripe) => {
-        stripe.redirectToCheckout({ sessionId: data.checkout.session });
+      stripePromise.then( (stripe) => {
+        updateOrder().then((message) => {
+          stripe.redirectToCheckout({ sessionId: data.checkout.session });
+        })
+        
       });
     }
   }, [data]);
@@ -28,12 +30,12 @@ function Cart() {
   }
   
 
-  
+  const orders = user_data.user.orders.filter(order => order.status === 'PENDING')
+  console.log(orders)
   function calculateTotal() {
     let total = 0;
-    user_data.user.orders.forEach(item => {
+    orders.forEach(item => {
       item.products.forEach(product => {
-        console.log(item)
         total += product.price * item.orderQuantity;
       });
       
@@ -42,7 +44,7 @@ function Cart() {
   }
 
   const renderCartItems = () => {
-    if (user_data.user.orders.length === 0) {
+    if (orders.length === 0) {
       return (
         <div className='cartItem'>
           <p>Your Shopping Cart is Empty</p>
@@ -52,7 +54,7 @@ function Cart() {
 
     return (
       <div className='cartItem'>
-        {user_data.user.orders.map(item => (
+        {orders.map(item => (
           <CartItem key={item._id} item={item} />
         ))}
       </div>
@@ -60,7 +62,7 @@ function Cart() {
   };
 
   async function submitCheckout() {
-    const { message } = await updateOrder();
+    
     getCheckout();
       
   }
@@ -71,7 +73,7 @@ function Cart() {
       <div className="container cart-page">
         <h1>Shopping Cart</h1>
         {renderCartItems()}
-        {user_data.user.orders.length > 0 && (
+        {orders.length > 0 && (
           <div className="cart-summary">
             <p>Total: <span className="total-price">${calculateTotal()}</span></p>
             <button className="checkout-button"  onClick={submitCheckout}>Checkout</button>
