@@ -1,3 +1,6 @@
+// Function to make elements draggable and to hold data of where the element is dragged
+// this function was provided by https://www.w3schools.com/howto/howto_js_draggable.asp
+
 export function dragElement(elmnt) {
   var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
   if (document.getElementById(elmnt.id + "header")) {

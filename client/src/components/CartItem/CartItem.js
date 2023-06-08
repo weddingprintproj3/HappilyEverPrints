@@ -10,10 +10,10 @@ import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import './index.scss';
 
 const CartItem = ({ item }) => {
-  const [deleteOrder] = useMutation(DELETE_ORDER)
-  console.log(item)
+  const [deleteOrder] = useMutation(DELETE_ORDER) // mutation to remove order from user
+
   const removeItemFromCart = async (event) => {
-    console.log(event.target.id)
+    // handler to remove item from cart
     const { data } = await deleteOrder({
       variables: { orderId: event.target.id },
     });
