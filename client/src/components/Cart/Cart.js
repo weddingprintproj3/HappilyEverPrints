@@ -8,7 +8,7 @@ import { loadStripe } from '@stripe/stripe-js';
 import { useLazyQuery, useQuery, useMutation } from '@apollo/client';
 import { QUERY_CHECKOUT, QUERY_USER } from '../../utils/queries'; // query
 import  {UPDATE_ORDER} from '../../utils/mutations';
-const stripePromise = loadStripe('pk_live_51MBSGXHxM1wHJ7zi2itQjXky3AQ91Ud6Clahvy8yIhNDQClEzI357kPUnymD8Lip2dAGbjtuvT3PQcptK8KppjlC00tStvDCdZ');
+const stripePromise = loadStripe('pk_test_51MBSGXHxM1wHJ7zi3tBfTaodIZ3VwzhAqDVXiDgECL0lD2F263jo0In07J2SVQvgZTRYcGWgTKiEZuoHyTEjlPtE00JXqeXGUI');
 
 function Cart() {
   
