@@ -1,0 +1,119 @@
+.signup-page {
+    min-height: calc(100vh - 80px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-image: url('../../assets/images/yohann-libot-GFjNDSSYIA4-unsplash.jpg'); // Add this line, adjust the filename as needed.
+    background-size: cover;
+    background-position: center;
+    padding: 30px 0;
+
+    &::before {
+        content: ""; // This is required for the pseudo-element to show.
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        background: rgba(255, 255, 255, 0.1);
+    }
+
+    .page-content {
+        position: relative;
+        margin: auto 0px;
+        width: 90%;
+        text-align: center;
+
+        @media (min-width: 768px) {
+            width: 70%;
+        }
+
+        @media (min-width: 1200px) {
+            width: 40%;
+        }
+
+        h1 {
+            font-size: 70px;
+            color: white;
+            padding: 30px;
+            font-family: 'Gistesy', sans-serif;
+            letter-spacing: 2px;
+            text-align: center;
+            font-weight: 200;
+        }
+
+        form {
+            width: 100%;
+
+            .form-row {
+                display: flex;
+                flex-direction: column;
+
+                .form-field {
+                    width: 100%;
+                    margin-bottom: 30px;
+
+                    input {
+                        width: 100%;
+                        border: 0;
+                        background: #f3f3f3;
+                        font-size: 16px;
+                        padding: 14px;
+                        font-family: inherit;
+                        font-weight: 600;
+                    }
+                }
+            }
+
+            .form-button {
+                display: flex;
+                justify-content: center;
+
+                button {
+                    appearance: none;
+                    -webkit-appearance: none;
+                    -moz-appearance: none;
+                    background: #adbea3;
+                    color: inherit;
+                    font: inherit;
+                    cursor: pointer;
+                    text-transform: uppercase;
+                    font-size: 12px;
+                    font-weight: 600;
+                    letter-spacing: 3px;
+                    text-decoration: none;
+                    padding: 12px 40px;
+                    border: 1px solid #adbea3;
+                    white-space: nowrap;
+                    margin-bottom: 30px;
+
+
+                    &:hover {
+                        background-color: #bdcbb5;
+                        border: 1px solid #bdcbb5;
+                    }
+                }
+            }
+        }
+
+        p {
+            color: white;
+            padding: 8px;
+            text-align: center;
+            background-color: rgba(0, 0, 0, 0.4);
+            display: inline-block;
+            font-size: 14px;
+        }
+
+        a {
+            text-decoration: none; 
+            color: #adbea3; 
+            font-weight: 600;
+        
+            &:hover {
+                color: #c6d2bf;
+                text-decoration: underline;
+            }
+        }
+    }
+}

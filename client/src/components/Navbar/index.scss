@@ -24,7 +24,7 @@ header {
         display: flex;
         flex-direction: row;
         justify-content: space-around;
-        width: 20vw;
+        width: 21vw;
 
         a {
             font-size: 24px;
@@ -74,6 +74,91 @@ header {
             svg {
                 color: #adbea3;
             }
+        }
+    }
+
+    .hamburger {
+        display: none;
+        position: absolute;
+        top: 20px;
+        right: 50px;
+        width: 35px;
+        height: 35px;
+        z-index: 1001;
+        background-color: #343131;
+        border-radius: 50%;
+        color: #fff;
+        cursor: pointer;
+        padding: 5px;
+        transition: background-color 0.3s ease;
+    
+        &:hover {
+            background-color: #849d75;
+            border-color: #849d75; 
+        }
+    }
+    
+    .mobile-menu {
+        display: none;
+        position: absolute;
+        top: 0;
+        left: 0;
+        background-color: rgba(173, 190, 163, 0.7);
+        backdrop-filter: blur(20px);
+        width: 100%;
+        height: auto;
+        justify-content: center;
+        align-items: center;
+        z-index: 999;
+
+        a {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            font-size: 16px;
+            font-weight: bolder;
+            color: #343131;
+            line-height: 62px;
+            text-decoration: none;
+            position: relative;
+
+            &:hover {
+                color: white;
+            }
+        }
+    }
+
+    .mobile-menu a:not(:last-child) {
+        border-bottom: 1px solid darkgray;
+    }
+
+    @media screen and (max-width: 768px) {
+        nav {
+            display: none;
+        }
+
+        .hamburger {
+            display: block;
+        }
+
+        .mobile-menu {
+            display: block;
+        }
+    }
+
+    @media screen and (min-width: 769px) {
+        nav {
+            display: flex;
+        }
+
+        .hamburger {
+            display: none;
+        }
+
+        .mobile-menu {
+            display: none;
         }
     }
 }

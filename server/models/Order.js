@@ -7,12 +7,20 @@ const orderSchema = new Schema({
     type: Date,
     default: Date.now,
   },
+  orderQuantity: {
+    type: Number,
+    min: 0,
+  },
   products: [
     {
       type: Schema.Types.ObjectId,
       ref: 'Product',
-    },
+    }
   ],
+  status: {
+    type: String,
+    enum: ['PENDING', 'COMPLETED'],
+  }
 });
 
 const Order = mongoose.model('Order', orderSchema);

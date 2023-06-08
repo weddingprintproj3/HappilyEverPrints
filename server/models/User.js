@@ -26,6 +26,7 @@ const userSchema = new Schema({
     minlength: 5,
   },
   orders: [Order.schema],
+  savedProducts: [{ type: Schema.Types.ObjectId, ref: 'Product' }]
 });
 
 // Set up pre-save middleware to create password
@@ -40,8 +41,14 @@ userSchema.pre('save', async function (next) {
 
 // Compare the incoming password with the hashed password
 userSchema.methods.isCorrectPassword = async function (password) {
-  await bcrypt.compare(password, this.password);
+  return await bcrypt.compare(password, this.password);
 };
+
+userSchema.methods.hashPassword = async function (password) {
+  const saltRounds = 10;
+  this.password = await bcrypt.hash(password, saltRounds);
+  return this.password; 
+}
 
 const User = mongoose.model('User', userSchema);
 

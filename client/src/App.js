@@ -12,7 +12,12 @@ import Layout from './components/Layout';
 import Home from './pages/Home';
 import Help from './pages/Help/Help';
 import Login from './pages/Login/Login';
-import Signup from './pages/Login/Signup';
+import Logout from './pages/Logout/Logout';
+import Signup from './pages/Signup/Signup';
+import Cart from "./components/Cart/Cart";
+import Profile from './pages/Profile/Profile';
+import Product from './pages/Product';
+import Success from './pages/Success';
 
 import { StoreProvider } from './utils/GlobalState';
 import './App.scss';
@@ -50,8 +55,8 @@ function App() {
   return (
     <ApolloProvider client={client}>
       <Router>
-      <ScrollToTop />
-        <div>
+        <ScrollToTop />
+        <>
           <StoreProvider>
             <Routes>
 
@@ -59,12 +64,24 @@ function App() {
                 <Route index element={<Home />} />
                 <Route path="/help" element={<Help />} />
                 <Route path="/login" element={<Login />} />
+                <Route path="/logout" element={<Logout />} />
                 <Route path="/signup" element={<Signup />} />
+                <Route path="/cart" element={<Cart />} />
+                <Route path="/profile" element={<Profile />} />
+                <Route
+                  path="/products/:category/:productID?"
+                  element={<Product />}
+                />
+                <Route
+                  path="/success"
+                  element={<Success />}
+                />
               </Route>
+              <Route path="*" element={<Home />} />
 
             </Routes>
           </StoreProvider>
-        </div>
+        </>
       </Router>
     </ApolloProvider>
   );
