@@ -50,11 +50,11 @@ For running the site locally (testing purposes), please make sure your in the co
 
 ## Usage
 
-Deployed Link:  
+Deployed Link: https://radiant-island-05643.herokuapp.com/  
 
 Instructions: Once in the website you can make a user profile (through sign up) and look through the four templates for designing your own card (in the home page). The user profile showcases order history and user information in which you can change. For customer service, there is a FAQ Help page that provides additional information regarding shipping and country services. It also includes get in touch section where you can write a message directly to HappilyEverPrints support team.
 
-[!screenshot]()
+[!screenshot](https://github.com/weddingprintproj3/HappilyEverPrints/blob/develop/Deployed_Site_Screenshot.png)
 
 ## License
 
