@@ -43,11 +43,11 @@ function Profile() {
     function categoryToUrl(category) {
         if (category === "Invitations") {
             return "/products/invitation";
-        } else if (category === "Menu") {
+        } else if (category === "Menus") {
             return "/products/menu";
-        } else if (category === "Thank You Card") {
+        } else if (category === "Thank You Cards") {
             return "/products/thankyou";
-        } else if (category === "Seating Chart") {
+        } else if (category === "Guest Lists") {
             return "/products/guestlist";
         }
     }
