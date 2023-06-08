@@ -1,0 +1,51 @@
+.success-page {
+    width: 100%;
+    min-height: calc(100vh - 80px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: calc(100vw - 231px);
+        background-color: white;
+        padding: 30px;
+        margin: 0 auto;
+        min-height: calc(100vh - 80px);
+    }
+
+    h1 {
+        font-size: 40px;
+        padding-bottom: 20px;
+        font-family: 'Gistesy', sans-serif;
+        letter-spacing: 2px;
+        text-align: center;
+        font-weight: 200;
+    }
+
+    h3 {
+        margin-bottom: 10px;
+        font-size: 1.0em;
+    }
+
+    p {
+        padding-top: 30px;
+        padding-left: 30px;
+        padding-right: 30px;
+        width: 100%;
+        max-width: 750px;
+        margin: 0 auto;
+        line-height: 1.5;
+        text-align: left;
+
+        &:nth-of-type(2) {
+            font-weight: bold;
+        }
+    }
+
+    .order-number {
+        font-weight: bold;
+    }
+}
