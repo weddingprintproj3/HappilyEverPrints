@@ -1,7 +1,7 @@
 const { AuthenticationError } = require('apollo-server-express');
 const { User, Product, Category, Order } = require('../models');
 const { signToken } = require('../utils/auth');
-const stripe = require('stripe')('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');
+const stripe = require('stripe')(`${process.env.STRIPE_SECRET_KEY}`);
 const resolvers = {
   Query: {
     categories: async () => Category.find(), // get all the categories
