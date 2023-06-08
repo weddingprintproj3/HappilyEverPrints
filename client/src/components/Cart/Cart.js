@@ -3,7 +3,7 @@ import CartItem from '../CartItem/CartItem';
 import Auth from '../../utils/auth';
 import './index.scss';
 
-// importation for stripe (payment)
+
 import { loadStripe } from '@stripe/stripe-js';
 import { useLazyQuery, useQuery, useMutation } from '@apollo/client';
 import { QUERY_CHECKOUT, QUERY_USER } from '../../utils/queries'; // query
@@ -11,11 +11,13 @@ import  {UPDATE_ORDER} from '../../utils/mutations';
 const stripePromise = loadStripe('pk_test_51MBSGXHxM1wHJ7zi3tBfTaodIZ3VwzhAqDVXiDgECL0lD2F263jo0In07J2SVQvgZTRYcGWgTKiEZuoHyTEjlPtE00JXqeXGUI');
 
 function Cart() {
-  
+  // checkout query will be stored and called when needed
   const [getCheckout, { data }] = useLazyQuery(QUERY_CHECKOUT);
-  const { loading, error,data: user_data } = useQuery(QUERY_USER)
-  const [updateOrder] = useMutation(UPDATE_ORDER)
+  // loading the data for current user so that we can pull their order data
+  const { loading, error,data: user_data } = useQuery(QUERY_USER) // we need to alias the error variable so we don't have variable name overlap
+  const [updateOrder] = useMutation(UPDATE_ORDER) // query to change status of order
   useEffect(() => {
+    // once we get cart data from resolver we redirect to stripe and update the order status to COMPLETED
     if (data) {
       stripePromise.then( (stripe) => {
         updateOrder().then((message) => {
@@ -29,9 +31,10 @@ function Cart() {
     return <h2>LOADING...</h2>;
   }
   
-
+  // only get the pending order as we will not be rebuying completed orders
   const orders = user_data.user.orders.filter(order => order.status === 'PENDING')
-  console.log(orders)
+
+  // function to calculate the total cost
   function calculateTotal() {
     let total = 0;
     orders.forEach(item => {
@@ -44,6 +47,7 @@ function Cart() {
   }
 
   const renderCartItems = () => {
+    // function to call item component, if no orders send test saying cart is empty
     if (orders.length === 0) {
       return (
         <div className='cartItem'>
@@ -60,7 +64,7 @@ function Cart() {
       </div>
     );
   };
-
+  // when the submit button is clicked
   async function submitCheckout() {
     
     getCheckout();
@@ -68,7 +72,7 @@ function Cart() {
   }
 
 
-  if (Auth.loggedIn()){ 
+  if (Auth.loggedIn()){ // check if user is logged in before trying to populate orders
     return (
       <div className="container cart-page">
         <h1>Shopping Cart</h1>

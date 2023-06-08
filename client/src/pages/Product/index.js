@@ -15,17 +15,24 @@ import './index.scss';
 import { useParams } from 'react-router-dom';
 
 function Product() {
-  const { category, productID } = useParams();
+  const { category, productID } = useParams(); // get the category and optional product ID parameter
+  // state handeling for fields
   const [brideName, setBrideName] = useState("Bride");
   const [groomName, setGroomName] = useState("Groom");
   const [invitationDate, setInvitationDate] = useState("January, 1st 2099");
   const [invitationTime, setInvitationTime] = useState("12:00 AM");
   const [invitationLocation, setInvitationLocation] = useState("123 Fake Street");
+  // mutations to add products and orders to user
   const [addProd, {error}] = useMutation(ADD_PROD)
   const [addOrder, {error: error2}] = useMutation(ADD_ORDER)
-  const [deleteProd, {error: error3}] = useMutation(DELETE_PROD)
+  const [deleteProd, {error: error3}] = useMutation(DELETE_PROD) // delete a product used to replace saved products
+
+  // if the optional productid parameter is provided we pull the product
   const { loading, data } = useQuery(QUERY_SINGLE_PRODUCTS, {variables: {"id": productID}});
+  // using react router to reroute
   const navigate = useNavigate()
+  
+  // states and setter to be passed to child components
   const setters = {
     bride:setBrideName, 
     groom:setGroomName, 
@@ -40,16 +47,18 @@ function Product() {
     time:invitationTime, 
     location:invitationLocation
   }
-
+  // check if we are waiting to retrieve the product and if so present user with loading message
+  if (loading){
+    return <div><h1>Loading...</h1></div>
+  }
   
-     
   document.addEventListener('readystatechange', event => {
+    // get all fields that should be draggable and add event listners to track their movement
     const draggableFields = document.getElementsByClassName('draggableField');
     Array.prototype.forEach.call(draggableFields, function(field){dragElement(field)});
     
-    
+    // if there is product data then update the state of the fields
     if (data) {
-      console.log(data.product);
       data.product.textFields.forEach(textfield=>{
         setters[textfield.label](textfield.input)
       });
@@ -65,7 +74,7 @@ function Product() {
           });
         });
       }
-      if (data.product.mods){
+      if (data.product.mods){ // if position data is provided in product update the positions
         data.product.mods.forEach(mod=>{
           
           document.getElementById(mod.element_id).style.top = mod.posTop
@@ -75,18 +84,20 @@ function Product() {
     }
   });
   
+  // handler for when user saves an invitation
   async function invitationSave(event) {
+    // this handler will get the value and position of all fields
     const textfields = []
     const mods = []
     const textfieldids = categoryComponents[category].textfields
-    textfieldids.forEach(id =>{
+    textfieldids.forEach(id =>{ // getting text fields and their value
       textfields.push({label:id, input:document.getElementById(id).value})
     });
     const draggableFields = document.getElementsByClassName('draggableField');
-    Array.prototype.forEach.call(draggableFields, function(field){
+    Array.prototype.forEach.call(draggableFields, function(field){ // get position data
       mods.push({element_id:field.id, posTop: field.style.top, posLeft: field.style.left})  
     });
-    const product = {
+    const product = { // creating product object
       name: document.getElementById('productName').innerText,
       description: document.getElementById('productDescirption').innerText,
       image: "/images/White-Green-Watercolor-Floral-Border-Wedding-Invitation-no-text.png",
@@ -97,7 +108,7 @@ function Product() {
       textFields: textfields,
       mods: mods
     }
-
+    // if there is an existing product then replace with the new product
     if(productID) {
       const { data } = await deleteProd({
         variables: {productID: productID},
@@ -110,24 +121,24 @@ function Product() {
 
     alert("Product has been saved") 
   }
-
+  // handler for when user saves an guest list
   async function guestlistSave(event) {
     const textfields = []
     const multifields = []
     const mods = []
-    const textfieldids = categoryComponents[category].textfields
+    const textfieldids = categoryComponents[category].textfields // getting text fields and their value
     textfieldids.forEach(id =>{
       textfields.push({label:id, input:document.getElementById(id).value})
     });
-    const multifieldids = categoryComponents[category].categories
+    const multifieldids = categoryComponents[category].categories // getting multi fields and their value
     multifieldids.forEach(id =>{
       multifields.push({group:`table${id}members`, fields:Array.from(document.getElementById(`table${id}members`).children, ({textContent}) => textContent)})
     });
     const draggableFields = document.getElementsByClassName('draggableField');
-    Array.prototype.forEach.call(draggableFields, function(field){
+    Array.prototype.forEach.call(draggableFields, function(field){ // get position data
       mods.push({element_id:field.id, posTop: field.style.top, posLeft: field.style.left})  
     });
-    const product = {
+    const product = { // creating product object
       name: document.getElementById('productName').innerText,
       description: document.getElementById('productDescirption').innerText,
       image: "/images/White-Green-And-Black-Floral-Wedding-Seating-Chart-no-text.png",
@@ -139,7 +150,7 @@ function Product() {
       groupFields: multifields,
       mods: mods
     }
-   
+     // if there is an existing product then replace with the new product
     if(productID) {
       const { data } = await deleteProd({
         variables: {productID: productID},
@@ -151,24 +162,24 @@ function Product() {
     navigate(`/products/guestlist/${data.addProduct._id}`);
     alert("Product has been saved") 
   }
-
+  // handler for when user saves an menu
   async function menuSave(event) {
     const textfields = []
     const multifields = []
     const mods = []
-    const textfieldids = categoryComponents[category].textfields
+    const textfieldids = categoryComponents[category].textfields // getting text fields and their value
     textfieldids.forEach(id =>{
       textfields.push({label:id, input:document.getElementById(id).value})
     });
-    const multifieldids = categoryComponents[category].categories
+    const multifieldids = categoryComponents[category].categories // getting multi fields and their value
     multifieldids.forEach(id =>{
       multifields.push({group:`${id.toLowerCase()}list`, fields:Array.from(document.getElementById(`${id.toLowerCase()}list`).children, ({textContent}) => textContent)})
     });
     const draggableFields = document.getElementsByClassName('draggableField');
-    Array.prototype.forEach.call(draggableFields, function(field){
+    Array.prototype.forEach.call(draggableFields, function(field){ // get position data
       mods.push({element_id:field.id, posTop: field.style.top, posLeft: field.style.left})  
     });
-    const product = {
+    const product = { // creating product object
       name: document.getElementById('productName').innerText,
       description: document.getElementById('productDescirption').innerText,
       image: "/images/Floral-Botanical-Wedding-Menu-no-text.png",
@@ -180,7 +191,7 @@ function Product() {
       groupFields: multifields,
       mods: mods
     }
- 
+     // if there is an existing product then replace with the new product
     if(productID) {
       const { data } = await deleteProd({
         variables: {productID: productID},
@@ -193,19 +204,19 @@ function Product() {
     navigate(`/products/menu/${data.addProduct._id}`);
     alert("Product has been saved") 
   }
-  
+  // handler for when user saves an thank you card
   async function thankyouSave(event) {
     const textfields = []
     const mods = []
-    const textfieldids = categoryComponents[category].textfields
+    const textfieldids = categoryComponents[category].textfields // getting text fields and their value
     textfieldids.forEach(id =>{
       textfields.push({label:id, input:document.getElementById(id).value})
     });
     const draggableFields = document.getElementsByClassName('draggableField');
-    Array.prototype.forEach.call(draggableFields, function(field){
+    Array.prototype.forEach.call(draggableFields, function(field){ // get position data
       mods.push({element_id:field.id, posTop: field.style.top, posLeft: field.style.left})  
     });
-    const product = {
+    const product = { // creating product object
       name: document.getElementById('productName').innerText,
       description: document.getElementById('productDescirption').innerText,
       image: "/images/Green-Floral-Watercolor-Thank-You-Card-no-text.png",
@@ -216,6 +227,7 @@ function Product() {
       textFields: textfields,
       mods: mods
     }
+     // if there is an existing product then replace with the new product
     if(productID) {
       const { data } = await deleteProd({
         variables: {productID: productID},
@@ -228,12 +240,13 @@ function Product() {
     alert("Product has been saved") 
   }
   
+  // handle add to cart event
   async function cartHandler(event){
     if(!document.getElementById("productQuantity").value){
       alert("Product quantity must be specified") 
       return false
     } 
-    const { data } = await addOrder({
+    const { data } = await addOrder({ // call addorder mutation and set it's status to pending
       variables: {
         productId: productID, 
         orderQuantity: parseInt(document.getElementById("productQuantity").value),
@@ -242,7 +255,7 @@ function Product() {
     });
     alert("Product has been added to cart") 
   }
-
+  // set state for products fields
   function setBrideGroomInput(event) {
     if (event.target.id === 'bride') {
       setBrideName(event.target.value);
@@ -250,7 +263,7 @@ function Product() {
       setGroomName(event.target.value);
     }
   }
-
+  // set state for products fields
   function setInvitation(event) {
     if (event.target.id === 'bride') {
       setBrideName(event.target.value);
@@ -264,7 +277,7 @@ function Product() {
       setInvitationLocation(event.target.value);
     }
   }
-
+// data for each product component
   const categoryComponents = {
     invitation:{
         type: "invitation",
