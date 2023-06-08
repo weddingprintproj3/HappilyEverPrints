@@ -47,7 +47,7 @@ function Profile() {
             return "/products/menu";
         } else if (category === "Thank You Cards") {
             return "/products/thankyou";
-        } else if (category === "Seating Charts") {
+        } else if (category === "Guest Lists") {
             return "/products/guestlist";
         }
     }
