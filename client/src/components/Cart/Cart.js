@@ -16,6 +16,7 @@ function Cart() {
   // loading the data for current user so that we can pull their order data
   const { loading, error,data: user_data } = useQuery(QUERY_USER) // we need to alias the error variable so we don't have variable name overlap
   const [updateOrder] = useMutation(UPDATE_ORDER) // query to change status of order
+  let orders = []
   useEffect(() => {
     // once we get cart data from resolver we redirect to stripe and update the order status to COMPLETED
     if (data) {
@@ -32,7 +33,10 @@ function Cart() {
   }
   
   // only get the pending order as we will not be rebuying completed orders
-  const orders = user_data.user.orders.filter(order => order.status === 'PENDING')
+  if (user_data){
+    orders = user_data.user.orders.filter(order => order.status === 'PENDING')
+  }
+  
 
   // function to calculate the total cost
   function calculateTotal() {
